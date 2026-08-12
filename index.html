@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indeks Plików Projektu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-8">
+    <div class="max-w-3xl mx-auto bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-xl">
+        <h1 class="text-2xl font-bold mb-2 flex items-center gap-3">
+            <i class="fas fa-folder-open text-sky-400"></i> Файлы проекта
+        </h1>
+        <p class="text-slate-400 text-sm mb-6">Список всех файлов, найденных в репозитории.</p>
+        
+        <div id="loader" class="text-center py-8 text-slate-400">
+            <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+            <p>Загрузка структуры проекта...</p>
+        </div>
+
+        <ul id="file-list" class="space-y-2 hidden"></ul>
+    </div>
+
+    <script>
+        // Автоматически определяет владельца и репозиторий из адреса GitHub Pages
+        const hostname = window.location.hostname; // формат: username.github.io
+        const pathArray = window.location.pathname.split('/');
+        
+        // Если сайт открыт на GitHub Pages (username.github.io/repo-name/)
+        const username = hostname.split('.')[0];
+        const repo = pathArray.length > 1 && pathArray[1] !== '' ? pathArray[1] : '';
+
+        async function fetchRepoFiles() {
+            const listEl = document.getElementById('file-list');
+            const loaderEl = document.getElementById('loader');
+
+            try {
+                // Запрос к GitHub API для получения дерева файлов ветки main/master
+                let apiUrl = `https://api.github.com/repos/${username}/${repo}/git/trees/HEAD?recursive=1`;
+                
+                // Если репозиторий корневой (username.github.io без подпапки), имя репо другое
+                if (!repo || hostname.includes('github.io') && pathArray.length <= 2) {
+                    // Попробуем через стандартный GitHub API поиск или дефолт
+                    // Для корневых репозиториев имя репозитория совпадает с username.github.io
+                    apiUrl = `https://api.github.com/repos/${username}/${username}.github.io/git/trees/HEAD?recursive=1`;
+                }
+
+                let response = await fetch(apiUrl);
+                if (!response.ok) {
+                    // Фолбек, если это локальный запуск или специфичный путь
+                    throw new Error("API limit or repo not found");
+                }
+
+                const data = await response.json();
+                loaderEl.style.display = 'none';
+                listEl.classList.remove('hidden');
+
+                // Фильтруем только файлы (исключаем папки и сам index.html)
+                const files = data.tree.filter(item => item.type === 'blob' && item.path !== 'index.html');
+
+                if (files.length === 0) {
+                    listEl.innerHTML = '<li class="text-slate-500 text-center py-4">Других файлов не найдено.</li>';
+                    return;
+                }
+
+                files.forEach(file => {
+                    const li = document.createElement('li');
+                    li.className = 'bg-slate-900/60 border border-slate-700/60 rounded-lg p-3 flex items-center justify-between hover:border-sky-500 transition-all';
+                    
+                    const ext = file.path.split('.').pop().toLowerCase();
+                    let icon = 'fa-file text-slate-400';
+                    if(['html', 'htm'].includes(ext)) icon = 'fa-file-code text-orange-400';
+                    else if(['css', 'js'].includes(ext)) icon = 'fa-file-lines text-yellow-400';
+                    else if(['png', 'jpg', 'jpeg', 'svg', 'ico'].includes(ext)) icon = 'fa-file-image text-emerald-400';
+                    else if(['pdf', 'txt', 'md'].includes(ext)) icon = 'fa-file-lines text-sky-400';
+
+                    li.innerHTML = `
+                        <div class="flex items-center gap-3 truncate">
+                            <i class="fas ${icon} text-lg w-6 text-center"></i>
+                            <span class="text-sm font-medium text-slate-200 truncate">${file.path}</span>
+                        </div>
+                        <a href="${file.path}" target="_blank" class="bg-sky-600 hover:bg-sky-500 text-white text-xs px-3 py-1.5 rounded font-semibold transition shrink-0 ml-4 flex items-center gap-1.5">
+                            <i class="fas fa-external-link-alt"></i> Открыть
+                        </a>
+                    `;
+                    listEl.appendChild(li);
+                });
+
+            } catch (error) {
+                loaderEl.innerHTML = `
+                    <p class="text-red-400 mb-2"><i class="fas fa-exclamation-triangle"></i> Не удалось загрузить через API GitHub.</p>
+                    <p class="text-xs text-slate-500">Убедись, что проект публичный. Если запускаешь локально, API GitHub может блокировать запросы.</p>
+                `;
+            }
+        }
+
+        fetchRepoFiles();
+    </script>
+</body>
+</html>
