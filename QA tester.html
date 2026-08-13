@@ -2,6 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <title>CV Bohdan Shvets</title>
     <style>
         @page {
             size: A4;
@@ -42,11 +43,12 @@
             margin: 0 auto;
             overflow: hidden;
             border: 3px solid rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #ccc;
+        }
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .sidebar h3 {
             font-size: 13px;
@@ -144,10 +146,8 @@
 </head>
 <body>
     <div class="sheet">
-        <!-- Боковая панель -->
         <div class="sidebar">
-            <div class="avatar-box"><img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover">
-                </div>
+            <div class="avatar-box"><img src="photo.jpg" alt="Avatar"></div>
             
             <div>
                 <h3>Kontakt</h3>
@@ -177,7 +177,6 @@
             </div>
         </div>
 
-        <!-- Основной контент -->
         <div class="main">
             <div class="header">
                 <h1>Bohdan Shvets</h1>
@@ -186,7 +185,7 @@
 
             <div>
                 <div class="section-title">Podsumowanie</div>
-                <p>Absolwent technikum informatycznego z analitycznym zacięciem i praktycznym doświadчением operacyjnym. Wielki fan symulatorów (911 Operator, Infection Free Zone) oraz hobbysta game devu (Roblox Studio, skrypty). Szukam szansy w QA, by łączyć pasję do gier z precyzją w wykrywaniu błędów.</p>
+                <p>Absolwent technikum informatycznego z analitycznym zacięciem i praktycznym doświadczeniem operacyjnym. Wielki fan symulatorów (911 Operator, Infection Free Zone) oraz hobbysta game devu (Roblox Studio, skrypty). Szukam szansy w QA, by łączyć pasję do gier z precyzją w wykrywaniu błędów.</p>
             </div>
 
             <div>
@@ -234,7 +233,7 @@
                     <div class="job-title"><span>Technik Informatyk</span> <span style="font-size: 10px; font-weight: normal;">2021 – 2025</span></div>
                     <div class="job-company">Technikum ZSŁ, Poznań</div>
                 </div>
-                <p style="margin-top: 2px;"><strong>Hobby Game Dev:</strong> Tworzenie mechanik i skryptów w Roblox Studio. Głębokorodne testрование gier strategicznych pod kątem UX i bugów.</p>
+                <p style="margin-top: 2px;"><strong>Hobby Game Dev:</strong> Tworzenie mechanik i skryptów w Roblox Studio. Głębokorodne testowanie gier strategicznych pod kątem UX i bugów.</p>
             </div>
         </div>
     </div>
