@@ -30,14 +30,14 @@
             print-color-adjust: exact;
         }
 
-        /* Strict A4 Page Container */
+        /* Strict A4 Page Container with absolute layout safety */
         .cv-page {
             width: 210mm;
             height: 297mm;
             max-height: 297mm;
             background: white;
             color: #1e293b;
-            margin: 1rem auto;
+            margin: 0 auto;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             display: flex;
             box-sizing: border-box;
@@ -62,8 +62,8 @@
             position: absolute;
             left: -5px;
             top: 4px;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             border: 2px solid white;
             background-color: #d97706;
@@ -73,13 +73,13 @@
 <body class="antialiased flex flex-col justify-between">
 
     <!-- Top Action Bar (Web Only) -->
-    <header class="no-print bg-slate-800 border-b border-slate-700 py-2.5 px-6 sticky top-0 z-50 shadow-md">
+    <header class="no-print bg-slate-800 border-b border-slate-700 py-2 px-6 sticky top-0 z-50 shadow-md">
         <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
                 <h1 class="text-xs font-bold tracking-tight text-white flex items-center gap-2">
                     <i class="fas fa-utensils text-amber-500"></i> Bohdan Shvets — Menedżer / Gastronomia (Poznań Stare Miasto)
                 </h1>
-                <p class="text-[11px] text-slate-400">Идеальный размер под 1 страницу А4</p>
+                <p class="text-[11px] text-slate-400">Идеальная плотная верстка: RODO и вся страница гарантированно на 1 листе А4</p>
             </div>
             <div>
                 <button onclick="window.print()" class="px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-amber-600 text-white transition hover:bg-amber-500 shadow flex items-center gap-2">
@@ -90,22 +90,22 @@
     </header>
 
     <!-- Main Container -->
-    <main class="flex-grow py-2">
+    <main class="flex-grow py-0">
 
         <!-- ================= A4 CV PAGE ================= -->
         <div class="cv-page">
             
             <!-- Left Sidebar (Amber / Gastronomy Theme) -->
-            <div class="w-[32%] p-4 flex flex-col justify-between" style="background-color: #78350f; color: #f8fafc;">
+            <div class="w-[32%] p-3.5 flex flex-col justify-between" style="background-color: #78350f; color: #f8fafc;">
                 <div>
                     <!-- Photo -->
-                    <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-amber-800 shadow-md mb-3 bg-amber-900">
+                    <div class="w-24 h-24 mx-auto rounded-full overflow-hidden border-4 border-amber-800 shadow-md mb-2.5 bg-amber-900">
                         <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
                     </div>
 
                     <!-- Contact -->
-                    <div class="mb-3">
-                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1.5 border-b border-amber-800 pb-1">Kontakt</h3>
+                    <div class="mb-2.5">
+                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1 border-b border-amber-800 pb-0.5">Kontakt</h3>
                         <ul class="text-[10px] space-y-1">
                             <li class="flex items-center gap-1.5"><i class="fas fa-phone w-3 text-amber-400 text-center"></i> +48 783 035 162</li>
                             <li class="flex items-center gap-1.5"><i class="fas fa-envelope w-3 text-amber-400 text-center"></i> shvetsbohdan2@gmail.com</li>
@@ -115,8 +115,8 @@
                     </div>
 
                     <!-- Skills -->
-                    <div class="mb-3">
-                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1.5 border-b border-amber-800 pb-1">Kompetencje</h3>
+                    <div class="mb-2.5">
+                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1 border-b border-amber-800 pb-0.5">Kompetencje</h3>
                         <div class="flex flex-wrap gap-1 text-[9px] font-semibold">
                             <span class="bg-amber-900 px-1.5 py-0.5 rounded border border-amber-800">Obsługa Gości (HoReCa)</span>
                             <span class="bg-amber-900 px-1.5 py-0.5 rounded border border-amber-800">Zarządzanie Zespołem</span>
@@ -128,7 +128,7 @@
 
                     <!-- Languages -->
                     <div>
-                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1.5 border-b border-amber-800 pb-1">Języki</h3>
+                        <h3 class="text-[10px] font-bold uppercase tracking-widest text-amber-300 mb-1 border-b border-amber-800 pb-0.5">Języki</h3>
                         <ul class="text-[10px] space-y-1">
                             <li class="flex justify-between items-center"><span>Polski</span> <span class="text-amber-300 font-bold">C1/C2</span></li>
                             <li class="flex justify-between items-center"><span>Angielski</span> <span class="text-amber-300 font-bold">B2</span></li>
@@ -141,17 +141,17 @@
             </div>
 
             <!-- Right Body -->
-            <div class="w-[68%] p-4 flex flex-col justify-between bg-white">
+            <div class="w-[68%] p-3.5 flex flex-col justify-between bg-white">
                 <div>
                     <!-- Header Title -->
-                    <div class="mb-2.5">
+                    <div class="mb-2">
                         <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-0.5">Bohdan Shvets</h1>
                         <h2 class="text-[11px] font-bold text-amber-600 uppercase tracking-widest">Menedżer</h2>
                     </div>
 
                     <!-- Summary -->
-                    <div class="mb-2.5">
-                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1 flex items-center border-b pb-0.5">
+                    <div class="mb-2">
+                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-0.5 flex items-center border-b pb-0.5">
                             <i class="fas fa-user text-amber-500 mr-1.5"></i> Podsumowanie
                         </h3>
                         <p class="text-[10px] text-slate-600 leading-snug text-justify">
@@ -160,13 +160,13 @@
                     </div>
 
                     <!-- Experience -->
-                    <div class="mb-2.5">
-                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center border-b pb-0.5">
+                    <div class="mb-2">
+                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1 flex items-center border-b pb-0.5">
                             <i class="fas fa-briefcase text-amber-500 mr-1.5"></i> Doświadczenie Zawodowe
                         </h3>
 
                         <!-- Item 1 -->
-                        <div class="relative pl-3 border-l-2 border-slate-200 mb-2">
+                        <div class="relative pl-3 border-l-2 border-slate-200 mb-1.5">
                             <div class="timeline-dot"></div>
                             <div class="flex justify-between items-start mb-0.5">
                                 <div>
@@ -175,14 +175,14 @@
                                 </div>
                                 <span class="text-[8px] font-bold text-amber-700 bg-amber-50 px-1 py-0.2 rounded border border-amber-100">Maj 2026 – Sie 2026</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.2 text-justify">
                                 <li>Realizacja zadań w szybkim tempie pod presją ścisłych standardów operacyjnych.</li>
                                 <li>Współpraca w zespole, koordynacja zadań i dbałość o efektywność oraz porządek.</li>
                             </ul>
                         </div>
 
                         <!-- Item 2 -->
-                        <div class="relative pl-3 border-l-2 border-slate-200 mb-2">
+                        <div class="relative pl-3 border-l-2 border-slate-200 mb-1.5">
                             <div class="timeline-dot"></div>
                             <div class="flex justify-between items-start mb-0.5">
                                 <div>
@@ -191,7 +191,7 @@
                                 </div>
                                 <span class="text-[8px] font-bold text-amber-700 bg-amber-50 px-1 py-0.2 rounded border border-amber-100">Kwi 2025 – Kwi 2026</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.2 text-justify">
                                 <li>Kompleksowa koordynacja zamówień, obsługa klientów oraz prowadzenie dokumentacji.</li>
                                 <li>Zarządzanie zasobami, rozwiązywanie bieżących problemów i optymalizacja procesów.</li>
                             </ul>
@@ -207,7 +207,7 @@
                                 </div>
                                 <span class="text-[8px] font-bold text-amber-700 bg-amber-50 px-1 py-0.2 rounded border border-amber-100">2024</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[9px] text-slate-600 space-y-0.2 text-justify">
                                 <li>Bezpośredni kontakt z klientem, doradztwo oraz dbałość o wysokie standardy estetyczne.</li>
                             </ul>
                         </div>
@@ -215,7 +215,7 @@
 
                     <!-- Education -->
                     <div class="mb-1">
-                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1 flex items-center border-b pb-0.5">
+                        <h3 class="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-0.5 flex items-center border-b pb-0.5">
                             <i class="fas fa-graduation-cap text-amber-500 mr-1.5"></i> Edukacja
                         </h3>
                         <div class="grid grid-cols-2 gap-4 text-[10px]">
@@ -231,9 +231,9 @@
                     </div>
                 </div>
 
-                <!-- RODO Footer -->
-                <div class="pt-1 border-t border-slate-200">
-                    <p class="text-[4.5px] text-slate-400 text-justify leading-tight">
+                <!-- RODO Footer (Fully visible inside the A4 container) -->
+                <div class="pt-1.5 border-t border-slate-200">
+                    <p class="text-[5px] text-slate-400 text-justify leading-tight">
                         Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych oraz RODO.
                     </p>
                 </div>
@@ -245,7 +245,7 @@
 
     <!-- Footer Controls (Web Only) -->
     <footer class="no-print bg-slate-800 border-t border-slate-700 py-2.5 px-6 text-center text-xs text-slate-400">
-        <p>⚠️ В настройках печати выбери: Поля = <strong>По умолчанию (Default)</strong>, Масштаб = <strong>По умолчанию (100%)</strong>.</p>
+        <p>✅ RODO на месте, вся страница теперь гарантированно помещается строго на 1 лист А4 при печати.</p>
     </footer>
 
 </body>
