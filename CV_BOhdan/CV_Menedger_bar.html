@@ -19,20 +19,20 @@
             font-family: 'Inter', sans-serif;
             background-color: #0f172a;
             color: #f8fafc;
+            margin: 0;
+            padding: 0;
         }
 
         /* A4 Strict Page Container */
         .cv-page {
             width: 210mm;
-            height: 297mm;
+            min-height: 297mm;
             background: white;
             color: #1e293b;
             margin: 2rem auto;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             display: flex;
-            overflow: hidden;
             box-sizing: border-box;
-            position: relative;
         }
 
         @media print {
@@ -42,18 +42,17 @@
                 margin: 0; 
                 box-shadow: none; 
                 width: 210mm; 
-                height: 297mm; 
+                min-height: 297mm; 
                 page-break-after: always; 
-                page-break-inside: avoid;
             }
         }
 
         .timeline-dot {
             position: absolute;
             left: -5px;
-            top: 6px;
-            width: 10px;
-            height: 10px;
+            top: 5px;
+            width: 9px;
+            height: 9px;
             border-radius: 50%;
             border: 2px solid white;
             background-color: #d97706;
@@ -63,13 +62,13 @@
 <body class="antialiased min-h-screen flex flex-col justify-between">
 
     <!-- Top Action Bar (Web Only) -->
-    <header class="no-print bg-slate-800 border-b border-slate-700 py-4 px-6 sticky top-0 z-50 shadow-md">
-        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <header class="no-print bg-slate-800 border-b border-slate-700 py-3 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
             <div>
                 <h1 class="text-sm font-bold tracking-tight text-white flex items-center gap-2">
                     <i class="fas fa-utensils text-amber-500"></i> Bohdan Shvets — Menedżer / Gastronomia (Poznań Stare Miasto)
                 </h1>
-                <p class="text-xs text-slate-400">Gotowe do druku i zapisu do PDF (A4 Strict)</p>
+                <p class="text-xs text-slate-400">Верстка исправлена: компактно, ровно на один лист А4</p>
             </div>
             <div>
                 <button onclick="window.print()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-amber-600 text-white transition hover:bg-amber-500 shadow flex items-center gap-2">
@@ -86,40 +85,40 @@
         <div class="cv-page">
             
             <!-- Left Sidebar (Amber / Gastronomy Theme) -->
-            <div class="w-1/3 text-slate-100 p-8 flex flex-col justify-between h-full" style="background-color: #78350f;">
+            <div class="w-[32%] text-slate-100 p-6 flex flex-col justify-between" style="background-color: #78350f;">
                 <div>
                     <!-- Photo -->
-                    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-amber-800 shadow-lg mb-6 bg-amber-900">
+                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-amber-800 shadow-md mb-5 bg-amber-900">
                         <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
                     </div>
 
                     <!-- Contact -->
-                    <div class="mb-6">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-3 border-b border-amber-800 pb-2">Kontakt</h3>
-                        <ul class="text-xs space-y-2.5">
-                            <li class="flex items-center"><i class="fas fa-phone w-5 text-amber-400 text-center"></i> +48 783 035 162</li>
-                            <li class="flex items-center"><i class="fas fa-envelope w-5 text-amber-400 text-center"></i> shvetsbohdan2@gmail.com</li>
-                            <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-amber-400 text-center"></i> Poznań, Stare Miasto</li>
-                            <li class="flex items-center"><i class="fab fa-linkedin w-5 text-amber-400 text-center"></i> /in/bohdan-shvets</li>
+                    <div class="mb-5">
+                        <h3 class="text-[11px] font-bold uppercase tracking-widest text-amber-300 mb-2.5 border-b border-amber-800 pb-1.5">Kontakt</h3>
+                        <ul class="text-[11px] space-y-2">
+                            <li class="flex items-center gap-2"><i class="fas fa-phone w-4 text-amber-400 text-center"></i> +48 783 035 162</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-envelope w-4 text-amber-400 text-center"></i> shvetsbohdan2@gmail.com</li>
+                            <li class="flex items-center gap-2"><i class="fas fa-map-marker-alt w-4 text-amber-400 text-center"></i> Poznań, Stare Miasto</li>
+                            <li class="flex items-center gap-2"><i class="fab fa-linkedin w-4 text-amber-400 text-center"></i> /in/bohdan-shvets</li>
                         </ul>
                     </div>
 
                     <!-- Skills -->
-                    <div class="mb-6">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-3 border-b border-amber-800 pb-2">Kompetencje</h3>
+                    <div class="mb-5">
+                        <h3 class="text-[11px] font-bold uppercase tracking-widest text-amber-300 mb-2.5 border-b border-amber-800 pb-1.5">Kompetencje</h3>
                         <div class="flex flex-wrap gap-1.5 text-[10px] font-semibold">
-                            <span class="bg-amber-900 px-2 py-1 rounded border border-amber-800">Obsługa Gości (HoReCa)</span>
-                            <span class="bg-amber-900 px-2 py-1 rounded border border-amber-800">Zarządzanie Zespołem</span>
-                            <span class="bg-amber-900 px-2 py-1 rounded border border-amber-800">Praca pod presją czasu</span>
-                            <span class="bg-amber-900 px-2 py-1 rounded border border-amber-800">Elastyczny grafik</span>
-                            <span class="bg-amber-900 px-2 py-1 rounded border border-amber-800">MS Excel / Rozliczenia</span>
+                            <span class="bg-amber-900 px-2 py-0.5 rounded border border-amber-800">Obsługa Gości (HoReCa)</span>
+                            <span class="bg-amber-900 px-2 py-0.5 rounded border border-amber-800">Zarządzanie Zespołem</span>
+                            <span class="bg-amber-900 px-2 py-0.5 rounded border border-amber-800">Praca pod presją czasu</span>
+                            <span class="bg-amber-900 px-2 py-0.5 rounded border border-amber-800">Elastyczny grafik</span>
+                            <span class="bg-amber-900 px-2 py-0.5 rounded border border-amber-800">MS Excel / Rozliczenia</span>
                         </div>
                     </div>
 
                     <!-- Languages -->
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-amber-300 mb-3 border-b border-amber-800 pb-2">Języki</h3>
-                        <ul class="text-xs space-y-2">
+                        <h3 class="text-[11px] font-bold uppercase tracking-widest text-amber-300 mb-2.5 border-b border-amber-800 pb-1.5">Języki</h3>
+                        <ul class="text-[11px] space-y-1.5">
                             <li class="flex justify-between items-center"><span>Polski</span> <span class="text-amber-300 font-bold">C1/C2</span></li>
                             <li class="flex justify-between items-center"><span>Angielski</span> <span class="text-amber-300 font-bold">B2</span></li>
                             <li class="flex justify-between items-center"><span>Rosyjski</span> <span class="text-amber-300 font-bold">Native</span></li>
@@ -127,95 +126,95 @@
                     </div>
                 </div>
 
-                <div class="text-[9pt] text-amber-300 text-center">Bohdan Shvets • Menedżer / Gastronomia</div>
+                <div class="text-[9px] text-amber-300 text-center pt-4">Bohdan Shvets • Gastronomia</div>
             </div>
 
             <!-- Right Body -->
-            <div class="w-2/3 p-8 flex flex-col justify-between h-full bg-white">
+            <div class="w-[68%] p-6 flex flex-col justify-between bg-white">
                 <div>
                     <!-- Header Title -->
-                    <div class="mb-5">
-                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan<br>Shvets</h1>
-                        <h2 class="text-sm font-bold text-amber-600 uppercase tracking-widest">Menedżer</h2>
+                    <div class="mb-4">
+                        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan Shvets</h1>
+                        <h2 class="text-xs font-bold text-amber-600 uppercase tracking-widest">Menedżer / Kelner / Barman</h2>
                     </div>
 
                     <!-- Summary -->
-                    <div class="mb-5">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                    <div class="mb-4">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center border-b pb-1">
                             <i class="fas fa-user text-amber-500 mr-2"></i> Podsumowanie
                         </h3>
-                        <p class="text-xs text-slate-600 leading-relaxed text-justify">
+                        <p class="text-[11px] text-slate-600 leading-relaxed text-justify">
                             Energiczny i odpowiedzialny kandydat z doświadczeniem w zarządzaniu operacyjnym, obsłudze klienta oraz pracy w dynamicznym środowisku. Doskonale odnajduję się w pracy pod presją czasu w samym sercu Poznania. Gwarantuję wysoką kulturę obsługi gości, dbałość o detale oraz pełne zaangażowanie – gotowy do podjęcia pracy od zaraz w elastycznym grafiku.
                         </p>
                     </div>
 
                     <!-- Experience -->
-                    <div class="mb-5">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center border-b pb-1">
+                    <div class="mb-4">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2.5 flex items-center border-b pb-1">
                             <i class="fas fa-briefcase text-amber-500 mr-2"></i> Doświadczenie Zawodowe
                         </h3>
 
                         <!-- Item 1 -->
-                        <div class="relative pl-5 border-l-2 border-slate-200 mb-3.5">
+                        <div class="relative pl-4 border-l-2 border-slate-200 mb-3">
                             <div class="timeline-dot"></div>
-                            <div class="flex justify-between items-start mb-1">
+                            <div class="flex justify-between items-start mb-0.5">
                                 <div>
-                                    <h4 class="font-bold text-slate-900 text-xs">Operacje Logistyczne i Obsługa Klienta</h4>
-                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Amazon (POZ1) | Sady k. Poznania</div>
+                                    <h4 class="font-bold text-slate-900 text-[11px]">Operacje Logistyczne i Obsługa Klienta</h4>
+                                    <div class="text-[10px] font-semibold text-slate-500 uppercase">Amazon (POZ1) | Sady k. Poznania</div>
                                 </div>
-                                <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">Maj 2026 – Sie 2026</span>
+                                <span class="text-[9px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">Maj 2026 – Sie 2026</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[10px] text-slate-600 space-y-0.5 text-justify">
                                 <li>Realizacja zadań w szybkim tempie pod presją ścisłych standardów operacyjnych.</li>
                                 <li>Współpraca w zespole, koordynacja zadań i dbałość o efektywność oraz porządek w miejscu pracy.</li>
                             </ul>
                         </div>
 
                         <!-- Item 2 -->
-                        <div class="relative pl-5 border-l-2 border-slate-200 mb-3.5">
+                        <div class="relative pl-4 border-l-2 border-slate-200 mb-3">
                             <div class="timeline-dot"></div>
-                            <div class="flex justify-between items-start mb-1">
+                            <div class="flex justify-between items-start mb-0.5">
                                 <div>
-                                    <h4 class="font-bold text-slate-900 text-xs">Menedżer Operacyjny / Obsługa B2B</h4>
-                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
+                                    <h4 class="font-bold text-slate-900 text-[11px]">Menedżer Operacyjny / Obsługa B2B</h4>
+                                    <div class="text-[10px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
                                 </div>
-                                <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">Kwi 2025 – Kwi 2026</span>
+                                <span class="text-[9px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">Kwi 2025 – Kwi 2026</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[10px] text-slate-600 space-y-0.5 text-justify">
                                 <li>Kompleksowa koordynacja zamówień, obsługa klientów oraz prowadzenie dokumentacji.</li>
                                 <li>Zarządzanie zasobami, rozwiązywanie bieżących problemów operacyjnych i optymalizacja procesów.</li>
                             </ul>
                         </div>
 
                         <!-- Item 3 -->
-                        <div class="relative pl-5 border-l-2 border-slate-200">
+                        <div class="relative pl-4 border-l-2 border-slate-200">
                             <div class="timeline-dot"></div>
-                            <div class="flex justify-between items-start mb-1">
+                            <div class="flex justify-between items-start mb-0.5">
                                 <div>
-                                    <h4 class="font-bold text-slate-900 text-xs">Obsługa Klienta i Standardy Sprzedażowe</h4>
-                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Zara | Poznań</div>
+                                    <h4 class="font-bold text-slate-900 text-[11px]">Obsługa Klienta i Standardy Sprzedażowe</h4>
+                                    <div class="text-[10px] font-semibold text-slate-500 uppercase">Zara | Poznań</div>
                                 </div>
-                                <span class="text-[10px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">2024</span>
+                                <span class="text-[9px] font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-100">2024</span>
                             </div>
-                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-0.5 text-justify">
+                            <ul class="list-disc list-outside ml-3 text-[10px] text-slate-600 space-y-0.5 text-justify">
                                 <li>Bezpośredni kontakt z klientem, doradztwo oraz dbałość o wysokie standardy estetyczne i obsługowe.</li>
                             </ul>
                         </div>
                     </div>
 
                     <!-- Education -->
-                    <div class="mb-3">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                    <div class="mb-2">
+                        <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5 flex items-center border-b pb-1">
                             <i class="fas fa-graduation-cap text-amber-500 mr-2"></i> Edukacja
                         </h3>
-                        <div class="grid grid-cols-2 gap-4 text-xs">
+                        <div class="grid grid-cols-2 gap-4 text-[11px]">
                             <div>
-                                <div class="font-bold text-slate-900 text-[11px]">Technik Informatyk</div>
-                                <div class="text-[10px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
+                                <div class="font-bold text-slate-900 text-[10px]">Technik Informatyk</div>
+                                <div class="text-[9px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
                             </div>
                             <div>
-                                <div class="font-bold text-slate-900 text-[11px]">Informatyka (niestacjonarne)</div>
-                                <div class="text-[10px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
+                                <div class="font-bold text-slate-900 text-[10px]">Informatyka (niestacjonarne)</div>
+                                <div class="text-[9px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
                             </div>
                         </div>
                     </div>
@@ -223,7 +222,7 @@
 
                 <!-- RODO Footer -->
                 <div class="pt-2 border-t border-slate-200">
-                    <p class="text-[5pt] text-slate-400 text-justify leading-tight">
+                    <p class="text-[5px] text-slate-400 text-justify leading-tight">
                         Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych oraz RODO.
                     </p>
                 </div>
@@ -234,8 +233,8 @@
     </main>
 
     <!-- Footer Controls (Web Only) -->
-    <footer class="no-print bg-slate-800 border-t border-slate-700 py-4 px-6 text-center text-xs text-slate-400">
-        <p>Wskazówka: Naciśnij <kbd class="bg-slate-700 px-2 py-1 rounded text-slate-200">Ctrl + P</kbd>, ustaw skalę na 100% (Default) i wyłącz nagłówki/stopki (Headers and footers), aby idealnie zmieścić CV na jednej stronie A4.</p>
+    <footer class="no-print bg-slate-800 border-t border-slate-700 py-3 px-6 text-center text-xs text-slate-400">
+        <p>Wskazówka: Naciśnij <kbd class="bg-slate-700 px-2 py-1 rounded text-slate-200">Ctrl + P</kbd>, ustaw skalу 100% и отключи колонтитулы (Headers/Footers).</p>
     </footer>
 
 </body>
