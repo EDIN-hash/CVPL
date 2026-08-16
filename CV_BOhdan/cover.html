@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio Cover - Bohdan Shvets</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-slate-950 flex items-center justify-center min-h-screen m-0">
+    <!-- 16:9 Preview Card -->
+    <div class="w-[1200px] h-[675px] bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 border border-slate-800 rounded-2xl shadow-2xl p-16 flex flex-col justify-between relative overflow-hidden">
+        
+        <!-- Glowing background effects -->
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl"></div>
+
+        <!-- Header -->
+        <div class="flex justify-between items-center relative z-10">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-violet-600 flex items-center justify-center text-white font-extrabold text-xl shadow-lg">
+                    B
+                </div>
+                <div>
+                    <h2 class="text-white font-bold text-lg tracking-wide">BOHDAN SHVETS</h2>
+                    <p class="text-slate-400 text-xs uppercase tracking-widest">Interactive CV Portfolio</p>
+                </div>
+            </div>
+            <div class="px-4 py-2 rounded-full bg-slate-800/80 border border-slate-700 text-xs text-sky-400 font-semibold tracking-wider">
+                POLAND, POZNAŃ
+            </div>
+        </div>
+
+        <!-- Center Content -->
+        <div class="relative z-10 my-auto">
+            <h1 class="text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+                IT Support <span class="text-slate-600">•</span> HR Ops <span class="text-slate-600">•</span> Office Management
+            </h1>
+            <p class="text-slate-300 text-xl max-w-3xl leading-relaxed">
+                Łączę administrację i procesy operacyjne z automatyzacją (AppSheet, Python, Excel & SQL).
+            </p>
+        </div>
+
+        <!-- Footer Tech Badges -->
+        <div class="flex justify-between items-center relative z-10 pt-6 border-t border-slate-800/80">
+            <div class="flex gap-3 text-xs font-semibold">
+                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-sky-400 border border-slate-700">AppSheet No-Code</span>
+                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-emerald-400 border border-slate-700">Windows Admin</span>
+                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-violet-400 border border-slate-700">Python & SQL</span>
+                <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-amber-400 border border-slate-700">Advanced Excel</span>
+            </div>
+            <span class="text-slate-500 text-xs font-mono">edin-hash.github.io/CVPL</span>
+        </div>
+    </div>
+</body>
+</html>

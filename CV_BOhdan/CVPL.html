@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bohdan Shvets - Professional CV Portfolio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* slate-900 */
+            color: #f8fafc;
+        }
+
+        /* A4 Strict Page Container */
+        .cv-page {
+            width: 210mm;
+            height: 297mm;
+            background: white;
+            color: #1e293b;
+            margin: 2rem auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            overflow: hidden;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: flex;
+        }
+
+        @media print {
+            body { background: white; }
+            .no-print { display: none !important; }
+            .cv-page { margin: 0; box-shadow: none; width: 100%; height: 297mm; page-break-after: always; }
+            .tab-content { display: flex !important; } /* При печати можно вывести все или активную */
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -5px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Top Navigation Hub (Web Only) -->
+    <header class="no-print bg-slate-800 border-b border-slate-700 py-4 px-6 sticky top-0 z-50 shadow-md">
+        <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                    <i class="fas fa-id-card text-sky-400"></i> Bohdan Shvets — Portfolio
+                </h1>
+                <p class="text-xs text-slate-400">Wybierz wersję stanowiska / Select target position:</p>
+            </div>
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button onclick="switchTab('hr')" id="btn-hr" class="px-4 py-2 text-xs font-semibold rounded-lg bg-sky-600 text-white transition hover:bg-sky-500 shadow">
+                    <i class="fas fa-users mr-1.5"></i> Junior HR Operations
+                </button>
+                <button onclick="switchTab('it')" id="btn-it" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-200 transition hover:bg-slate-600 shadow">
+                    <i class="fas fa-microchip mr-1.5"></i> IT Support Specialist
+                </button>
+                <button onclick="switchTab('office')" id="btn-office" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-200 transition hover:bg-slate-600 shadow">
+                    <i class="fas fa-building mr-1.5"></i> Office Manager
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow py-4">
+
+        <!-- ================= TAB 1: HR OPERATIONS ================= -->
+        <div id="tab-hr" class="tab-content active cv-page">
+            <!-- Left Sidebar -->
+            <div class="w-1/3 bg-slate-800 text-slate-100 p-8 flex flex-col justify-between h-full">
+                <div>
+                    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-slate-600 shadow-lg mb-6 bg-slate-700">
+                        <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-3 border-b border-slate-600 pb-2">Kontakt</h3>
+                        <ul class="text-xs space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone w-5 text-slate-400 text-center"></i> +48 783 035 162</li>
+                            <li class="flex items-center"><i class="fas fa-envelope w-5 text-slate-400 text-center"></i> shvetsbohdan2@gmail.com</li>
+                            <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-slate-400 text-center"></i> Poznań, Polska</li>
+                            <li class="flex items-center"><i class="fab fa-linkedin w-5 text-slate-400 text-center"></i> /in/bohdan-shvets</li>
+                        </ul>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-3 border-b border-slate-600 pb-2">Hard Skills</h3>
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                            <span class="bg-slate-700 px-2.5 py-1 rounded">Microsoft Excel (Pro)</span>
+                            <span class="bg-slate-700 px-2.5 py-1 rounded">AppSheet (No-code)</span>
+                            <span class="bg-slate-700 px-2.5 py-1 rounded">PostgreSQL</span>
+                            <span class="bg-slate-700 px-2.5 py-1 rounded">Python Scripts</span>
+                            <span class="bg-slate-700 px-2.5 py-1 rounded">Dokumentacja HR</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-sky-400 mb-3 border-b border-slate-600 pb-2">Języki</h3>
+                        <ul class="text-xs space-y-2">
+                            <li class="flex justify-between items-center"><span>Polski</span> <span class="text-sky-400 font-bold">C1/C2</span></li>
+                            <li class="flex justify-between items-center"><span>Angielski</span> <span class="text-sky-400 font-bold">B2</span></li>
+                            <li class="flex justify-between items-center"><span>Rosyjski</span> <span class="text-sky-400 font-bold">Native</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-[9pt] text-slate-400 text-center">Bohdan Shvets • HR CV</div>
+            </div>
+
+            <!-- Right Body -->
+            <div class="w-2/3 p-8 flex flex-col justify-between h-full bg-white">
+                <div>
+                    <div class="mb-6">
+                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan<br>Shvets</h1>
+                        <h2 class="text-sm font-bold text-sky-600 uppercase tracking-widest">Junior HR Operations / Admin</h2>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-user text-sky-500 mr-2"></i> Podsumowanie
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed text-justify">
+                            Młody i konkretny specjalista ds. operacji HR z mocnym zapleczem technicznym. Nie szukam pracy „w kadrach” dla klepania papierów, tylko dla optymalizacji procesów i eliminacji chaosu w danych. Łączę administrację z automatyzacją (Excel, AppSheet), dzięki czemu rutynowe zadania realizuję szybciej i bez błędów. Szybko się uczę, nie boję się odpowiedzialności i skutecznie dowożę wyniki.
+                        </p>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center border-b pb-1">
+                            <i class="fas fa-briefcase text-sky-500 mr-2"></i> Doświadczenie
+                        </h3>
+                        <div class="relative pl-5 border-l-2 border-slate-200 mb-4">
+                            <div class="timeline-dot bg-sky-600"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Specjalista ds. Administracji i Operacji</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100">Kwi 2025 – Kwi 2026</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li><strong>Zarządzanie dokumentacją:</strong> Obieg, archiwizacja i ewidencja 200+ dokumentów miesięcznie.</li>
+                                <li><strong>Automatyzacja procesów:</strong> Wdrożenie systemu w AppSheet, skrócenie czasu raportowania o 30%.</li>
+                                <li><strong>Analityka:</strong> Tworzenie cotygodniowych raportów operacyjnych w Excelu dla zarządu.</li>
+                            </ul>
+                        </div>
+                        <div class="relative pl-5 border-l-2 border-slate-200">
+                            <div class="timeline-dot bg-sky-600"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Freelancer / IT & Admin Support</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Projekty własne | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-sky-600 bg-sky-50 px-1.5 py-0.5 rounded border border-sky-100">Maj 2026 – Obecnie</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li>Optymalizacja procesów operacyjnych i wsparcie techniczne dla biznesu.</li>
+                                <li>Tworzenie autorskich skryptów (Python) automatyzujących pracę biurową.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-graduation-cap text-sky-500 mr-2"></i> Edukacja
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Technik Informatyk</div>
+                                <div class="text-[10px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Informatyka (niestacjonarne)</div>
+                                <div class="text-[10px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200">
+                    <p class="text-[5.5pt] text-slate-400 text-justify leading-tight">
+                        Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych oraz RODO).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 2: IT SUPPORT ================= -->
+        <div id="tab-it" class="tab-content cv-page">
+            <div class="w-1/3 bg-slate-900 text-slate-100 p-8 flex flex-col justify-between h-full">
+                <div>
+                    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-slate-700 shadow-lg mb-6 bg-slate-800">
+                        <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-3 border-b border-slate-700 pb-2">Kontakt</h3>
+                        <ul class="text-xs space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone w-5 text-slate-400 text-center"></i> +48 783 035 162</li>
+                            <li class="flex items-center"><i class="fas fa-envelope w-5 text-slate-400 text-center"></i> shvetsbohdan2@gmail.com</li>
+                            <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-slate-400 text-center"></i> Poznań, Polska</li>
+                            <li class="flex items-center"><i class="fab fa-linkedin w-5 text-slate-400 text-center"></i> /in/bohdan-shvets</li>
+                        </ul>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-3 border-b border-slate-700 pb-2">Tech Stack</h3>
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                            <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">Windows OS Admin</span>
+                            <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">HW/SW Troubleshooting</span>
+                            <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">Python & C#</span>
+                            <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">PostgreSQL / SQL</span>
+                            <span class="bg-slate-800 px-2.5 py-1 rounded border border-slate-700">AppSheet (No-Code)</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-3 border-b border-slate-700 pb-2">Języki</h3>
+                        <ul class="text-xs space-y-2">
+                            <li class="flex justify-between items-center"><span>Polski</span> <span class="text-emerald-400 font-bold">C1/C2</span></li>
+                            <li class="flex justify-between items-center"><span>Angielski (IT)</span> <span class="text-emerald-400 font-bold">B2</span></li>
+                            <li class="flex justify-between items-center"><span>Rosyjski</span> <span class="text-emerald-400 font-bold">Native</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-[9pt] text-slate-500 text-center">Bohdan Shvets • IT CV</div>
+            </div>
+
+            <div class="w-2/3 p-8 flex flex-col justify-between h-full bg-white">
+                <div>
+                    <div class="mb-6">
+                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan<br>Shvets</h1>
+                        <h2 class="text-sm font-bold text-emerald-600 uppercase tracking-widest">IT Support Specialist / Helpdesk</h2>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-microchip text-emerald-500 mr-2"></i> Profil Techniczny
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed text-justify">
+                            Zorientowany na rozwiązywanie problemów specjalista IT z silnym naciskiem na wsparcie użytkownika i automatyzację. Posiadam doświadczenie w diagnostyce sprzętu/oprogramowania, administracji środowiskiem Windows oraz wdrażaniu narzędzi biznesowych. Łączę klasyczne wsparcie helpdesk z wiedzą programistyczną (Python, SQL, AppSheet), aby trwale optymalizować infrastrukturę.
+                        </p>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center border-b pb-1">
+                            <i class="fas fa-terminal text-emerald-500 mr-2"></i> Doświadczenie IT
+                        </h3>
+                        <div class="relative pl-5 border-l-2 border-slate-200 mb-4">
+                            <div class="timeline-dot bg-emerald-500"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Freelancer / IT & Admin Support</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Projekty własne | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">Maj 2026 – Obecnie</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li><strong>Wsparcie Techniczne:</strong> Diagnostyka, naprawa oraz optymalizacja wydajności sprzętu i oprogramowania.</li>
+                                <li><strong>Administracja OS:</strong> Zarządzanie środowiskiem Windows, troubleshooting i integracja pluginów.</li>
+                                <li><strong>Skryptowanie:</strong> Tworzenie skryptów narzędziowych w Pythonie automatyzujących procesy systemowe.</li>
+                            </ul>
+                        </div>
+                        <div class="relative pl-5 border-l-2 border-slate-200">
+                            <div class="timeline-dot bg-emerald-500"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Specjalista ds. Administracji i IT</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-100">Kwi 2025 – Kwi 2026</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li><strong>Wdrożenia No-Code:</strong> Wdrożenie aplikacji w AppSheet automatyzującej procesy ewidencji.</li>
+                                <li><strong>Zarządzanie Danymi:</strong> Obsługa baz operacyjnych oraz integracje raportowe w Power Query / Excel.</li>
+                                <li><strong>Endpoint Support:</strong> Rozwiązywanie codziennych problemów technicznych zespołu (L1/L2).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-graduation-cap text-emerald-500 mr-2"></i> Edukacja
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Technik Informatyk (Profil IT)</div>
+                                <div class="text-[10px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Informatyka (niestacjonarne)</div>
+                                <div class="text-[10px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200">
+                    <p class="text-[5.5pt] text-slate-400 text-justify leading-tight">
+                        Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z RODO.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= TAB 3: OFFICE OPERATIONS ================= -->
+        <div id="tab-office" class="tab-content cv-page">
+            <div class="w-1/3 text-slate-100 p-8 flex flex-col justify-between h-full" style="background-color: #2e1065;">
+                <div>
+                    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-violet-800 shadow-lg mb-6 bg-violet-900">
+                        <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Kontakt</h3>
+                        <ul class="text-xs space-y-3">
+                            <li class="flex items-center"><i class="fas fa-phone w-5 text-violet-400 text-center"></i> +48 783 035 162</li>
+                            <li class="flex items-center"><i class="fas fa-envelope w-5 text-violet-400 text-center"></i> shvetsbohdan2@gmail.com</li>
+                            <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-violet-400 text-center"></i> Poznań, Polska</li>
+                            <li class="flex items-center"><i class="fab fa-linkedin w-5 text-violet-400 text-center"></i> /in/bohdan-shvets</li>
+                        </ul>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Kompetencje</h3>
+                        <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Office Management</span>
+                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">B2B Communication</span>
+                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Advanced Excel</span>
+                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Process Automation</span>
+                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Cost Optimization</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Języki</h3>
+                        <ul class="text-xs space-y-2">
+                            <li class="flex justify-between items-center"><span>Polski</span> <span class="text-violet-300 font-bold">C1/C2</span></li>
+                            <li class="flex justify-between items-center"><span>Angielski</span> <span class="text-violet-300 font-bold">B2</span></li>
+                            <li class="flex justify-between items-center"><span>Rosyjski</span> <span class="text-violet-300 font-bold">Native</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-[9pt] text-violet-300 text-center">Bohdan Shvets • Office CV</div>
+            </div>
+
+            <div class="w-2/3 p-8 flex flex-col justify-between h-full bg-white">
+                <div>
+                    <div class="mb-6">
+                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan<br>Shvets</h1>
+                        <h2 class="text-sm font-bold text-violet-600 uppercase tracking-widest">Office Manager / Operations Spec.</h2>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-building text-violet-500 mr-2"></i> Podsumowanie
+                        </h3>
+                        <p class="text-xs text-slate-600 leading-relaxed text-justify">
+                            Proaktywny specjalista ds. administracji, łączący klasyczne zarządzanie biurem z umiejętnościami automatyzacji procesów (Excel, AppSheet). Posiadam doświadczenie w obsłudze dokumentacji B2B, wielokanałowej komunikacji oraz pełnej organizacji pracy biura. W poprzedniej firmie przejąłem zarządzanie operacjami po miesiącu wdrożenia. Gwarantuję sprawny obieg informacji oraz zwinne wdrażanie rozwiązań IT optymalizujących koszty i czas pracy.
+                        </p>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center border-b pb-1">
+                            <i class="fas fa-chart-line text-violet-500 mr-2"></i> Doświadczenie
+                        </h3>
+                        <div class="relative pl-5 border-l-2 border-slate-200 mb-4">
+                            <div class="timeline-dot" style="background-color: #8b5cf6;"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Specjalista ds. Administracji i Obsługi B2B</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-violet-700 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">Kwi 2025 – Kwi 2026</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li><strong>Zarządzanie Obiegiem:</strong> Ewidencja ok. 200 dokumentów miesięcznie dla partnerów B2B.</li>
+                                <li><strong>Komunikacja:</strong> Wielokanałowa obsługa klienta oraz wsparcie organizacyjne spotkań.</li>
+                                <li><strong>Wdrożenia IT:</strong> Zaprojektowanie aplikacji w AppSheet eliminującej błędy magazynowe.</li>
+                                <li><strong>Raportowanie:</strong> Generowanie zaawansowanych raportów biznesowych w MS Excel.</li>
+                            </ul>
+                        </div>
+                        <div class="relative pl-5 border-l-2 border-slate-200">
+                            <div class="timeline-dot" style="background-color: #8b5cf6;"></div>
+                            <div class="flex justify-between items-start mb-1">
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-xs">Freelancer / Admin Support</h4>
+                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Projekty własne | Poznań</div>
+                                </div>
+                                <span class="text-[10px] font-bold text-violet-700 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">Maj 2026 – Obecnie</span>
+                            </div>
+                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
+                                <li>Wsparcie operacyjne i administracyjne dla klientów B2B/B2C.</li>
+                                <li>Wdrażanie autorskich skryptów redukujących powtarzalne operacje biurowe.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
+                            <i class="fas fa-graduation-cap text-violet-500 mr-2"></i> Edukacja
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Technik Informatyk</div>
+                                <div class="text-[10px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
+                            </div>
+                            <div>
+                                <div class="font-bold text-slate-900 text-[11px]">Informatyka (niestacjonarne)</div>
+                                <div class="text-[10px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200">
+                    <p class="text-[5.5pt] text-slate-400 text-justify leading-tight">
+                        Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z RODO.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Controls (Web Only) -->
+    <footer class="no-print bg-slate-800 border-t border-slate-700 py-4 px-6 text-center text-xs text-slate-400">
+        <p>Wskazówka: Naciśnij <kbd class="bg-slate-700 px-2 py-1 rounded text-slate-200">Ctrl + P</kbd>, aby zapisać wybraną wersję do pliku PDF.</p>
+    </footer>
+
+    <!-- Tab Switcher Script -->
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            // Reset buttons style
+            ['hr', 'it', 'office'].forEach(name => {
+                const btn = document.getElementById('btn-' + name);
+                btn.className = "px-4 py-2 text-xs font-semibold rounded-lg bg-slate-700 text-slate-200 transition hover:bg-slate-600 shadow";
+            });
+
+            // Show selected tab
+            document.getElementById('tab-' + tabName).classList.add('active');
+            
+            // Highlight active button
+            const activeBtn = document.getElementById('btn-' + tabName);
+            activeBtn.className = "px-4 py-2 text-xs font-semibold rounded-lg text-white transition shadow " + 
+                (tabName === 'hr' ? 'bg-sky-600 hover:bg-sky-500' : tabName === 'it' ? 'bg-emerald-600 hover:bg-emerald-500' : 'bg-violet-600 hover:bg-violet-500');
+        }
+    </script>
+</body>
+</html>
