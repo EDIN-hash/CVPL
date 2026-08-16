@@ -8,69 +8,108 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-left: #0f172a;
+            --bg-right: #fafafa;
+        }
+
         body { 
             background: #e5e7eb; 
             font-family: 'Montserrat', sans-serif; 
             -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
         }
+
         .cv-container { 
             width: 210mm; 
             height: 297mm; 
-            background: #fff; 
+            background: var(--bg-right); 
             margin: 2rem auto; 
             box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); 
             display: flex; 
             overflow: hidden; 
             box-sizing: border-box;
         }
+
         .left-col { 
-            width: 34%; 
-            background: #0f172a; 
+            width: 35%; 
+            background: var(--bg-left); 
             color: #f8fafc; 
-            padding: 45px 30px; 
+            padding: 35px 25px; 
         }
+
         .right-col { 
-            width: 66%; 
-            padding: 45px 40px; 
-            background: #fafafa; 
+            width: 65%; 
+            padding: 35px 35px; 
+            background: var(--bg-right); 
         }
+
         .section-title { 
             font-family: 'Playfair Display', serif; 
-            font-size: 1.15rem; 
+            font-size: 1.1rem; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             border-bottom: 1px solid #d1d5db; 
-            padding-bottom: 6px; 
-            margin-bottom: 18px; 
+            padding-bottom: 4px; 
+            margin-bottom: 14px; 
             color: #0f172a; 
             font-weight: 700;
         }
+
         .left-col .section-title { 
             color: #f1f5f9; 
             border-color: #334155; 
         }
+
         .skill-tag {
             border: 1px solid #475569;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 500;
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
         }
+
         .bullet-point {
             position: relative;
-            padding-left: 14px;
+            padding-left: 12px;
         }
+
         .bullet-point::before {
             content: '▹';
             position: absolute;
             left: 0;
             color: #64748b;
         }
+
+        /* ----------------------------------------------------
+           ЖЕСТКИЕ ПРАВИЛА ДЛЯ ПЕЧАТИ (A4)
+        ---------------------------------------------------- */
+        @page {
+            size: A4;
+            margin: 0 !important; /* Убиваем отступы принтера */
+        }
+
         @media print { 
-            body { background: #fff; } 
-            .cv-container { margin: 0; box-shadow: none; width: 100%; height: 297mm; page-break-after: always; } 
+            html, body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #fff !important;
+                -webkit-print-color-adjust: exact !important; /* Форсируем печать фоновых цветов */
+                print-color-adjust: exact !important;
+            }
+            .cv-container { 
+                margin: 0 !important; 
+                box-shadow: none !important; 
+                width: 210mm !important; 
+                height: 297mm !important; 
+                page-break-after: avoid; 
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -79,22 +118,22 @@
         <!-- ЛЕВАЯ КОЛОНКА -->
         <div class="left-col flex flex-col justify-between">
             <div>
-                <div class="w-44 h-44 mx-auto rounded-full overflow-hidden border-2 border-slate-400 mb-10 shadow-xl grayscale contrast-125 bg-slate-800">
+                <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-slate-400 mb-8 shadow-xl grayscale contrast-125 bg-slate-800">
                     <img src="photo_vika.jpg" alt="Viktoriia Borysenko" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/200'">
                 </div>
                 
-                <div class="mb-10">
+                <div class="mb-8">
                     <h2 class="section-title">Kontakt</h2>
-                    <ul class="text-[0.8rem] space-y-4 font-light tracking-wide">
-                        <li class="flex items-center"><i class="fas fa-phone w-7 text-slate-400 text-lg"></i> +48 696 391 501</li>
-                        <li class="flex items-center"><i class="fas fa-envelope w-7 text-slate-400 text-lg"></i> vikaborysenko29@gmail.com</li>
-                        <li class="flex items-center"><i class="fas fa-map-marker-alt w-7 text-slate-400 text-lg"></i> Poznań, Polska</li>
+                    <ul class="text-[0.75rem] space-y-3 font-light tracking-wide">
+                        <li class="flex items-center"><i class="fas fa-phone w-7 text-slate-400 text-base"></i> +48 696 391 501</li>
+                        <li class="flex items-center"><i class="fas fa-envelope w-7 text-slate-400 text-base"></i> vikaborysenko29@gmail.com</li>
+                        <li class="flex items-center"><i class="fas fa-map-marker-alt w-7 text-slate-400 text-base"></i> Poznań, Polska</li>
                     </ul>
                 </div>
 
-                <div class="mb-10">
+                <div class="mb-8">
                     <h2 class="section-title">Kompetencje</h2>
-                    <div class="flex flex-wrap gap-2">
+                    <div class="flex flex-wrap gap-1.5">
                         <span class="skill-tag">Quality Control</span>
                         <span class="skill-tag">Inventory Auditing</span>
                         <span class="skill-tag">SLA Compliance</span>
@@ -106,7 +145,7 @@
 
                 <div>
                     <h2 class="section-title">Języki</h2>
-                    <ul class="text-[0.8rem] space-y-3 font-light tracking-wide">
+                    <ul class="text-[0.75rem] space-y-2.5 font-light tracking-wide">
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Ukraiński</span> <span class="font-semibold text-white">Native</span></li>
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Rosyjski</span> <span class="font-semibold text-white">Biegły</span></li>
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Polski</span> <span class="font-semibold text-white">B2</span></li>
@@ -119,11 +158,11 @@
         <!-- ПРАВАЯ КОЛОНКА -->
         <div class="right-col flex flex-col justify-between">
             <div>
-                <header class="mb-8">
-                    <h1 class="text-4xl font-light text-slate-900 uppercase mb-2 leading-none" style="font-family: 'Playfair Display', serif;">
+                <header class="mb-6">
+                    <h1 class="text-4xl font-light text-slate-900 uppercase mb-1.5 leading-none" style="font-family: 'Playfair Display', serif;">
                         Viktoriia<br><span class="font-bold">Borysenko</span>
                     </h1>
-                    <h2 class="text-xs tracking-[0.25em] text-slate-500 uppercase font-bold mt-3">Operations & Quality Control Specialist</h2>
+                    <h2 class="text-[0.7rem] tracking-[0.25em] text-slate-500 uppercase font-bold mt-2">Operations & Quality Control Specialist</h2>
                 </header>
 
                 <div class="mb-6">
@@ -133,17 +172,17 @@
                     </p>
                 </div>
 
-                <div class="mb-6">
+                <div class="mb-5">
                     <h2 class="section-title">Doświadczenie</h2>
                     
                     <!-- Amazon -->
                     <div class="mb-4">
                         <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Fulfillment Associate</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Fulfillment Associate</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">CZE 2026 – SIE 2026</span>
                         </div>
-                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-2 uppercase tracking-wide">Amazon | Poznań</div>
-                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Amazon | Poznań</div>
+                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
                             <li class="bullet-point">Kompletacja i procesowanie zamówień z zachowaniem najwyższych wskaźników wydajnościowych (SLA).</li>
                             <li class="bullet-point">Utrzymanie standardów bezpieczeństwa (BHP) na zautomatyzowanym stanowisku pracy.</li>
                         </ul>
@@ -152,11 +191,11 @@
                     <!-- H&M -->
                     <div class="mb-4">
                         <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Customer Experience Specialist</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Customer Experience Specialist</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2025 – 2026</span>
                         </div>
-                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-2 uppercase tracking-wide">H&M | Poznań</div>
-                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">H&M | Poznań</div>
+                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
                             <li class="bullet-point">Profesjonalna obsługa klienta oraz realizacja celów sprzedażowych salonu.</li>
                             <li class="bullet-point">Zarządzanie ekspozycją towaru (Visual Merchandising) i dbałość o estetykę przestrzeni handlowej.</li>
                         </ul>
@@ -165,11 +204,11 @@
                     <!-- Inwent.AG -->
                     <div class="mb-4">
                         <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Inventory Auditor</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Inventory Auditor</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2025</span>
                         </div>
-                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-2 uppercase tracking-wide">Inwent.AG</div>
-                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Inwent.AG</div>
+                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
                             <li class="bullet-point">Wykonywanie skrupulatnych inwentaryzacji w obiektach handlowych przy użyciu terminali mobilnych.</li>
                             <li class="bullet-point">Raportowanie rozbieżności i weryfikacja poprawności stanów magazynowych.</li>
                         </ul>
@@ -178,11 +217,11 @@
                     <!-- Colian Logistic -->
                     <div class="mb-2">
                         <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Quality & Packaging Specialist</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Quality & Packaging Specialist</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2024 – 2025</span>
                         </div>
-                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-2 uppercase tracking-wide">Colian Logistic</div>
-                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Colian Logistic</div>
+                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
                             <li class="bullet-point">Rygorystyczna kontrola jakości asortymentu przed wysyłką do klienta końcowego.</li>
                             <li class="bullet-point">Nadzór nad procesem pakowania zgodnie ze specyfikacją techniczną.</li>
                         </ul>
@@ -193,24 +232,24 @@
                     <h2 class="section-title">Edukacja</h2>
                     <div class="mb-2">
                         <div class="flex justify-between items-baseline">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Mediaworking</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Mediaworking</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2021 – 2024</span>
                         </div>
-                        <div class="text-[0.75rem] font-medium text-slate-600 mt-0.5">Collegium Da Vinci</div>
+                        <div class="text-[0.7rem] font-medium text-slate-600 mt-0.5">Collegium Da Vinci</div>
                     </div>
                     <div>
                         <div class="flex justify-between items-baseline">
-                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Technik Reklamy</h3>
+                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Technik Reklamy</h3>
                             <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2017 – 2021</span>
                         </div>
-                        <div class="text-[0.75rem] font-medium text-slate-600 mt-0.5">Technikum Zawodowe</div>
+                        <div class="text-[0.7rem] font-medium text-slate-600 mt-0.5">Technikum Zawodowe</div>
                     </div>
                 </div>
             </div>
             
-            <div class="pt-4 border-t border-slate-300 mt-2">
-                <p class="text-[5.5pt] text-slate-400 text-justify leading-tight font-medium">
-                    Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z RODO.
+            <div class="pt-3 border-t border-slate-300 mt-2">
+                <p class="text-[5pt] text-slate-400 text-justify leading-tight font-medium">
+                    Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych (Dz. U. z 2018, poz. 1000) oraz zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (RODO).
                 </p>
             </div>
         </div>
