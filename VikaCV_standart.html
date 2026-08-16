@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viktoriia Borysenko - Premium CV</title>
+    <title>Viktoriia Borysenko - Professional CV</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             padding: 0;
         }
 
-        .cv-container { 
+        .cv-page { 
             width: 210mm; 
             height: 297mm; 
             background: #fafafa; 
@@ -25,29 +25,30 @@
             display: flex; 
             overflow: hidden; 
             box-sizing: border-box;
+            page-break-after: always;
         }
 
         .left-col { 
             width: 35%; 
             background: #0f172a !important; 
             color: #f8fafc; 
-            padding: 35px 25px; 
+            padding: 40px 25px; 
         }
 
         .right-col { 
             width: 65%; 
-            padding: 35px 35px; 
+            padding: 40px 35px; 
             background: #fafafa !important; 
         }
 
         .section-title { 
             font-family: 'Playfair Display', serif; 
-            font-size: 1.1rem; 
+            font-size: 1.15rem; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             border-bottom: 1px solid #d1d5db; 
-            padding-bottom: 4px; 
-            margin-bottom: 14px; 
+            padding-bottom: 6px; 
+            margin-bottom: 16px; 
             color: #0f172a; 
             font-weight: 700;
         }
@@ -59,16 +60,17 @@
 
         .skill-tag {
             border: 1px solid #475569;
-            padding: 3px 10px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
             font-weight: 500;
             letter-spacing: 0.5px;
+            background: #1e293b;
         }
 
         .bullet-point {
             position: relative;
-            padding-left: 12px;
+            padding-left: 14px;
         }
 
         .bullet-point::before {
@@ -86,36 +88,36 @@
         @media print { 
             html, body {
                 width: 210mm;
-                height: 297mm;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: #fff !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            .cv-container { 
+            .cv-page { 
                 margin: 0 !important; 
                 box-shadow: none !important; 
                 width: 210mm !important; 
                 height: 297mm !important; 
-                page-break-after: avoid; 
-                page-break-inside: avoid;
+                page-break-after: always; 
             }
         }
     </style>
 </head>
 <body>
-    <div class="cv-container">
-        <!-- ЛЕВАЯ КОЛОНКА -->
+
+    <!-- СТРАНИЦА 1: Основные данные, профиль и опыт работы -->
+    <div class="cv-page">
+        <!-- ЛЕВАЯ КОЛОНКА (Стр. 1) -->
         <div class="left-col flex flex-col justify-between">
             <div>
-                <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-slate-400 mb-8 shadow-xl contrast-125 bg-slate-800">
+                <div class="w-40 h-40 mx-auto rounded-full overflow-hidden border-2 border-slate-400 mb-8 shadow-xl bg-slate-800">
                     <img src="vika.jpg" alt="Viktoriia Borysenko" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/200'">
                 </div>
                 
                 <div class="mb-8">
                     <h2 class="section-title">Kontakt</h2>
-                    <ul class="text-[0.75rem] space-y-3 font-light tracking-wide">
+                    <ul class="text-[0.8rem] space-y-3 font-light tracking-wide">
                         <li class="flex items-center"><i class="fas fa-phone w-7 text-slate-400 text-base"></i> +48 696 391 501</li>
                         <li class="flex items-center"><i class="fas fa-envelope w-7 text-slate-400 text-base"></i> vikaborysenko29@gmail.com</li>
                         <li class="flex items-center"><i class="fas fa-map-marker-alt w-7 text-slate-400 text-base"></i> Poznań, Polska</li>
@@ -123,20 +125,8 @@
                 </div>
 
                 <div class="mb-8">
-                    <h2 class="section-title">Kompetencje</h2>
-                    <div class="flex flex-wrap gap-1.5">
-                        <span class="skill-tag">Quality Control</span>
-                        <span class="skill-tag">Inventory Auditing</span>
-                        <span class="skill-tag">SLA Compliance</span>
-                        <span class="skill-tag">Visual Merchandising</span>
-                        <span class="skill-tag">Customer Experience</span>
-                        <span class="skill-tag">Team Coordination</span>
-                    </div>
-                </div>
-
-                <div>
                     <h2 class="section-title">Języki</h2>
-                    <ul class="text-[0.75rem] space-y-2.5 font-light tracking-wide">
+                    <ul class="text-[0.8rem] space-y-3 font-light tracking-wide">
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Ukraiński</span> <span class="font-semibold text-white">Native</span></li>
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Rosyjski</span> <span class="font-semibold text-white">Native</span></li>
                         <li class="flex justify-between border-b border-slate-700 pb-1"><span>Polski</span> <span class="font-semibold text-white">B2</span></li>
@@ -144,102 +134,172 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="text-[9px] text-slate-400 text-center uppercase tracking-widest">
+                Strona 1 / 2
+            </div>
         </div>
 
-        <!-- ПРАВАЯ КОЛОНКА -->
+        <!-- ПРАВАЯ КОЛОНКА (Стр. 1) -->
         <div class="right-col flex flex-col justify-between">
             <div>
                 <header class="mb-6">
                     <h1 class="text-4xl font-light text-slate-900 uppercase mb-1.5 leading-none" style="font-family: 'Playfair Display', serif;">
                         Viktoriia<br><span class="font-bold">Borysenko</span>
                     </h1>
-                    <h2 class="text-[0.7rem] tracking-[0.25em] text-slate-500 uppercase font-bold mt-2">Operations & Quality Control Specialist</h2>
+                    <h2 class="text-[0.75rem] tracking-[0.25em] text-slate-500 uppercase font-bold mt-2">Operations & Multimedia Specialist</h2>
                 </header>
 
                 <div class="mb-6">
-                    <h2 class="section-title">Profil</h2>
-                    <p class="text-[0.75rem] leading-relaxed text-slate-600 text-justify font-medium">
-                        Zorganizowana i zorientowana na detale specjalistka z udokumentowanym doświadczeniem w obsłudze procesów logistycznych oraz wsparciu operacyjnym w branży retail. Skutecznie realizuje zadania w dynamicznym środowisku pracy, dbając o rygorystyczne standardy jakości, audyt stanów magazynowych oraz płynność operacji. Wyróżnia się odpornością na stres i szybką adaptacją do nowych procedur.
+                    <h2 class="section-title">Profil zawodowy</h2>
+                    <p class="text-[0.8rem] leading-relaxed text-slate-600 text-justify font-medium">
+                        Zorganizowana specjalistka z praktycznym doświadczeniem w logistyce, obsłudze procesów operacyjnych oraz tworzeniu materiałów multimedialnych. Łączy solidne zaplecze administracyjno-magazynowe z umiejętnością obsługi pakietów biurowych, arkuszy kalkulacyjnych oraz narzędzi graficznych (Adobe, Google Workspace). Skupiona na dokładności, przestrzeganiu procedur i efektywnej realizacji zadań.
                     </p>
                 </div>
 
-                <div class="mb-5">
-                    <h2 class="section-title">Doświadczenie</h2>
-                    
-                    <div class="mb-4">
-                        <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Fulfillment Associate</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">CZE 2026 – SIE 2026</span>
-                        </div>
-                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Amazon | Poznań</div>
-                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
-                            <li class="bullet-point">Kompletacja i procesowanie zamówień z zachowaniem najwyższych wskaźników wydajnościowych (SLA).</li>
-                            <li class="bullet-point">Utrzymanie standardów bezpieczeństwa (BHP) na zautomatyzowanym stanowisku pracy.</li>
-                        </ul>
-                    </div>
-
-                    <div class="mb-4">
-                        <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Customer Experience Specialist</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2025 – 2026</span>
-                        </div>
-                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">H&M | Poznań</div>
-                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
-                            <li class="bullet-point">Profesjonalna obsługa klienta oraz realizacja celów sprzedażowych salonu.</li>
-                            <li class="bullet-point">Zarządzanie ekspozycją towaru (Visual Merchandising) i dbałość o estetykę przestrzeni handlowej.</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="mb-4">
-                        <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Inventory Auditor</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2025</span>
-                        </div>
-                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Inwent.AG</div>
-                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
-                            <li class="bullet-point">Wykonywanie skrupulatnych inwentaryzacji w obiektach handlowych przy użyciu terminali mobilnych.</li>
-                            <li class="bullet-point">Raportowanie rozbieżności i weryfikacja poprawności stanów magazynowych.</li>
-                        </ul>
-                    </div>
-
-                    <div class="mb-2">
-                        <div class="flex justify-between items-baseline mb-0.5">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Quality & Packaging Specialist</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2024 – 2025</span>
-                        </div>
-                        <div class="text-[0.65rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Colian Logistic</div>
-                        <ul class="list-none text-[0.7rem] text-slate-600 space-y-1 font-medium text-justify">
-                            <li class="bullet-point">Rygorystyczna kontrola jakości asortymentu przed wysyłką do klienta końcowego.</li>
-                            <li class="bullet-point">Nadzór nad procesem pakowania zgodnie ze specyfikacją techniczną.</li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div>
-                    <h2 class="section-title">Edukacja</h2>
-                    <div class="mb-2">
-                        <div class="flex justify-between items-baseline">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Mediaworking</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2021 – 2024</span>
+                    <h2 class="section-title">Doświadczenie zawodowe</h2>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Fulfillment Associate</h3>
+                            <span class="text-[0.7rem] font-bold text-slate-500 tracking-widest">CZE 2026 – SIE 2026</span>
                         </div>
-                        <div class="text-[0.7rem] font-medium text-slate-600 mt-0.5">Collegium Da Vinci</div>
+                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Amazon | Poznań</div>
+                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                            <li class="bullet-point">Realizacja procesów logistycznych i zamówień w rygorystycznym reżimie czasowym (SLA).</li>
+                            <li class="bullet-point">Ewidencja danych operacyjnych w systemach wewnętrznych z zachowaniem norm jakościowych.</li>
+                        </ul>
                     </div>
-                    <div>
-                        <div class="flex justify-between items-baseline">
-                            <h3 class="font-bold text-slate-900 text-[0.8rem]">Technik Reklamy</h3>
-                            <span class="text-[0.65rem] font-bold text-slate-500 tracking-widest">2017 – 2021</span>
+
+                    <div class="mb-4">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Customer Experience Specialist</h3>
+                            <span class="text-[0.7rem] font-bold text-slate-500 tracking-widest">2025 – 2026</span>
                         </div>
-                        <div class="text-[0.7rem] font-medium text-slate-600 mt-0.5">Technikum Zawodowe</div>
+                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">H&M | Poznań</div>
+                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                            <li class="bullet-point">Obsługa klienta, doradztwo oraz dbałość o standardy wizualne ekspozycji towaru (Visual Merchandising).</li>
+                            <li class="bullet-point">Koordynacja stanów magazynowych na sali sprzedaży i praca z dokumentacją obrotu towarowego.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Inventory Auditor</h3>
+                            <span class="text-[0.7rem] font-bold text-slate-500 tracking-widest">2025</span>
+                        </div>
+                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Inwent.AG</div>
+                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                            <li class="bullet-point">Przeprowadzanie precyzyjnych inwentaryzacji za pomocą terminali danych.</li>
+                            <li class="bullet-point">Analiza rozbieżności ilościowych i raportowanie wyników w arkuszach Excel.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
             
-            <div class="pt-3 border-t border-slate-300 mt-2">
-                <p class="text-[5pt] text-slate-400 text-justify leading-tight font-medium">
-                    Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych (Dz. U. z 2018, poz. 1000) oraz zgodnie z Rozporządzeniem Parlamentu Europejskiego i Rady (UE) 2016/679 z dnia 27 kwietnia 2016 r. w sprawie ochrony osób fizycznych w związku z przetwarzaniem danych osobowych i w sprawie swobodnego przepływu takich danych oraz uchylenia dyrektywy 95/46/WE (RODO).
+            <div class="pt-3 border-t border-slate-300">
+                <p class="text-[5.5pt] text-slate-400 text-center">Dokument rekrutacyjny – Strona 1</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- СТРАНИЦА 2: Технические навыки, инструменты, образование -->
+    <div class="cv-page">
+        <!-- ЛЕВАЯ КОЛОНКА (Стр. 2) -->
+        <div class="left-col flex flex-col justify-between">
+            <div>
+                <div class="mb-10 pt-4">
+                    <h2 class="section-title">Edukacja</h2>
+                    <div class="mb-6">
+                        <div class="text-[0.85rem] font-bold text-white">Mediaworking</div>
+                        <div class="text-[0.75rem] text-slate-300">Collegium Da Vinci</div>
+                        <div class="text-[0.65rem] text-slate-400 mt-1">2021 – 2024</div>
+                    </div>
+                    <div>
+                        <div class="text-[0.85rem] font-bold text-white">Technik Reklamy</div>
+                        <div class="text-[0.75rem] text-slate-300">Technikum Zawodowe</div>
+                        <div class="text-[0.65rem] text-slate-400 mt-1">2017 – 2021</div>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h2 class="section-title">Kompetencje</h2>
+                    <ul class="text-[0.75rem] space-y-2.5 text-slate-300">
+                        <li class="bullet-point">Zarządzanie dokumentacją i ewidencja danych</li>
+                        <li class="bullet-point">Kontrola jakości i zgodności ze standardami</li>
+                        <li class="bullet-point">Wizualna prezentacja treści i danych</li>
+                        <li class="bullet-point">Praca z systemami i terminalami magazynowymi</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-[9px] text-slate-400 text-center uppercase tracking-widest">
+                Strona 2 / 2
+            </div>
+        </div>
+
+        <!-- ПРАВАЯ КОЛОНКА (Стр. 2) -->
+        <div class="right-col flex flex-col justify-between">
+            <div>
+                <!-- Продолжение опыта -->
+                <div class="mb-6 pt-2">
+                    <h2 class="section-title">Doświadczenie (c.d.)</h2>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-baseline mb-0.5">
+                            <h3 class="font-bold text-slate-900 text-[0.85rem]">Quality & Packaging Specialist</h3>
+                            <span class="text-[0.7rem] font-bold text-slate-500 tracking-widest">2024 – 2025</span>
+                        </div>
+                        <div class="text-[0.7rem] font-semibold text-slate-400 mb-1.5 uppercase tracking-wide">Colian Logistic</div>
+                        <ul class="list-none text-[0.75rem] text-slate-600 space-y-1 font-medium text-justify">
+                            <li class="bullet-point">Kontrola jakości i kompletności towarów zgodnie ze specyfikacją logistyczną.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Технические навыки и софт -->
+                <div class="mb-6">
+                    <h2 class="section-title">Umiejętności techniczne & IT</h2>
+                    <div class="grid grid-cols-2 gap-3 text-[0.75rem]">
+                        <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-0.5"><i class="fas fa-file-excel text-emerald-600 mr-1.5"></i> Microsoft Excel</div>
+                            <div class="text-[0.65rem] text-slate-500">Poziom: Średni – Wysoki<br>(Tabele, formuły, zestawienia danych)</div>
+                        </div>
+                        <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-0.5"><i class="fas fa-cloud text-blue-600 mr-1.5"></i> Google Workspace</div>
+                            <div class="text-[0.65rem] text-slate-500">Poziom: Średni – Wysoki<br>(Dokumenty, Prezentacje, Arkusze)</div>
+                        </div>
+                        <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-0.5"><i class="fas fa-paint-brush text-cyan-600 mr-1.5"></i> Adobe Photoshop</div>
+                            <div class="text-[0.65rem] text-slate-500">Poziom: Średni<br>(Edycja grafik, retusz, materiały)</div>
+                        </div>
+                        <div class="bg-slate-100 p-2.5 rounded border border-slate-200">
+                            <div class="font-bold text-slate-900 mb-0.5"><i class="fas fa-video text-purple-600 mr-1.5"></i> After Effects & VFX</div>
+                            <div class="text-[0.65rem] text-slate-500">Poziom: Średni – Średni+<br>(Efekty wizualne, podstawy animacji)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Навыки / Сферы применения -->
+                <div class="mb-4">
+                    <h2 class="section-title">Obszary kompetencji</h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag text-slate-200">Google Docs / Sheets / Slides</span>
+                        <span class="skill-tag text-slate-200">Tworzenie prezentacji</span>
+                        <span class="skill-tag text-slate-200">Obsługa terminali PDA</span>
+                        <span class="skill-tag text-slate-200">Kontrola Jakości (QC)</span>
+                        <span class="skill-tag text-slate-200">Multimedia & Grafika</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-3 border-t border-slate-300">
+                <p class="text-[5.5pt] text-slate-400 text-justify leading-tight font-medium">
+                    Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych oraz Rozporządzeniem RODO).
                 </p>
             </div>
         </div>
     </div>
+
 </body>
 </html>
