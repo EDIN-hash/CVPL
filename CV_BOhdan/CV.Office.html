@@ -3,186 +3,371 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bohdan Shvets - Office Manager CV</title>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>Bohdan Shvets - CV - Pomarańcza Sp. z o.o.</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- FontAwesome Icons -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                    },
+                    colors: {
+                        accent: '#FF5A1F', // Orange accent for Pomarańcza Sp. z o.o.
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* slate-900 */
-            color: #f8fafc;
-        }
-
-        /* A4 Strict Page Container */
-        .cv-page {
-            width: 210mm;
-            height: 297mm;
-            background: white;
-            color: #1e293b;
-            margin: 2rem auto;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            display: flex;
-            overflow: hidden;
-            box-sizing: border-box;
-            position: relative;
-        }
-
+        /* Print optimizations for A4 PDF export */
         @media print {
-            body { background: white; }
-            .no-print { display: none !important; }
-            .cv-page { margin: 0; box-shadow: none; width: 100%; height: 297mm; page-break-after: always; }
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                margin: 0;
+                padding: 0;
+            }
+            .desk-bg {
+                background: none !important;
+                padding: 0 !important;
+                gap: 0 !important;
+            }
+            .a4-page {
+                width: 210mm !important;
+                height: 297mm !important;
+                max-width: 210mm !important;
+                margin: 0 auto !important;
+                box-shadow: none !important;
+                border: none !important;
+                border-radius: 0 !important;
+                page-break-after: always;
+                transform: scale(1) !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        /* Custom highlight marker effect */
+        .marker-highlight {
+            position: relative;
+            z-index: 1;
+            display: inline-block;
+        }
+        .marker-highlight::after {
+            content: '';
+            position: absolute;
+            left: -4px;
+            right: -8px;
+            bottom: 2px;
+            height: 35%;
+            background-color: rgba(255, 90, 31, 0.3);
+            z-index: -1;
+            transform: skewX(-15deg);
         }
 
-        .timeline-dot {
-            position: absolute;
-            left: -5px;
-            top: 6px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 2px solid white;
+        /* Subtle paper texture */
+        .paper-texture {
+            background-color: #ffffff;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col justify-between">
+<body class="bg-zinc-900 text-zinc-800 font-sans antialiased desk-bg py-10 px-4 flex flex-col items-center gap-12">
 
-    <!-- Top Navigation (Web Only) -->
-    <header class="no-print bg-slate-800 border-b border-slate-700 py-4 px-6 sticky top-0 z-50 shadow-md">
-        <div class="max-w-4xl mx-auto flex items-center justify-between gap-4">
-            <div>
-                <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
-                    <i class="fas fa-id-card text-violet-400"></i> Bohdan Shvets — Office Manager CV
-                </h1>
-            </div>
-            <div class="text-xs text-slate-400">
-                Wskazówka: <kbd class="bg-slate-700 px-2 py-1 rounded text-slate-200">Ctrl + P</kbd>, aby zapisać jako PDF
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-grow py-4">
+    <!-- ========================================== -->
+    <!-- PAGE 1                                     -->
+    <!-- ========================================== -->
+    <article class="a4-page paper-texture w-full max-w-[800px] aspect-[1/1.414] rounded-sm shadow-2xl relative p-12 lg:p-14 flex flex-col overflow-hidden bg-white">
         
-        <!-- ================= OFFICE OPERATIONS CV ================= -->
-        <div class="cv-page">
-            <div class="w-1/3 text-slate-100 p-8 flex flex-col justify-between h-full" style="background-color: #2e1065;">
-                <div>
-                    <div class="w-36 h-36 mx-auto rounded-full overflow-hidden border-4 border-violet-800 shadow-lg mb-6 bg-violet-900">
-                        <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150'">
+        <!-- Header Container: ID Badge & Sticky Note -->
+        <header class="flex flex-col sm:flex-row justify-between items-start gap-8 relative z-10 mb-12">
+            
+            <!-- Left: Polaroid / ID Badge -->
+            <div class="relative bg-white p-5 shadow-xl border border-zinc-200 rounded-xl -rotate-2 w-72 flex-shrink-0 z-20">
+                <!-- Metallic Paperclip SVG -->
+                <svg class="absolute -top-6 left-10 w-8 h-14 drop-shadow-md text-zinc-400 rotate-6" viewBox="0 0 24 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v40c0 4.418-3.582 8-8 8s-8-3.582-8-8V12c0-3.314 2.686-6 6-6s6 2.686 6 6v32c0 2.209-1.791 4-4 4s-4-1.791-4-4V16"/>
+                </svg>
+                
+                <!-- Photo Placeholder -->
+                <div class="bg-zinc-100 w-32 h-32 rounded-xl mb-5 mx-auto flex items-center justify-center border-2 border-dashed border-zinc-300">
+                    <span class="text-zinc-400 font-medium tracking-widest text-xs uppercase text-center px-2">Avatar / Zdjecie</span>
+                </div>
+                
+                <h1 class="text-2xl font-extrabold text-zinc-900 tracking-tight leading-none mb-1 text-center">Bohdan Shvets</h1>
+                <p class="text-accent font-bold text-[13px] mb-4 text-center">Junior / Mid Office-Chaos Absorber</p>
+                
+                <div class="bg-zinc-50 rounded-lg p-3 text-[11px] text-zinc-600 space-y-2 border border-zinc-100">
+                    <div class="flex items-start gap-2">
+                        <span class="text-accent text-sm leading-none mt-0.5">📍</span>
+                        <span><strong>Poznań, Jeżyce</strong><br>(ul. Przelot 17 is 10 min away!)</span>
                     </div>
-                    <div class="mb-8">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Kontakt</h3>
-                        <ul class="text-xs space-y-3">
-                            <li class="flex items-center"><i class="fas fa-phone w-5 text-violet-400 text-center"></i> +48 783 035 162</li>
-                            <li class="flex items-center"><i class="fas fa-envelope w-5 text-violet-400 text-center"></i> shvetsbohdan2@gmail.com</li>
-                            <li class="flex items-center"><i class="fas fa-map-marker-alt w-5 text-violet-400 text-center"></i> Poznań, Polska</li>
-                            <li class="flex items-center"><i class="fab fa-linkedin w-5 text-violet-400 text-center"></i> /in/bohdan-shvets</li>
-                        </ul>
+                    <div class="flex items-center gap-2">
+                        <span class="text-accent text-sm leading-none">📞</span>
+                        <span>+48 783 035 162</span>
                     </div>
-                    <div class="mb-8">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Kompetencje</h3>
-                        <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Office Management</span>
-                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">B2B Communication</span>
-                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Advanced Excel</span>
-                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Process Automation</span>
-                            <span class="bg-violet-900 px-2.5 py-1 rounded border border-violet-800">Cost Optimization</span>
-                        </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-accent text-sm leading-none">✉️</span>
+                        <span>shvetsbohdan2@gmail.com</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-accent text-sm leading-none">🔗</span>
+                        <span>/in/bohdan-shvets</span>
+                    </div>
+                    <div class="flex items-start gap-2 pt-1 border-t border-zinc-200">
+                        <span class="text-accent text-sm leading-none mt-0.5">🚀</span>
+                        <span class="leading-tight"><strong>Mobility:</strong> Uber / Bolt / InPost Courier (Agile logistics, zero parking issues)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Yellow Sticky Note -->
+            <div class="relative bg-[#FFF9C4] shadow-lg p-6 w-80 -rotate-3 rounded-br-2xl rounded-tl-sm rounded-tr-xl border-t-4 border-yellow-300 flex-shrink-0 z-10 mt-4">
+                <!-- Tape -->
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-6 bg-white/40 shadow-sm rotate-[2deg] backdrop-blur-sm border border-white/20"></div> 
+                
+                <p class="font-handwriting text-xl text-zinc-800 leading-snug">
+                    <span class="text-accent font-bold text-2xl">#żyrafywchodządoszafy</span> <br>
+                    <span class="inline-block bg-green-200 px-1.5 rounded-sm transform -rotate-1 mt-1 text-sm font-sans font-bold">[PASSED] 🦒</span>
+                    <br><br>
+                    Przeczytałem całe ogłoszenie od A do Z! Wiem, jak działacie i gwarantuję, że zrobimy razem <span class="text-accent font-bold">#wszystkodobrze</span>, a papiery przestaną żyć własnym życiem.
+                </p>
+                <!-- Marker arrow pointing left -->
+                <svg class="absolute bottom-4 -left-6 w-12 h-12 text-accent rotate-[120deg] drop-shadow-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+            </div>
+        </header>
+
+        <!-- Main Content Section: SPECYFIKACJA TECHNICZNA -->
+        <main class="flex-grow z-10 mt-6 relative">
+            <h2 class="text-[22px] font-bold uppercase tracking-wide text-zinc-900 mb-8 marker-highlight">
+                Karta Urządzenia / Specyfikacja Techniczna
+            </h2>
+            
+            <ul class="space-y-6">
+                <li class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-xl bg-zinc-100 border border-zinc-200 text-accent flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
                     </div>
                     <div>
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-violet-300 mb-3 border-b border-violet-800 pb-2">Języki</h3>
-                        <ul class="text-xs space-y-2">
-                            <li class="flex justify-between items-center"><span>Polski</span> <span class="text-violet-300 font-bold">C1/C2</span></li>
-                            <li class="flex justify-between items-center"><span>Angielski</span> <span class="text-violet-300 font-bold">B2</span></li>
-                            <li class="flex justify-between items-center"><span>Rosyjski</span> <span class="text-violet-300 font-bold">Native</span></li>
-                        </ul>
+                        <h3 class="font-bold text-zinc-900 text-lg leading-tight">Silnik Excela i danych</h3>
+                        <p class="text-zinc-600 leading-relaxed text-[13px] mt-1.5">Wbudowany moduł logiki i automatyzacji. Tworzę zaawansowane raporty, formuły i skrypty, aby zestawienia kosztów projektowych dla klientów robiły się same.</p>
                     </div>
-                </div>
-                <div class="text-[9pt] text-violet-300 text-center">Bohdan Shvets • Office CV</div>
-            </div>
+                </li>
+                
+                <li class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-xl bg-zinc-100 border border-zinc-200 text-accent flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-zinc-900 text-lg leading-tight">Moduł Logistyki (Bez Kat. B)</h3>
+                        <p class="text-zinc-600 leading-relaxed text-[13px] mt-1.5">Zamiast szukać parkingu na Jeżycach i zbierać paragony za paliwo, zarządzam dostawami przez Uber Courier, Bolt i InPost. Dokumenty śmigają w 2 kliknięcia.</p>
+                    </div>
+                </li>
 
-            <div class="w-2/3 p-8 flex flex-col justify-between h-full bg-white">
-                <div>
-                    <div class="mb-6">
-                        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight uppercase leading-none mb-1">Bohdan<br>Shvets</h1>
-                        <h2 class="text-sm font-bold text-violet-600 uppercase tracking-widest">Office Manager / Operations Spec.</h2>
+                <li class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-xl bg-zinc-100 border border-zinc-200 text-accent flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path></svg>
                     </div>
-                    <div class="mb-6">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
-                            <i class="fas fa-building text-violet-500 mr-2"></i> Podsumowanie
-                        </h3>
-                        <p class="text-xs text-slate-600 leading-relaxed text-justify">
-                            Proaktywny specjalista ds. administracji, łączący klasyczne zarządzanie biurem z umiejętnościami automatyzacji procesów (Excel, AppSheet). Posiadam doświadczenie w obsłudze dokumentacji B2B, wielokanałowej komunikacji oraz pełnej organizacji pracy biura. W poprzedniej firmie przejąłem zarządzanie operacjami po miesiącu wdrożenia. Gwarantuję sprawny obieg informacji oraz zwinne wdrażanie rozwiązań IT optymalizujących koszty i czas pracy.
-                        </p>
+                    <div>
+                        <h3 class="font-bold text-zinc-900 text-lg leading-tight">Protokół „Poniedziałkowe Śniadania”</h3>
+                        <p class="text-zinc-600 leading-relaxed text-[13px] mt-1.5">Sprawdzone doświadczenie w zamawianiu jedzenia dla ekipy (ze szczególnym uwzględnieniem azjatyckiej kuchni: woki, ramen, sushi).</p>
                     </div>
-                    <div class="mb-6">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-3 flex items-center border-b pb-1">
-                            <i class="fas fa-chart-line text-violet-500 mr-2"></i> Doświadczenie
-                        </h3>
-                        <div class="relative pl-5 border-l-2 border-slate-200 mb-4">
-                            <div class="timeline-dot" style="background-color: #8b5cf6;"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <div>
-                                    <h4 class="font-bold text-slate-900 text-xs">Specjalista ds. Administracji i Obsługi B2B</h4>
-                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">POL-SERVICE | Poznań</div>
-                                </div>
-                                <span class="text-[10px] font-bold text-violet-700 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">Kwi 2025 – Kwi 2026</span>
-                            </div>
-                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
-                                <li><strong>Zarządzanie Obiegiem:</strong> Ewidencja ok. 200 dokumentów miesięcznie dla partnerów B2B.</li>
-                                <li><strong>Komunikacja:</strong> Wielokanałowa obsługa klienta oraz wsparcie organizacyjne spotkań.</li>
-                                <li><strong>Wdrożenia IT:</strong> Zaprojektowanie aplikacji w AppSheet eliminującej błędy magazynowe.</li>
-                                <li><strong>Raportowanie:</strong> Generowanie zaawansowanych raportów biznesowych w MS Excel.</li>
-                            </ul>
-                        </div>
-                        <div class="relative pl-5 border-l-2 border-slate-200">
-                            <div class="timeline-dot" style="background-color: #8b5cf6;"></div>
-                            <div class="flex justify-between items-start mb-1">
-                                <div>
-                                    <h4 class="font-bold text-slate-900 text-xs">Freelancer / Admin Support</h4>
-                                    <div class="text-[11px] font-semibold text-slate-500 uppercase">Projekty własne | Poznań</div>
-                                </div>
-                                <span class="text-[10px] font-bold text-violet-700 bg-violet-50 px-1.5 py-0.5 rounded border border-violet-100">Maj 2026 – Obecnie</span>
-                            </div>
-                            <ul class="list-disc list-outside ml-3 text-[11px] text-slate-600 space-y-1 text-justify">
-                                <li>Wsparcie operacyjne i administracyjne dla klientów B2B/B2C.</li>
-                                <li>Wdrażanie autorskich skryptów redukujących powtarzalne operacje biurowe.</li>
-                            </ul>
-                        </div>
+                </li>
+
+                <li class="flex items-start gap-4">
+                    <div class="w-8 h-8 rounded-xl bg-zinc-100 border border-zinc-200 text-accent flex items-center justify-center flex-shrink-0 shadow-sm mt-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
-                    <div class="mb-4">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2 flex items-center border-b pb-1">
-                            <i class="fas fa-graduation-cap text-violet-500 mr-2"></i> Edukacja
-                        </h3>
-                        <div class="grid grid-cols-2 gap-4 text-xs">
-                            <div>
-                                <div class="font-bold text-slate-900 text-[11px]">Technik Informatyk</div>
-                                <div class="text-[10px] text-slate-500">Technikum ZSŁ, Poznań (2021–2025)</div>
-                            </div>
-                            <div>
-                                <div class="font-bold text-slate-900 text-[11px]">Informatyka (niestacjonarne)</div>
-                                <div class="text-[10px] text-slate-500">Uniwersytet im. W. Karazina (2021–2025)</div>
-                            </div>
-                        </div>
+                    <div>
+                        <h3 class="font-bold text-zinc-900 text-lg leading-tight">Dokładność B2B</h3>
+                        <p class="text-zinc-600 leading-relaxed text-[13px] mt-1.5">Błyskawiczne opanowanie każdego programu do fakturowania dzięki zacięciu IT.</p>
                     </div>
+                </li>
+            </ul>
+
+            <!-- Floating Skill Stickers -->
+            <div class="absolute -bottom-8 right-0 flex flex-wrap justify-end gap-3 w-[400px] z-20">
+                <span class="bg-zinc-900 text-white px-4 py-2 rounded-2xl text-[13px] font-bold shadow-xl -rotate-2 border-2 border-zinc-900">Advanced Excel & Data</span>
+                <span class="bg-white text-zinc-800 px-4 py-2 rounded-2xl text-[13px] font-bold shadow-xl rotate-2 border border-zinc-200">Ewidencja B2B</span>
+                <span class="bg-accent text-white px-4 py-2 rounded-2xl text-[13px] font-bold shadow-xl rotate-1 border-2 border-accent">Uber / InPost Logistics</span>
+                <span class="bg-zinc-100 text-zinc-800 px-4 py-2 rounded-2xl text-[13px] font-bold shadow-xl -rotate-3 border border-zinc-300">Azjatycka Kuchnia 🥢</span>
+            </div>
+        </main>
+        
+    </article>
+
+    <!-- ========================================== -->
+    <!-- PAGE 2                                     -->
+    <!-- ========================================== -->
+    <article class="a4-page paper-texture w-full max-w-[800px] aspect-[1/1.414] rounded-sm shadow-2xl relative p-12 lg:p-14 flex flex-col overflow-hidden bg-white">
+        
+        <!-- Experience Section -->
+        <section class="mb-10">
+            <h2 class="text-[22px] font-bold uppercase tracking-wide text-zinc-900 mb-8 marker-highlight">
+                Log Wykonanych Zadań / Doświadczenie
+            </h2>
+
+            <div class="space-y-7 pl-4 border-l-2 border-zinc-200 relative">
+                
+                <!-- Item 1 -->
+                <div class="relative">
+                    <div class="absolute -left-[21px] top-1.5 w-3.5 h-3.5 bg-accent rounded-full ring-4 ring-white shadow-sm"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
+                        <h3 class="font-bold text-zinc-900 text-[17px]">POL-SERVICE <span class="text-zinc-400 font-normal text-[15px] ml-1">| Poznań</span></h3>
+                        <span class="text-sm font-semibold text-accent font-handwriting text-xl">04.2025 – 04.2026</span>
+                    </div>
+                    <p class="font-semibold text-[13px] text-zinc-800 mb-2">Specjalista ds. Administracji i Obsługi B2B</p>
+                    <p class="text-[13px] text-zinc-600 leading-relaxed">
+                        Ewidencja i obieg ok. 200 dokumentów B2B miesięcznie. Przejęcie samodzielnego zarządzania operacjami biura po miesiącu wdrożenia. Rozliczanie kart pracy, generowanie zaawansowanych raportów w MS Excel oraz współpraca z zewnętrzną księgowością.
+                    </p>
                 </div>
-                <div class="pt-3 border-t border-slate-200">
-                    <p class="text-[5.5pt] text-slate-400 text-justify leading-tight">
-                        Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z RODO.
+
+                <!-- Item 2 -->
+                <div class="relative">
+                    <div class="absolute -left-[21px] top-1.5 w-3.5 h-3.5 bg-zinc-800 rounded-full ring-4 ring-white shadow-sm"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
+                        <h3 class="font-bold text-zinc-900 text-[17px]">Autorska Aplikacja Webowa <span class="text-zinc-400 font-normal text-[15px] ml-1">| AppSheet</span></h3>
+                        <span class="text-sm font-semibold text-zinc-500 font-handwriting text-xl">Projekt Własny</span>
+                    </div>
+                    <p class="font-semibold text-[13px] text-zinc-800 mb-2">Internal Process Optimization</p>
+                    <p class="text-[13px] text-zinc-600 leading-relaxed">
+                        Zaprojektowanie i wdrożenie autorskiej aplikacji w AppSheet eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.
+                    </p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="relative">
+                    <div class="absolute -left-[21px] top-1.5 w-3.5 h-3.5 bg-zinc-300 rounded-full ring-4 ring-white shadow-sm"></div>
+                    <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-1">
+                        <h3 class="font-bold text-zinc-900 text-[17px]">Freelance / Admin Support</h3>
+                        <span class="text-sm font-semibold text-zinc-500 font-handwriting text-xl">05.2026 – Obecnie</span>
+                    </div>
+                    <p class="text-[13px] text-zinc-600 leading-relaxed mt-1">
+                        Wsparcie operacyjne dla klientów B2B, wdrażanie skryptów usprawniających pracę z danymi.
                     </p>
                 </div>
             </div>
-        </div>
+        </section>
 
-    </main>
+        <!-- Resources Allocation -->
+        <section class="mb-10 relative">
+            <!-- decorative handwritten note -->
+            <div class="absolute -right-4 top-2 rotate-6 opacity-80 z-0">
+                <span class="font-handwriting text-zinc-400 text-lg">Wydajność 100% ⚡</span>
+            </div>
+
+            <h2 class="text-[15px] font-bold uppercase tracking-wide text-zinc-900 mb-6 bg-zinc-100 inline-block px-3 py-1.5 rounded-lg border border-zinc-200">
+                Podział Zasobów Procesora (RAM & CPU)
+            </h2>
+            
+            <div class="space-y-4">
+                <!-- Bar 1 -->
+                <div>
+                    <div class="flex justify-between text-[13px] mb-1.5 font-semibold text-zinc-800">
+                        <span>Walka z chaosem, Excel, faktury i kontrola kosztów</span>
+                        <span class="text-accent font-bold">60%</span>
+                    </div>
+                    <div class="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden border border-zinc-200 shadow-inner">
+                        <div class="bg-accent h-2.5 rounded-full" style="width: 60%"></div>
+                    </div>
+                </div>
+                <!-- Bar 2 -->
+                <div>
+                    <div class="flex justify-between text-[13px] mb-1.5 font-semibold text-zinc-800">
+                        <span>Jedzenie, kurierzy, klimat na Jeżycach i atmosfera</span>
+                        <span class="text-zinc-600 font-bold">25%</span>
+                    </div>
+                    <div class="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden border border-zinc-200 shadow-inner">
+                        <div class="bg-zinc-800 h-2.5 rounded-full" style="width: 25%"></div>
+                    </div>
+                </div>
+                <!-- Bar 3 -->
+                <div>
+                    <div class="flex justify-between text-[13px] mb-1.5 font-semibold text-zinc-800">
+                        <span>Słuchanie opowieści o Atenach i pakowanie walizki w Alpach</span>
+                        <span class="text-zinc-500 font-bold">15%</span>
+                    </div>
+                    <div class="w-full bg-zinc-100 rounded-full h-2.5 overflow-hidden border border-zinc-200 shadow-inner">
+                        <div class="bg-zinc-400 h-2.5 rounded-full" style="width: 15%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stack, Languages, Education -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 mb-auto">
+            
+            <!-- Column 1 -->
+            <div class="space-y-8">
+                <div>
+                    <h2 class="text-[16px] font-bold uppercase tracking-wide text-zinc-900 mb-4 flex items-center gap-2">
+                        <span class="w-4 h-1 bg-accent rounded-full"></span> Stos Zewnętrzny
+                    </h2>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-zinc-900 text-white text-[12px] font-semibold rounded-lg shadow-sm">MS Excel (Advanced)</span>
+                        <span class="px-3 py-1.5 bg-zinc-100 text-zinc-800 text-[12px] font-semibold rounded-lg border border-zinc-200 shadow-sm">Python</span>
+                        <span class="px-3 py-1.5 bg-zinc-100 text-zinc-800 text-[12px] font-semibold rounded-lg border border-zinc-200 shadow-sm">AppSheet</span>
+                        <span class="px-3 py-1.5 bg-zinc-100 text-zinc-800 text-[12px] font-semibold rounded-lg border border-zinc-200 shadow-sm">Google Workspace</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="text-[16px] font-bold uppercase tracking-wide text-zinc-900 mb-3 flex items-center gap-2">
+                        <span class="w-4 h-1 bg-accent rounded-full"></span> Języki
+                    </h2>
+                    <ul class="text-[13px] font-semibold text-zinc-700 space-y-2 mt-2">
+                        <li class="flex justify-between border-b border-zinc-100 pb-1">Polski <span class="text-accent font-handwriting text-[17px] leading-none">C1/C2 - Płynny</span></li>
+                        <li class="flex justify-between border-b border-zinc-100 pb-1">Angielski <span class="text-zinc-500 font-handwriting text-[17px] leading-none">B2 - Komunikatywny</span></li>
+                        <li class="flex justify-between border-b border-zinc-100 pb-1">Rosyjski <span class="text-zinc-500 font-handwriting text-[17px] leading-none">Native</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Column 2 -->
+            <div>
+                <h2 class="text-[16px] font-bold uppercase tracking-wide text-zinc-900 mb-4 flex items-center gap-2">
+                    <span class="w-4 h-1 bg-accent rounded-full"></span> Edukacja
+                </h2>
+                <div class="space-y-4">
+                    <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-4 shadow-sm relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-12 h-12 bg-accent/10 rounded-full transition-transform group-hover:scale-150"></div>
+                        <p class="font-bold text-zinc-900 text-[14px]">Technik Informatyk</p>
+                        <p class="text-[12px] text-zinc-600 mt-1">Technikum ZSŁ w Poznaniu</p>
+                        <p class="text-[11px] font-bold text-accent mt-2">2021–2025</p>
+                    </div>
+                    
+                    <div class="bg-zinc-50 border border-zinc-200 rounded-xl p-4 shadow-sm relative overflow-hidden group">
+                        <div class="absolute -right-4 -top-4 w-12 h-12 bg-zinc-200/50 rounded-full transition-transform group-hover:scale-150"></div>
+                        <p class="font-bold text-zinc-900 text-[14px]">Informatyka <span class="font-normal text-zinc-500 text-[12px]">(Niestacjonarne)</span></p>
+                        <p class="text-[12px] text-zinc-600 mt-1">Uniwersytet im. W. Karazina</p>
+                        <p class="text-[11px] font-bold text-zinc-400 mt-2">2021–2025</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RODO Footer -->
+        <footer class="mt-8 pt-4 border-t-2 border-dashed border-zinc-200">
+            <p class="text-[9px] text-zinc-400 text-justify leading-relaxed font-medium">
+                Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych).
+            </p>
+        </footer>
+    </article>
 
 </body>
 </html>
