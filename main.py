@@ -1,11 +1,13 @@
 import os
 import re
 import time
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import requests
 from supabase import create_client, Client
 import config
 
-# Инициализация клиентов (Render берет их из Environment Variables)
+# Инициализация клиентов
 supabase_url = os.environ.get("SUPABASE_URL")
 supabase_key = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(supabase_url, supabase_key)
@@ -41,24 +43,20 @@ def calculate_score(title: str, description: str, location: str, is_remote: bool
     score = 0
     matched_skills = []
 
-    # 1. Минус-слова
     for neg in config.KEYWORDS["negative"]:
         if re.search(r'\b' + re.escape(neg) + r'\b', full_text):
             return -100, []
 
-    # 2. Основные навыки
     for kw in config.KEYWORDS["primary"]:
         if re.search(r'\b' + re.escape(kw) + r'\b', full_text):
             score += 20
             matched_skills.append(kw)
 
-    # 3. Вторичные навыки
     for kw in config.KEYWORDS["secondary"]:
         if re.search(r'\b' + re.escape(kw) + r'\b', full_text):
             score += 10
             matched_skills.append(kw)
 
-    # 4. Локация / Удаленка
     if is_remote:
         score += 15
     elif config.TARGET_CITY in location.lower():
@@ -94,44 +92,57 @@ def fetch_justjoin_it():
         print(f"Ошибка парсинга JustJoin: {e}")
     return []
 
-def main():
-    print("Собираю вакансии...")
-    try:
-        # Получаем уже сохраненные ID
-        existing_records = supabase.table('jobs').select('id').execute()
-        existing_ids = {item['id'] for item in existing_records.data}
-
-        # Парсинг
-        jobs = []
-        jobs.extend(fetch_justjoin_it())
-
-        # Фильтрация и отправка
-        for job in jobs:
-            job_id = str(job['id'])
-            if job_id in existing_ids:
-                continue
-
-            score, matches = calculate_score(
-                job['title'], 
-                job['description'], 
-                job['location'], 
-                job['is_remote']
-            )
-
-            # Сохраняем в Supabase
-            supabase.table('jobs').insert({'id': job_id, 'url': job['url']}).execute()
-
-            # Отправляем в Telegram
-            if score >= config.SCORE_THRESHOLD:
-                send_telegram_alert(job, score, matches)
-                
-        print("Сбор завершен.")
-    except Exception as e:
-        print(f"Ошибка во время выполнения: {e}")
-
-if __name__ == "__main__":
+# Главная функция теперь крутится в фоне
+def monitor_jobs():
     while True:
         print("Запуск мониторинга...")
-        main()
+        try:
+            existing_records = supabase.table('jobs').select('id').execute()
+            existing_ids = {item['id'] for item in existing_records.data}
+
+            jobs = []
+            jobs.extend(fetch_justjoin_it())
+
+            for job in jobs:
+                job_id = str(job['id'])
+                if job_id in existing_ids:
+                    continue
+
+                score, matches = calculate_score(
+                    job['title'], 
+                    job['description'], 
+                    job['location'], 
+                    job['is_remote']
+                )
+
+                supabase.table('jobs').insert({'id': job_id, 'url': job['url']}).execute()
+
+                if score >= config.SCORE_THRESHOLD:
+                    send_telegram_alert(job, score, matches)
+                    
+            print("Сбор завершен.")
+        except Exception as e:
+            print(f"Ошибка во время выполнения: {e}")
+            
         print("Ожидание 3 часа...")
         time.sleep(10800)
+
+# Фейковый сервер для заглушки портов Рендера
+class DummyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'text/plain')
+        self.end_headers()
+        self.wfile.write(b"Bot is running!")
+
+if __name__ == "__main__":
+    # 1. Запускаем бесконечный парсинг в отдельном потоке
+    task_thread = threading.Thread(target=monitor_jobs)
+    task_thread.daemon = True
+    task_thread.start()
+
+    # 2. Запускаем сервер-заглушку в основном потоке
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), DummyServer)
+    print(f"Слушаю порт {port} для Render...")
+    server.serve_forever()
