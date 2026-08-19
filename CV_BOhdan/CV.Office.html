@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV Scrapbook</title>
-    <!-- Google Fonts: Inter (Sans-serif) & Caveat (Handwriting) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,20 +21,13 @@
         }
     </script>
     <style>
-        /* Base Desk Background */
-        body {
-            background-color: #020617; /* bg-slate-950 */
-        }
-
-        /* Grid Paper Texture */
+        body { background-color: #020617; }
         .grid-paper {
             background-color: #f8fafc;
             background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
             background-size: 24px 24px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
-
-        /* Yellow Highlighter Effect */
         .highlight-yellow {
             position: relative;
             display: inline-block;
@@ -45,118 +36,54 @@
         .highlight-yellow::before {
             content: '';
             position: absolute;
-            top: 15%;
-            left: -3%;
-            width: 106%;
-            height: 75%;
-            background-color: #ffed4a;
-            z-index: -1;
-            transform: rotate(-1.5deg);
-            border-radius: 3px;
+            top: 15%; left: -3%; width: 106%; height: 75%;
+            background-color: #ffed4a; z-index: -1;
+            transform: rotate(-1.5deg); border-radius: 3px;
         }
-
-        /* Green Marker Highlight */
         .marker-green {
-            background-color: #a8ffb2;
-            padding: 0 4px;
-            border-radius: 2px;
-            box-decoration-break: clone;
-            -webkit-box-decoration-break: clone;
-            font-weight: 700;
+            background-color: #a8ffb2; padding: 0 4px; border-radius: 2px; font-weight: 700;
         }
-
-        /* Custom Shapes for Collage */
-        .clip-triangle {
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-        }
-        .clip-torn {
-            clip-path: polygon(0% 0%, 100% 4%, 96% 95%, 3% 100%, 0% 80%, 2% 60%, 0% 40%, 3% 20%);
-        }
-        
-        /* Red Circle SVG Container */
-        .red-circle-wrapper {
-            position: relative;
-            display: inline-block;
-        }
+        .clip-triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }
+        .clip-torn { clip-path: polygon(0% 0%, 100% 4%, 96% 95%, 3% 100%, 0% 80%, 2% 60%, 0% 40%, 3% 20%); }
+        .red-circle-wrapper { position: relative; display: inline-block; }
         .red-circle-svg {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 115%;
-            height: 140%;
-            z-index: -1;
-            pointer-events: none;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 115%; height: 140%; z-index: -1; pointer-events: none;
         }
-
-        /* Paperclip */
         .paperclip {
-            position: absolute;
-            top: -20px;
-            left: 15px;
-            width: 32px;
-            height: 75px;
-            z-index: 50;
-            filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4));
-            transform: rotate(5deg);
+            position: absolute; top: -20px; left: 15px; width: 32px; height: 75px;
+            z-index: 50; filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4)); transform: rotate(5deg);
         }
-
-        /* Print Media Queries */
         @media print {
-            @page {
-                size: A4;
-                margin: 0;
-            }
-            body {
-                background: none !important;
-                background-color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-                margin: 0;
-                padding: 0;
-            }
+            @page { size: A4; margin: 0; }
+            body { background: none !important; background-color: white !important; margin: 0; padding: 0; }
             .grid-paper {
-                box-shadow: none !important;
-                max-width: 210mm !important;
-                height: 297mm !important;
-                margin: 0 auto !important;
-                border: none !important;
-                page-break-after: always;
-                transform: scale(1) !important;
+                box-shadow: none !important; max-width: 210mm !important; height: 297mm !important;
+                margin: 0 auto !important; border: none !important; page-break-after: always;
             }
         }
     </style>
 </head>
 <body class="py-12 px-4 flex flex-col items-center gap-16 text-slate-800 antialiased min-h-screen">
 
-    <!-- ========================================== -->
-    <!-- PAGE 1                                     -->
-    <!-- ========================================== -->
+    <!-- PAGE 1 -->
     <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden">
         
-        <!-- HEADER SECTION -->
         <header class="flex justify-between items-start mb-12 relative z-20">
-            
-            <!-- Left: Polaroid ID Card -->
+            <!-- ID Card -->
             <div class="relative bg-[#f4f4f5] p-4 w-[390px] border border-slate-200 shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] rotate-[-1deg] z-30">
-                <!-- Silver Paperclip -->
                 <svg class="paperclip text-slate-400" viewBox="0 0 24 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2v40c0 4.418-3.582 8-8 8s-8-3.582-8-8V12c0-3.314 2.686-6 6-6s6 2.686 6 6v32c0 2.209-1.791 4-4 4s-4-1.791-4-4V16"/>
                 </svg>
-
-                <!-- Smiley Face Sticker -->
                 <img src="image_f3c822.png" alt="Smiley" class="absolute -top-5 -right-5 w-14 h-14 rotate-12 drop-shadow-md z-40">
 
                 <div class="flex gap-4 items-start mb-3">
-                    <!-- Photo Frame -->
                     <div class="bg-yellow-400 w-24 h-[110px] p-1 flex-shrink-0 shadow-inner">
                         <div class="w-full h-full bg-slate-300 flex items-center justify-center border border-slate-400 overflow-hidden">
-                            <!-- Placeholder image, replace with actual photo if needed -->
-                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center" src="photo.jpg"></span>
+                            <!-- ИСПРАВЛЕНИЕ: Добавлен тег img -->
+                            <img src="photo.jpg" alt="Bohdan Shvets" class="w-full h-full object-cover">
                         </div>
                     </div>
-                    
-                    <!-- Basic Info -->
                     <div>
                         <h1 class="font-extrabold text-[28px] leading-none text-slate-900 tracking-tight">Bohdan<br>Shvets</h1>
                         <p class="text-[12px] font-semibold text-slate-600 mt-2 leading-tight border-b border-slate-300 pb-2">
@@ -165,7 +92,6 @@
                     </div>
                 </div>
 
-                <!-- Info Data Grid -->
                 <div class="border-2 border-slate-800 bg-white">
                     <div class="flex border-b border-slate-800">
                         <div class="w-1/2 p-1.5 text-[10px] border-r border-slate-800"><span class="font-bold">Loc:</span> Poznań, Jeżyce</div>
@@ -181,20 +107,17 @@
                 </div>
             </div>
 
-            <!-- Right: Handwritten Notes -->
+            <!-- Notes -->
             <div class="w-[300px] pt-6 pl-4 rotate-2 relative z-10">
                 <div class="red-circle-wrapper font-handwriting text-red-600 text-[24px] font-bold mb-3 leading-none">
                     <span class="relative z-10">#żyrafywchodządoszafy<br>[PASSED]</span>
-                    <!-- Hand-drawn Red Circle SVG -->
                     <svg class="red-circle-svg" viewBox="0 0 200 80" preserveAspectRatio="none">
                         <path d="M10,40 C20,10 180,10 190,40 C195,70 15,80 10,40 Z" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
-                    <!-- Marker Arrow pointing to the left card -->
                     <svg class="absolute -left-12 top-6 w-12 h-12 text-red-600 rotate-[-15deg]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                         <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                
                 <p class="font-handwriting text-red-600 text-[20px] font-semibold leading-tight mt-4">
                     Przeczytałem ogłoszenie od A do Z! Gwarantuję, że zrobimy razem #wszystkodobrze!
                 </p>
@@ -205,108 +128,81 @@
             </div>
         </header>
 
-        <!-- MAIN BODY SECTION -->
         <main class="flex-grow grid grid-cols-12 gap-8 relative z-10">
-            
-            <!-- LEFT COLUMN -->
+            <!-- ИСПРАВЛЕНИЕ: Перенос опыта и проектов в одну колонку на первой странице -->
             <div class="col-span-7 pr-2">
-                <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Doświadczenie</span></h2>
+                <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Doświadczenie & Projekty</span></h2>
                 
-                <!-- Timeline -->
-                <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-6 ml-2">
-                    <!-- Item 1 -->
+                <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-6 ml-2 space-y-8">
+                    <!-- Job 1 -->
                     <div class="relative">
-                        <!-- Timeline Dot -->
                         <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
                         <div class="text-[12px] font-bold text-slate-500 mb-1">Kwi 2025 – Kwi 2026 • POL-SERVICE, Poznań</div>
                         <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-2">Specjalista ds. Administracji i Obsługi B2B</h3>
                         <ul class="text-[14px] text-slate-700 space-y-2 leading-snug">
                             <li>• Ewidencja i obieg ok. <span class="marker-green">200 dokumentów B2B</span> miesięcznie.</li>
-                            <li>• Przejęcie zarządzania operacjami po 1 miesiącu.</li>
+                            <li>• Przejęcie управления operacjami po 1 miesiącu.</li>
                             <li>• Zaawansowane raporty w MS Excel.</li>
                         </ul>
+                    </div>
+
+                    <!-- Project 1 -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
+                        <div class="text-[12px] font-bold text-slate-500 mb-1">Projekt Autorski</div>
+                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-1">Aplikacja Webowa (AppSheet)</h3>
+                        <p class="text-[14px] text-slate-700 leading-snug">
+                            Zaprojektowanie i wdrożenie aplikacji eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.
+                        </p>
+                    </div>
+
+                    <!-- Freelance -->
+                    <div class="relative">
+                        <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
+                        <div class="text-[12px] font-bold text-slate-500 mb-1">Maj 2026 – Obecnie</div>
+                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight">Freelance / Admin Support</h3>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN -->
             <div class="col-span-5 pl-2">
                 <h2 class="text-2xl font-bold mb-8 text-center"><span class="highlight-yellow px-1">Karta Urządzenia</span></h2>
-                
-                <!-- Floating Collage Area -->
                 <div class="relative h-[250px] w-full mt-4">
-                    
-                    <!-- Orange Tape/Sticker -->
                     <div class="absolute top-0 left-2 bg-orange-300 px-4 py-2 shadow-md rotate-[-4deg] border border-orange-200 z-30">
                         <span class="font-handwriting font-bold text-[18px] text-slate-900">Rozliczanie Kosztów</span>
                     </div>
-
-                    <!-- Red Triangle -->
                     <div class="absolute top-12 left-6 z-20 filter drop-shadow-[0_8px_8px_rgba(0,0,0,0.3)]">
                         <div class="bg-red-500 w-28 h-28 clip-triangle rotate-[12deg] flex items-end justify-center pb-2">
                             <span class="text-white font-bold text-[11px] mb-1">Excel & Automatyzacja</span>
                         </div>
                     </div>
-
-                    <!-- Green Torn Paper -->
                     <div class="absolute top-10 right-2 z-10 filter drop-shadow-[0_8px_6px_rgba(0,0,0,0.25)]">
                         <div class="bg-[#4ade80] w-24 h-24 clip-torn rotate-[-8deg] flex items-center justify-center p-2">
                             <span class="text-slate-900 font-bold text-[13px] text-center transform -rotate-3">Ewidencja B2B</span>
                         </div>
                     </div>
-
-                    <!-- Blue Circle -->
                     <div class="absolute bottom-6 right-8 z-20 filter drop-shadow-[0_10px_8px_rgba(0,0,0,0.3)]">
                         <div class="bg-blue-300 w-[100px] h-[100px] rounded-full rotate-[5deg] flex items-center justify-center p-2">
                             <span class="font-handwriting font-bold text-[16px] text-slate-900 text-center leading-tight">Uber / InPost Logistics</span>
                         </div>
                     </div>
-
-                    <!-- Frog in Fire Sticker -->
                     <img src="image_f3c827.png" alt="Frog in fire" class="absolute -bottom-10 -left-6 w-[110px] h-[110px] -rotate-12 drop-shadow-xl z-40">
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PAGE 2                                     -->
-    <!-- ========================================== -->
-    <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden">
+    <!-- PAGE 2 -->
+    <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden justify-between">
         
-        <!-- TOP SECTION: Wdrożenia & Projekty -->
-        <section class="mb-10 z-10">
-            <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Wdrożenia & Projekty</span></h2>
-            
-            <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-2 ml-2 space-y-8">
-                <!-- Project 1 -->
-                <div class="relative">
-                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
-                    <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-1">Autorska Aplikacja Webowa (AppSheet)</h3>
-                    <p class="text-[14px] text-slate-700 leading-snug">
-                        Zaprojektowanie i wdrożenie aplikacji eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.
-                    </p>
-                </div>
-                
-                <!-- Project 2 -->
-                <div class="relative">
-                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
-                    <div class="text-[12px] font-bold text-slate-500 mb-1">Maj 2026 – Obecnie</div>
-                    <h3 class="text-[17px] font-bold text-slate-900 leading-tight">Freelance / Admin Support</h3>
-                </div>
-            </div>
-        </section>
-
-        <!-- MIDDLE SECTION: RAM & CPU -->
-        <section class="mb-12 z-10">
-            <h2 class="text-[18px] font-bold mb-6 text-slate-800 uppercase tracking-wide border-b-2 border-slate-300 inline-block pb-1">
+        <!-- Верх: Графики -->
+        <section class="mb-8 z-10 pt-4">
+            <h2 class="text-[18px] font-bold mb-8 text-slate-800 uppercase tracking-wide border-b-2 border-slate-300 inline-block pb-1">
                 Podział Zasobów Procesora (RAM & CPU)
             </h2>
-            
-            <div class="space-y-5 w-3/4">
-                <!-- Bar 1 -->
+            <div class="space-y-6 w-full pr-8">
                 <div>
-                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
                         <span>Walka z chaosem, Excel, faktury i kontrola kosztów</span>
                         <span>60%</span>
                     </div>
@@ -314,9 +210,8 @@
                         <div class="bg-red-500 h-full w-[60%]"></div>
                     </div>
                 </div>
-                <!-- Bar 2 -->
                 <div>
-                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
                         <span>Jedzenie, kurierzy, klimat na Jeżycach</span>
                         <span>25%</span>
                     </div>
@@ -324,9 +219,8 @@
                         <div class="bg-blue-500 h-full w-[25%]"></div>
                     </div>
                 </div>
-                <!-- Bar 3 -->
                 <div>
-                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
                         <span>Słuchanie opowieści o Atenach i pakowanie walizki w Alpach</span>
                         <span>15%</span>
                     </div>
@@ -337,100 +231,71 @@
             </div>
         </section>
 
-        <!-- BOTTOM SECTION: Edukacja & Software Skills -->
-        <section class="grid grid-cols-12 gap-8 z-10 mb-auto">
-            <!-- Left: Edukacja -->
-            <div class="col-span-7">
+        <!-- Середина: Образование и Навыки -->
+        <section class="grid grid-cols-12 gap-12 z-10 mb-auto mt-8">
+            <div class="col-span-6">
                 <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Edukacja</span></h2>
-                <div class="space-y-4">
-                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
-                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
-                        <h3 class="text-[14px] font-bold text-slate-900">Technik Informatyk</h3>
-                        <p class="text-[13px] text-slate-600">Technikum ZSŁ w Poznaniu</p>
+                <div class="space-y-5">
+                    <div class="bg-white p-4 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[12px] font-bold text-slate-500 mb-1">2021–2025</div>
+                        <h3 class="text-[15px] font-bold text-slate-900">Technik Informatyk</h3>
+                        <p class="text-[14px] text-slate-600 mt-1">Technikum ZSŁ w Poznaniu</p>
                     </div>
-                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
-                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
-                        <h3 class="text-[14px] font-bold text-slate-900">Informatyka (Niestacjonarne)</h3>
-                        <p class="text-[13px] text-slate-600">Uniwersytet im. W. Karazina</p>
+                    <div class="bg-white p-4 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[12px] font-bold text-slate-500 mb-1">2021–2025</div>
+                        <h3 class="text-[15px] font-bold text-slate-900">Informatyka (Niestacjonarne)</h3>
+                        <p class="text-[14px] text-slate-600 mt-1">Uniwersytet im. W. Karazina</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Right: Software Skills -->
-            <div class="col-span-5">
+            <div class="col-span-6">
                 <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Software Skills</span></h2>
-                
-                <div class="grid grid-cols-2 gap-x-6 gap-y-6">
-                    
+                <div class="grid grid-cols-2 gap-x-6 gap-y-8">
                     <!-- Excel -->
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center gap-2">
-                            <!-- Styled Folder Icon -->
-                            <div class="w-10 h-10 bg-[#107c41] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#094725] shadow-md flex items-center justify-center text-white font-bold text-sm">
-                                Ex
-                            </div>
-                            <span class="text-[12px] font-bold text-slate-800 leading-tight">MS Excel<br><span class="text-[10px] font-normal text-slate-500">(Advanced)</span></span>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#107c41] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#094725] shadow-md flex items-center justify-center text-white font-bold text-base">Ex</div>
+                            <span class="text-[13px] font-bold text-slate-800 leading-tight">MS Excel<br><span class="text-[11px] font-normal text-slate-500">(Advanced)</span></span>
                         </div>
-                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
-                            <div class="bg-slate-800 h-full w-[95%]"></div>
-                        </div>
+                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[95%]"></div></div>
                     </div>
-
                     <!-- Python -->
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center gap-2">
-                            <!-- Styled Folder Icon -->
-                            <div class="w-10 h-10 bg-[#3776ab] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#ffdf76] shadow-md flex items-center justify-center text-white font-bold text-sm">
-                                Py
-                            </div>
-                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Python</span>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#3776ab] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#ffdf76] shadow-md flex items-center justify-center text-white font-bold text-base">Py</div>
+                            <span class="text-[13px] font-bold text-slate-800 leading-tight">Python</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
-                            <div class="bg-slate-800 h-full w-[65%]"></div>
-                        </div>
+                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[65%]"></div></div>
                     </div>
-
                     <!-- AppSheet -->
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center gap-2">
-                            <!-- Styled Folder Icon -->
-                            <div class="w-10 h-10 bg-[#8c34f7] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#5c1cbf] shadow-md flex items-center justify-center text-white font-bold text-sm">
-                                Ap
-                            </div>
-                            <span class="text-[12px] font-bold text-slate-800 leading-tight">AppSheet</span>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-[#8c34f7] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#5c1cbf] shadow-md flex items-center justify-center text-white font-bold text-base">Ap</div>
+                            <span class="text-[13px] font-bold text-slate-800 leading-tight">AppSheet</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
-                            <div class="bg-slate-800 h-full w-[85%]"></div>
-                        </div>
+                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[85%]"></div></div>
                     </div>
-
                     <!-- Google Workspace -->
-                    <div class="flex flex-col gap-1.5">
-                        <div class="flex items-center gap-2">
-                            <!-- Styled Folder Icon -->
-                            <div class="w-10 h-10 bg-white border-2 border-slate-200 rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-t-blue-500 shadow-md flex items-center justify-center text-slate-700 font-bold text-sm relative overflow-hidden">
-                                Gw
-                                <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
+                    <div class="flex flex-col gap-2">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-white border-2 border-slate-200 rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-t-blue-500 shadow-md flex items-center justify-center text-slate-700 font-bold text-base relative overflow-hidden">
+                                Gw<div class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
                             </div>
-                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Google<br>Workspace</span>
+                            <span class="text-[13px] font-bold text-slate-800 leading-tight">Google<br>Workspace</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
-                            <div class="bg-slate-800 h-full w-[90%]"></div>
-                        </div>
+                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[90%]"></div></div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- FOOTER RODO -->
+        <!-- Футер -->
         <footer class="mt-8 pt-4 border-t border-slate-300 border-dashed z-10">
             <p class="text-[9px] text-slate-400 text-justify leading-relaxed">
                 Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych).
             </p>
         </footer>
-
     </div>
-
 </body>
 </html>
