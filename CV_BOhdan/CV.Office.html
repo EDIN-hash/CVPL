@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV Scrapbook</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -54,12 +56,31 @@
             position: absolute; top: -20px; left: 15px; width: 32px; height: 75px;
             z-index: 50; filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4)); transform: rotate(5deg);
         }
+        
+        /* ИСПРАВЛЕНИЯ ДЛЯ ПЕЧАТИ (PDF) */
         @media print {
-            @page { size: A4; margin: 0; }
-            body { background: none !important; background-color: white !important; margin: 0; padding: 0; }
+            @page { 
+                size: A4; 
+                margin: 0; 
+            }
+            body { 
+                display: block !important; /* Отключаем flexbox, чтобы не ломался разрыв страниц */
+                background: none !important; 
+                background-color: white !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+            }
             .grid-paper {
-                box-shadow: none !important; max-width: 210mm !important; height: 297mm !important;
-                margin: 0 auto !important; border: none !important; page-break-after: always;
+                display: block !important;
+                box-shadow: none !important; 
+                width: 210mm !important;
+                max-width: 210mm !important; 
+                height: 297mm !important;
+                margin: 0 auto !important; 
+                border: none !important; 
+                page-break-after: always !important; 
+                break-after: page !important; 
+                overflow: hidden !important;
             }
         }
     </style>
@@ -173,7 +194,7 @@
                         <span class="font-handwriting font-bold text-[18px] text-slate-900">Rozliczanie Kosztów</span>
                     </div>
                     
-                    <!-- Исправленный красный треугольник -->
+                    <!-- Red Triangle -->
                     <div class="absolute top-12 left-4 z-20 filter drop-shadow-[0_8px_8px_rgba(0,0,0,0.3)]">
                         <div class="bg-red-500 w-32 h-32 clip-triangle rotate-[12deg] flex flex-col items-center justify-end pb-3">
                             <span class="text-white font-bold text-[11px] leading-tight text-center">
