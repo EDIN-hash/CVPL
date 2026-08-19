@@ -21,59 +21,66 @@
     </script>
     <style>
         body {
-            background-color: #f3f4f6; /* Light gray background for the screen */
+            background-color: #f3f4f6;
             display: flex;
             justify-content: center;
-            padding: 2rem;
-            color: #111827; /* Dark slate text */
-            line-height: 1.5;
+            padding: 1.5rem;
+            color: #111827;
+            line-height: 1.4;
         }
         
         .a4-container {
             width: 210mm;
-            min-height: 297mm;
+            height: 297mm;
+            max-height: 297mm;
             background: white;
-            padding: 12mm 15mm;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 10mm 12mm;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
-        }
-
-        /* Print optimizations */
-        @media print {
-            body {
-                background-color: white;
-                padding: 0;
-                display: block;
-            }
-            .a4-container {
-                box-shadow: none;
-                width: 100%;
-                padding: 0;
-                margin: 0;
-            }
-            @page {
-                size: A4;
-                margin: 12mm 15mm;
-            }
+            overflow: hidden;
         }
 
         .section-header {
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
             font-weight: 700;
             text-transform: uppercase;
-            margin-bottom: 0.25rem;
-            margin-top: 1.5rem;
+            margin-bottom: 0.15rem;
+            margin-top: 0.85rem;
         }
 
         .divider {
             border-bottom: 1px solid #d1d5db;
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
         }
         
         .contact-info {
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: #4b5563;
+        }
+
+        /* Print optimizations for 1 exact page */
+        @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
+            html, body {
+                height: 297mm;
+                background-color: white;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+            }
+            .a4-container {
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                padding: 10mm 12mm;
+                margin: 0;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
         }
     </style>
 </head>
@@ -82,18 +89,16 @@
     <div class="a4-container">
         
         <!-- HEADER -->
-        <header class="mb-6">
-            <h1 class="text-[2.5rem] font-bold tracking-widest uppercase leading-none mb-2">
+        <header class="mb-4">
+            <h1 class="text-[2.2rem] font-bold tracking-widest uppercase leading-none mb-1">
                 Bohdan<br>Shvets
             </h1>
             
-            <div class="flex justify-between items-end mt-4 border-b border-gray-300 pb-2">
-                <!-- Professional Headline -->
-                <div class="text-sm font-semibold tracking-wider uppercase text-gray-700">
+            <div class="flex justify-between items-end mt-2 border-b border-gray-300 pb-1.5">
+                <div class="text-xs font-semibold tracking-wider uppercase text-gray-700">
                     Junior Finance & Operations Specialist
                 </div>
                 
-                <!-- Contact Details aligned right -->
                 <div class="contact-info text-right">
                     +48 783 035 162 | shvetsbohdan2@gmail.com<br>
                     Poznań, Polska | linkedin.com/in/bohdan-shvets
@@ -101,15 +106,15 @@
             </div>
         </header>
 
-        <!-- MAIN LAYOUT: Single Column as requested -->
+        <!-- MAIN LAYOUT -->
         <main>
             
             <!-- SUMMARY -->
             <section>
                 <h2 class="section-header">Podsumowanie</h2>
                 <div class="divider"></div>
-                <p class="text-[13px] text-gray-800 text-justify leading-relaxed">
-                    Ambitny i zorientowany na szczegóły specjalista ds. operacji i administracji z silnym zapleczem analityczno-technicznym. Posiadam praktyczne doświadczenie w obsłudze dokumentacji, weryfikacji danych oraz automatyzacji procesów biurowych (Excel, AppSheet, skrypty Python). Szybko przyswajam nowe systemy (w tym środowiska klasy ERP/SAP) i sprawnie zarządzam rutynowymi procesami finansowo-administracyjnymi, dbając o bezbłędność i terminowość.
+                <p class="text-[12px] text-gray-800 text-justify leading-relaxed">
+                    Ambitny i zorientowany na szczegóły specjalista ds. operacji i administracji z silnym zapleczem analityczno-technicznym. Posiadam practical doświadczenie w obsłudze dokumentacji, weryfikacji danych oraz automatyzacji procesów biurowych (Excel, AppSheet, skrypty Python). Szybko przyswajam nowe systemy (w tym środowiska klasy ERP/SAP) i sprawnie zarządzam rutynowymi procesami finansowo-administracyjnymi, dbając o bezbłędność i terminowość.
                 </p>
             </section>
 
@@ -119,14 +124,14 @@
                 <div class="divider"></div>
                 
                 <!-- Job 1 -->
-                <div class="mb-4">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-[14px] font-bold text-gray-900 uppercase tracking-wide">Specjalista ds. Administracji i Operacji</h3>
-                        <span class="text-[12px] font-medium text-gray-600">Kwi 2025 – Kwi 2026</span>
+                <div class="mb-3">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <h3 class="text-[13px] font-bold text-gray-900 uppercase tracking-wide">Specjalista ds. Administracji i Operacji</h3>
+                        <span class="text-[11px] font-medium text-gray-600">Kwi 2025 – Kwi 2026</span>
                     </div>
-                    <div class="text-[13px] text-gray-700 mb-2">POL-SERVICE | Poznań</div>
+                    <div class="text-[12px] text-gray-700 mb-1.5 font-medium">POL-SERVICE | Poznań</div>
                     
-                    <ul class="list-disc pl-5 text-[13px] text-gray-800 space-y-1">
+                    <ul class="list-disc pl-4 text-[12px] text-gray-800 space-y-1">
                         <li><strong>Obsługa i weryfikacja dokumentacji:</strong> Ewidencja, archiwizacja oraz kontrolowanie obiegu ponad 200 dokumentów miesięcznie (w tym dokumentów finansowych i rozliczeniowych).</li>
                         <li><strong>Raportowanie i analityka:</strong> Tworzenie i aktualizacja cotygodniowych raportów operacyjno-budżetowych w programie Microsoft Excel na potrzeby zarządu.</li>
                         <li><strong>Automatyzacja procesów:</strong> Wdrożenie wewnętrznego systemu rejestracji w AppSheet, co skróciło czas przetwarzania danych i raportowania o 30%.</li>
@@ -135,14 +140,14 @@
                 </div>
 
                 <!-- Job 2 -->
-                <div class="mb-2">
-                    <div class="flex justify-between items-baseline mb-1">
-                        <h3 class="text-[14px] font-bold text-gray-900 uppercase tracking-wide">Freelancer / IT & Admin Support</h3>
-                        <span class="text-[12px] font-medium text-gray-600">Maj 2026 – Obecnie</span>
+                <div class="mb-1">
+                    <div class="flex justify-between items-baseline mb-0.5">
+                        <h3 class="text-[13px] font-bold text-gray-900 uppercase tracking-wide">Freelancer / IT & Admin Support</h3>
+                        <span class="text-[11px] font-medium text-gray-600">Maj 2026 – Obecnie</span>
                     </div>
-                    <div class="text-[13px] text-gray-700 mb-2">PROJEKTY WŁASNE | Poznań</div>
+                    <div class="text-[12px] text-gray-700 mb-1.5 font-medium">PROJEKTY WŁASNE | Poznań</div>
                     
-                    <ul class="list-disc pl-5 text-[13px] text-gray-800 space-y-1">
+                    <ul class="list-disc pl-4 text-[12px] text-gray-800 space-y-1">
                         <li>Tworzenie autorskich narzędzi i skryptów (Python, Excel VBA) automatyzujących przetwarzanie zestawień, trackerów oraz baz danych.</li>
                         <li>Optymalizacja procesów operacyjnych i wsparcie techniczno-administracyjne dla klientów biznesowych.</li>
                     </ul>
@@ -154,34 +159,35 @@
                 <h2 class="section-header">Edukacja</h2>
                 <div class="divider"></div>
                 
-                <div class="flex justify-between items-baseline mb-2">
-                    <div class="text-[13px] text-gray-800">
+                <div class="flex justify-between items-baseline mb-1">
+                    <div class="text-[12px] text-gray-800">
                         <span class="font-bold">Technik Informatyk</span> | Technikum ZSŁ, Poznań
                     </div>
-                    <div class="text-[12px] text-gray-600">2021 – 2025</div>
+                    <div class="text-[11px] text-gray-600">2021 – 2025</div>
                 </div>
                 
                 <div class="flex justify-between items-baseline">
-                    <div class="text-[13px] text-gray-800">
+                    <div class="text-[12px] text-gray-800">
                         <span class="font-bold">Informatyka (niestacjonarne)</span> | Uniwersytet im. W. Karazina
                     </div>
-                    <div class="text-[12px] text-gray-600">2021 – 2025</div>
+                    <div class="text-[11px] text-gray-600">2021 – 2025</div>
                 </div>
             </section>
 
-            <!-- SKILLS & LANGUAGES (Displayed linearly as requested) -->
+            <!-- SKILLS -->
             <section>
                 <h2 class="section-header">Hard Skills</h2>
                 <div class="divider"></div>
-                <p class="text-[13px] text-gray-800 leading-relaxed font-medium">
-                    Microsoft Excel (Pro / Analityka) &nbsp;/&nbsp; Systemy ERP / SAP (Podstawy / Gotowość do pracy) &nbsp;/&nbsp; AppSheet (No-code / Automatyzacja) &nbsp;/&nbsp; PostgreSQL & Bazy Danych &nbsp;/&nbsp; Python Scripts (Automatyzacja danych) &nbsp;/&nbsp; Analiza Danych & Raportowanie (Trackery) &nbsp;/&nbsp; Obieg Dokumentacji & Płatności
+                <p class="text-[11.5px] text-gray-800 leading-normal font-medium">
+                    Microsoft Excel (Pro / Analityka) &nbsp;/&nbsp; Systemy ERP / SAP (Podstawowa znajomość) &nbsp;/&nbsp; AppSheet (No-code / Automatyzacja) &nbsp;/&nbsp; PostgreSQL & Bazy Danych &nbsp;/&nbsp; Python Scripts (Automatyzacja danych) &nbsp;/&nbsp; Analiza Danych & Raportowanie (Trackery) &nbsp;/&nbsp; Obieg Dokumentacji & Płatności
                 </p>
             </section>
 
+            <!-- LANGUAGES -->
             <section>
                 <h2 class="section-header">Języki</h2>
                 <div class="divider"></div>
-                <p class="text-[13px] text-gray-800 leading-relaxed font-medium">
+                <p class="text-[11.5px] text-gray-800 leading-normal font-medium">
                     Polski: C1/C2 &nbsp;/&nbsp; Angielski: B2 &nbsp;/&nbsp; Rosyjski: Native
                 </p>
             </section>
