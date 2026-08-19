@@ -3,7 +3,16 @@ import re
 import requests
 from supabase import create_client, Client
 import config
+import time
 
+# Твой основной код...
+
+if __name__ == "__main__":
+    while True:
+        print("Запуск мониторинга...")
+        main()
+        print("Ожидание 3 часа...")
+        time.sleep(10800)  # 10800 секунд = 3 часа
 # Инициализация клиентов
 supabase_url = os.environ.get("SUPABASE_URL")
 supabase_key = os.environ.get("SUPABASE_KEY")
