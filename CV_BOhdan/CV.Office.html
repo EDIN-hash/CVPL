@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV Scrapbook</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -64,7 +62,7 @@
                 margin: 0; 
             }
             body { 
-                display: block !important; /* Отключаем flexbox, чтобы не ломался разрыв страниц */
+                display: block !important;
                 background: none !important; 
                 background-color: white !important; 
                 margin: 0 !important; 
@@ -90,7 +88,7 @@
     <!-- PAGE 1 -->
     <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden">
         
-        <header class="flex justify-between items-start mb-12 relative z-20">
+        <header class="flex justify-between items-start mb-10 relative z-20">
             <!-- ID Card -->
             <div class="relative bg-[#f4f4f5] p-4 w-[390px] border border-slate-200 shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] rotate-[-1deg] z-30">
                 <svg class="paperclip text-slate-400" viewBox="0 0 24 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -128,8 +126,8 @@
             </div>
 
             <!-- Notes -->
-            <div class="w-[300px] pt-6 pl-4 rotate-2 relative z-10">
-                <div class="red-circle-wrapper font-handwriting text-red-600 text-[24px] font-bold mb-3 leading-none">
+            <div class="w-[300px] pt-4 pl-4 rotate-2 relative z-10">
+                <div class="red-circle-wrapper font-handwriting text-red-600 text-[24px] font-bold mb-2 leading-none">
                     <span class="relative z-10">#żyrafywchodządoszafy<br>[PASSED]</span>
                     <svg class="red-circle-svg" viewBox="0 0 200 80" preserveAspectRatio="none">
                         <path d="M10,40 C20,10 180,10 190,40 C195,70 15,80 10,40 Z" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
@@ -138,10 +136,10 @@
                         <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
-                <p class="font-handwriting text-red-600 text-[20px] font-semibold leading-tight mt-4">
+                <p class="font-handwriting text-red-600 text-[20px] font-semibold leading-tight mt-3">
                     Przeczytałem ogłoszenie od A do Z! Gwarantuję, że zrobimy razem #wszystkodobrze!
                 </p>
-                <div class="font-handwriting text-red-600 text-[18px] font-bold mt-3 flex items-center gap-2">
+                <div class="font-handwriting text-red-600 text-[18px] font-bold mt-2 flex items-center gap-2">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     /in/bohdan-shvets
                 </div>
@@ -151,36 +149,39 @@
         <main class="flex-grow grid grid-cols-12 gap-8 relative z-10">
             <!-- Doświadczenie & Projekty -->
             <div class="col-span-7 pr-2">
-                <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Doświadczenie & Projekty</span></h2>
+                <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Doświadczenie & Projekty</span></h2>
                 
-                <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-6 ml-2 space-y-8">
+                <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-2 ml-2 space-y-6">
                     <!-- Job 1 -->
                     <div class="relative">
                         <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
-                        <div class="text-[12px] font-bold text-slate-500 mb-1">Kwi 2025 – Kwi 2026 • POL-SERVICE, Poznań</div>
-                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-2">Specjalista ds. Administracji i Obsługi B2B</h3>
-                        <ul class="text-[14px] text-slate-700 space-y-2 leading-snug">
-                            <li>• Ewidencja i obieg ok. <span class="marker-green">200 dokumentów B2B</span> miesięcznie.</li>
-                            <li>• Przejęcie zarządzania operacjami po 1 miesiącu.</li>
-                            <li>• Zaawansowane raporty w MS Excel.</li>
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">Kwi 2025 – Kwi 2026 • POL-SERVICE, Poznań</div>
+                        <h3 class="text-[16px] font-bold text-slate-900 leading-tight mb-2">Specjalista ds. Administracji i Operacji</h3>
+                        <ul class="text-[13px] text-slate-700 space-y-1.5 leading-snug">
+                            <li>• <strong class="text-slate-900">Dokumenty i finanse:</strong> Prowadzenie ewidencji <span class="marker-green">około 200 dokumentów</span> miesięcznie, weryfikacja kosztów i dbanie o porządek w papierach.</li>
+                            <li>• <strong class="text-slate-900">Excel i dane:</strong> Tworzenie zaawansowanych raportów oraz prostych automatyzacji, które oszczędzają czas i eliminują błędy.</li>
+                            <li>• <strong class="text-slate-900">Szybkie wdrożenie:</strong> Samodzielne przejęcie codziennej organizacji pracy biura po pierwszym miesiącu.</li>
                         </ul>
                     </div>
 
                     <!-- Project 1 -->
                     <div class="relative">
                         <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
-                        <div class="text-[12px] font-bold text-slate-500 mb-1">Projekt Autorski</div>
-                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-1">Aplikacja Webowa (AppSheet)</h3>
-                        <p class="text-[14px] text-slate-700 leading-snug">
-                            Zaprojektowanie i wdrożenie aplikacji eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">Projekt Autorski</div>
+                        <h3 class="text-[16px] font-bold text-slate-900 leading-tight mb-1">Aplikacja Biurowa (AppSheet / Excel)</h3>
+                        <p class="text-[13px] text-slate-700 leading-snug">
+                            Stworzenie własnego narzędzia usprawniającego obieg informacji i automatyzującego powtarzalne zadania w firmie.
                         </p>
                     </div>
 
                     <!-- Freelance -->
                     <div class="relative">
                         <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
-                        <div class="text-[12px] font-bold text-slate-500 mb-1">Maj 2026 – Obecnie</div>
-                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight">Freelance / Admin Support</h3>
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">Maj 2026 – Obecnie</div>
+                        <h3 class="text-[16px] font-bold text-slate-900 leading-tight mb-1">Działalność Niezależna / Wsparcie Biurowe</h3>
+                        <p class="text-[13px] text-slate-700 leading-snug">
+                            Pomoc firmom w organizacji dokumentów, logistyce (Uber, InPost) oraz porządkowaniu codziennych procesów.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -227,101 +228,124 @@
     <!-- PAGE 2 -->
     <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden justify-between">
         
-        <section class="mb-8 z-10 pt-4">
-            <h2 class="text-[18px] font-bold mb-8 text-slate-800 uppercase tracking-wide border-b-2 border-slate-300 inline-block pb-1">
+        <!-- НОВЫЙ БЛОК: Szczerze o moich umiejętnościach -->
+        <section class="mb-8 z-10 pt-2 relative">
+            <div class="bg-white p-6 shadow-md border border-slate-200 relative transform rotate-[1deg]">
+                <!-- Полупрозрачный скотч сверху -->
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-white/60 w-24 h-6 rotate-[-2deg] shadow-sm border border-slate-200 backdrop-blur-sm z-10"></div>
+                
+                <h2 class="font-handwriting text-red-600 text-2xl font-bold mb-3 flex items-center gap-2 border-b border-slate-100 pb-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                    Szczerze o moich umiejętnościach
+                </h2>
+                <div class="text-[13px] text-slate-700 leading-relaxed space-y-3 font-medium">
+                    <p>
+                        Nie pracowałem jeszcze bezpośrednio w specjalistycznych programach do fakturowania ani w systemie <strong>KSeF</strong>. Mam jednak wykształcenie techniczne (Technik Informatyk) i bardzo dobrą znajomość Excela, dlatego opanowanie nowego oprogramowania to dla mnie kwestia <span class="marker-green">jednego lub dwóch dni</span>.
+                    </p>
+                    <p>
+                        Jestem gotowy na <strong>okres próbny</strong>, aby pokazać swoje podejście do pracy w praktyce. Jeśli zależy Państwu na osobie skrupulatnej, dostępnej na miejscu i potrafiącej szybko się uczyć — z chęcią dołączę do zespołu na dłużej.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Графики CPU/RAM -->
+        <section class="mb-6 z-10">
+            <h2 class="text-[17px] font-bold mb-5 text-slate-800 uppercase tracking-wide border-b-2 border-slate-300 inline-block pb-1">
                 Podział Zasobów Procesora (RAM & CPU)
             </h2>
-            <div class="space-y-6 w-full pr-8">
+            <div class="space-y-5 w-full pr-8">
                 <div>
-                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1.5">
                         <span>Walka z chaosem, Excel, faktury i kontrola kosztów</span>
                         <span>60%</span>
                     </div>
-                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden shadow-inner border border-slate-300">
                         <div class="bg-red-500 h-full w-[60%]"></div>
                     </div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1.5">
                         <span>Jedzenie, kurierzy, klimat na Jeżycach</span>
                         <span>25%</span>
                     </div>
-                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden shadow-inner border border-slate-300">
                         <div class="bg-blue-500 h-full w-[25%]"></div>
                     </div>
                 </div>
                 <div>
-                    <div class="flex justify-between text-[14px] font-bold text-slate-700 mb-2">
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1.5">
                         <span>Słuchanie opowieści o Atenach i pakowanie walizki w Alpach</span>
                         <span>15%</span>
                     </div>
-                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                    <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden shadow-inner border border-slate-300">
                         <div class="bg-green-500 h-full w-[15%]"></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="grid grid-cols-12 gap-12 z-10 mb-auto mt-8">
+        <!-- Образование и Скиллы -->
+        <section class="grid grid-cols-12 gap-12 z-10 mb-auto mt-6">
             <div class="col-span-6">
-                <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Edukacja</span></h2>
-                <div class="space-y-5">
-                    <div class="bg-white p-4 border border-slate-300 shadow-sm rounded-sm">
-                        <div class="text-[12px] font-bold text-slate-500 mb-1">2021–2025</div>
-                        <h3 class="text-[15px] font-bold text-slate-900">Technik Informatyk</h3>
-                        <p class="text-[14px] text-slate-600 mt-1">Technikum ZSŁ w Poznaniu</p>
+                <h2 class="text-2xl font-bold mb-5"><span class="highlight-yellow px-1">Edukacja</span></h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
+                        <h3 class="text-[14px] font-bold text-slate-900">Technik Informatyk</h3>
+                        <p class="text-[13px] text-slate-600 mt-0.5">Technikum ZSŁ w Poznaniu</p>
                     </div>
-                    <div class="bg-white p-4 border border-slate-300 shadow-sm rounded-sm">
-                        <div class="text-[12px] font-bold text-slate-500 mb-1">2021–2025</div>
-                        <h3 class="text-[15px] font-bold text-slate-900">Informatyka (Niestacjonarne)</h3>
-                        <p class="text-[14px] text-slate-600 mt-1">Uniwersytet im. W. Karazina</p>
+                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
+                        <h3 class="text-[14px] font-bold text-slate-900">Informatyka (Niestacjonarne)</h3>
+                        <p class="text-[13px] text-slate-600 mt-0.5">Uniwersytet im. W. Karazina</p>
                     </div>
                 </div>
             </div>
 
             <div class="col-span-6">
-                <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Software Skills</span></h2>
-                <div class="grid grid-cols-2 gap-x-6 gap-y-8">
+                <h2 class="text-2xl font-bold mb-5"><span class="highlight-yellow px-1">Software Skills</span></h2>
+                <div class="grid grid-cols-2 gap-x-6 gap-y-6">
                     <!-- Excel -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#107c41] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#094725] shadow-md flex items-center justify-center text-white font-bold text-base">Ex</div>
-                            <span class="text-[13px] font-bold text-slate-800 leading-tight">MS Excel<br><span class="text-[11px] font-normal text-slate-500">(Advanced)</span></span>
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 bg-[#107c41] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#094725] shadow-md flex items-center justify-center text-white font-bold text-sm">Ex</div>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">MS Excel<br><span class="text-[10px] font-normal text-slate-500">(Advanced)</span></span>
                         </div>
-                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[95%]"></div></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[95%]"></div></div>
                     </div>
                     <!-- Python -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#3776ab] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#ffdf76] shadow-md flex items-center justify-center text-white font-bold text-base">Py</div>
-                            <span class="text-[13px] font-bold text-slate-800 leading-tight">Python</span>
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 bg-[#3776ab] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#ffdf76] shadow-md flex items-center justify-center text-white font-bold text-sm">Py</div>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Python</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[65%]"></div></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[65%]"></div></div>
                     </div>
                     <!-- AppSheet -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-[#8c34f7] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#5c1cbf] shadow-md flex items-center justify-center text-white font-bold text-base">Ap</div>
-                            <span class="text-[13px] font-bold text-slate-800 leading-tight">AppSheet</span>
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 bg-[#8c34f7] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#5c1cbf] shadow-md flex items-center justify-center text-white font-bold text-sm">Ap</div>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">AppSheet</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[85%]"></div></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[85%]"></div></div>
                     </div>
                     <!-- Google Workspace -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-white border-2 border-slate-200 rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-t-blue-500 shadow-md flex items-center justify-center text-slate-700 font-bold text-base relative overflow-hidden">
-                                Gw<div class="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-10 h-10 bg-white border-2 border-slate-200 rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-t-blue-500 shadow-md flex items-center justify-center text-slate-700 font-bold text-sm relative overflow-hidden">
+                                Gw<div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
                             </div>
-                            <span class="text-[13px] font-bold text-slate-800 leading-tight">Google<br>Workspace</span>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Google<br>Workspace</span>
                         </div>
-                        <div class="w-full bg-slate-300 h-2 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[90%]"></div></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1"><div class="bg-slate-800 h-full w-[90%]"></div></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- RODO Footer -->
-        <footer class="mt-8 pt-4 border-t border-slate-300 border-dashed z-10">
+        <footer class="mt-6 pt-3 border-t border-slate-300 border-dashed z-10">
             <p class="text-[9px] text-slate-400 text-justify leading-relaxed">
                 Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych).
             </p>
