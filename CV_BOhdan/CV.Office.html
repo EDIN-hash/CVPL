@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV Scrapbook</title>
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter (Sans-serif) & Caveat (Handwriting) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -17,60 +17,64 @@
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                         handwriting: ['Caveat', 'cursive'],
-                    },
-                    colors: {
-                        'marker-yellow': '#fdff00',
-                        'marker-green': '#a8ffb2',
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Dark desk background */
+        /* Base Desk Background */
         body {
-            background-color: #18181b; /* zinc-900 */
-            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+            background-color: #020617; /* bg-slate-950 */
         }
 
-        /* Light gray grid-paper texture */
+        /* Grid Paper Texture */
         .grid-paper {
-            background-color: #f8f9fa;
-            background-image: radial-gradient(#d1d5db 1px, transparent 1px);
-            background-size: 20px 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
 
         /* Yellow Highlighter Effect */
-        .yellow-highlight {
+        .highlight-yellow {
             position: relative;
             display: inline-block;
             z-index: 1;
         }
-        .yellow-highlight::before {
+        .highlight-yellow::before {
             content: '';
             position: absolute;
-            top: 20%;
-            left: -2%;
-            width: 104%;
-            height: 70%;
-            background-color: #fdff00;
+            top: 15%;
+            left: -3%;
+            width: 106%;
+            height: 75%;
+            background-color: #ffed4a;
             z-index: -1;
             transform: rotate(-1.5deg);
             border-radius: 3px;
         }
 
         /* Green Marker Highlight */
-        .green-marker {
+        .marker-green {
             background-color: #a8ffb2;
             padding: 0 4px;
             border-radius: 2px;
             box-decoration-break: clone;
             -webkit-box-decoration-break: clone;
+            font-weight: 700;
         }
 
-        /* Handwritten Circle Effect */
-        .red-circle-container {
+        /* Custom Shapes for Collage */
+        .clip-triangle {
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .clip-torn {
+            clip-path: polygon(0% 0%, 100% 4%, 96% 95%, 3% 100%, 0% 80%, 2% 60%, 0% 40%, 3% 20%);
+        }
+        
+        /* Red Circle SVG Container */
+        .red-circle-wrapper {
             position: relative;
             display: inline-block;
         }
@@ -88,35 +92,16 @@
         /* Paperclip */
         .paperclip {
             position: absolute;
-            top: -25px;
-            left: 20px;
-            width: 35px;
-            height: 80px;
+            top: -20px;
+            left: 15px;
+            width: 32px;
+            height: 75px;
             z-index: 50;
             filter: drop-shadow(2px 4px 3px rgba(0,0,0,0.4));
             transform: rotate(5deg);
         }
 
-        /* Collage Elements */
-        .tape {
-            background-color: rgba(253, 245, 230, 0.9);
-            box-shadow: 1px 2px 5px rgba(0,0,0,0.15);
-            border: 1px solid rgba(0,0,0,0.05);
-            transform: rotate(-4deg);
-        }
-        .triangle {
-            width: 100px;
-            height: 100px;
-            background-color: #ef4444; /* red-500 */
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            box-shadow: 0px 10px 15px rgba(0,0,0,0.3); /* clip-path hides native shadow, using filter drop-shadow in HTML instead */
-        }
-        .torn-square {
-            background-color: #4ade80; /* green-400 */
-            clip-path: polygon(0% 0%, 100% 5%, 95% 95%, 5% 100%, 0% 80%, 2% 60%, 0% 40%, 3% 20%);
-        }
-
-        /* Print Styles */
+        /* Print Media Queries */
         @media print {
             @page {
                 size: A4;
@@ -127,260 +112,321 @@
                 background-color: white !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                margin: 0;
                 padding: 0;
             }
             .grid-paper {
                 box-shadow: none !important;
                 max-width: 210mm !important;
                 height: 297mm !important;
-                margin: 0 auto;
-                border: none;
+                margin: 0 auto !important;
+                border: none !important;
+                page-break-after: always;
+                transform: scale(1) !important;
             }
         }
     </style>
 </head>
-<body class="py-10 px-4 min-h-screen flex justify-center text-gray-800">
+<body class="py-12 px-4 flex flex-col items-center gap-16 text-slate-800 antialiased min-h-screen">
 
-    <!-- MAIN A4 CANVAS -->
-    <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 flex flex-col overflow-hidden">
-
+    <!-- ========================================== -->
+    <!-- PAGE 1                                     -->
+    <!-- ========================================== -->
+    <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden">
+        
         <!-- HEADER SECTION -->
         <header class="flex justify-between items-start mb-12 relative z-20">
             
-            <!-- Left: Badge Card -->
-            <div class="relative bg-[#f4f4f4] p-5 w-[380px] border border-gray-300 shadow-[0_15px_25px_-5px_rgba(0,0,0,0.4)] transform -rotate-2 z-30">
-                <!-- Silver Paperclip SVG -->
-                <svg class="paperclip text-gray-400" viewBox="0 0 24 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Left: Polaroid ID Card -->
+            <div class="relative bg-[#f4f4f5] p-4 w-[390px] border border-slate-200 shadow-[0_15px_25px_-5px_rgba(0,0,0,0.3)] rotate-[-1deg] z-30">
+                <!-- Silver Paperclip -->
+                <svg class="paperclip text-slate-400" viewBox="0 0 24 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 2v40c0 4.418-3.582 8-8 8s-8-3.582-8-8V12c0-3.314 2.686-6 6-6s6 2.686 6 6v32c0 2.209-1.791 4-4 4s-4-1.791-4-4V16"/>
                 </svg>
 
-                <div class="flex gap-4 items-start">
-                    <!-- Photo placeholder over yellow square -->
+                <!-- Smiley Face Sticker -->
+                <img src="image_f3c822.png" alt="Smiley" class="absolute -top-5 -right-5 w-14 h-14 rotate-12 drop-shadow-md z-40">
+
+                <div class="flex gap-4 items-start mb-3">
+                    <!-- Photo Frame -->
                     <div class="bg-yellow-400 w-24 h-[110px] p-1 flex-shrink-0 shadow-inner">
-                        <div class="w-full h-full bg-zinc-700 flex items-center justify-center border border-zinc-800">
-                            <span class="text-xs text-zinc-400 font-semibold tracking-wider text-center">[ZDJĘCIE]</span>
+                        <div class="w-full h-full bg-slate-300 flex items-center justify-center border border-slate-400 overflow-hidden">
+                            <!-- Placeholder image, replace with actual photo if needed -->
+                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest text-center">Photo</span>
                         </div>
                     </div>
-                    <!-- Badge Text -->
+                    
+                    <!-- Basic Info -->
                     <div>
-                        <h1 class="font-bold text-[28px] leading-tight text-gray-900 tracking-tight">Bohdan<br>Shvets</h1>
-                        <p class="text-[11px] text-gray-600 mt-2 leading-tight">
-                            Junior / Mid Office-Chaos Absorber. Łączę IT z administracją. Tworzę automatyzacje, pilnuję budżetów i organizuję biuro.
+                        <h1 class="font-extrabold text-[28px] leading-none text-slate-900 tracking-tight">Bohdan<br>Shvets</h1>
+                        <p class="text-[12px] font-semibold text-slate-600 mt-2 leading-tight border-b border-slate-300 pb-2">
+                            Junior / Mid Office-Chaos Absorber
                         </p>
                     </div>
                 </div>
 
-                <!-- Grid/Table Data -->
-                <div class="mt-4 border-2 border-gray-800 rounded-sm">
-                    <div class="flex border-b border-gray-800">
-                        <div class="w-1/2 p-1.5 text-[10px] border-r border-gray-800 font-bold bg-white">DOB <span class="font-normal">24.08.2001</span></div>
-                        <div class="w-1/2 p-1.5 text-[10px] font-bold bg-white">LOC <span class="font-normal">Poznań, Jeżyce</span></div>
+                <!-- Info Data Grid -->
+                <div class="border-2 border-slate-800 bg-white">
+                    <div class="flex border-b border-slate-800">
+                        <div class="w-1/2 p-1.5 text-[10px] border-r border-slate-800"><span class="font-bold">Loc:</span> Poznań, Jeżyce</div>
+                        <div class="w-1/2 p-1.5 text-[10px]"><span class="font-bold">Logistyka:</span> Uber / Bolt / InPost</div>
                     </div>
-                    <div class="p-1.5 text-[10px] border-b border-gray-800 bg-white">
-                        <span class="font-bold">Logistics:</span> Uber / Bolt / InPost
+                    <div class="flex border-b border-slate-800">
+                        <div class="w-1/2 p-1.5 text-[10px] border-r border-slate-800 break-all"><span class="font-bold">@:</span> shvetsbohdan2@gmail.com</div>
+                        <div class="w-1/2 p-1.5 text-[10px]"><span class="font-bold">Tel:</span> +48 783 035 162</div>
                     </div>
-                    <div class="p-1.5 text-[10px] bg-white flex items-center gap-1">
-                        <span class="font-bold">@</span> shvetsbohdan2@gmail.com
+                    <div class="p-1.5 text-[9px] bg-slate-50 uppercase tracking-wide font-medium text-center">
+                        Polski (C1/C2) | Angielski (B1 Tech) | Rosyjski (Native)
                     </div>
-                </div>
-
-                <!-- Badge Footer -->
-                <div class="mt-3 text-[9px] text-gray-500 text-center uppercase tracking-wide">
-                    Polski (C1/C2) &nbsp;|&nbsp; Angielski (B1 Tech) &nbsp;|&nbsp; Rosyjski (Native)
                 </div>
             </div>
 
             <!-- Right: Handwritten Notes -->
-            <div class="w-[320px] pt-8 pl-4 transform rotate-3 relative z-10">
-                <p class="font-handwriting text-red-500 text-[26px] leading-tight font-bold mb-4">
-                    Przeczytałem ogłoszenie od A do Z! Zrobimy razem #wszystkodobrze!
-                </p>
-                
-                <div class="relative inline-block mb-6">
-                    <div class="red-circle-container font-handwriting text-red-600 text-[22px] font-bold">
-                        <span class="relative z-10">#żyrafywchodządoszafy [PASSED]</span>
-                        <!-- Drawn Circle SVG -->
-                        <svg class="red-circle-svg" viewBox="0 0 200 60" preserveAspectRatio="none">
-                            <path d="M10,30 C20,5 180,5 190,30 C195,55 15,65 10,30 Z" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        <!-- Arrow pointing to badge -->
-                        <svg class="absolute -left-12 top-4 w-12 h-12 text-red-500 transform -rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+            <div class="w-[300px] pt-6 pl-4 rotate-2 relative z-10">
+                <div class="red-circle-wrapper font-handwriting text-red-600 text-[24px] font-bold mb-3 leading-none">
+                    <span class="relative z-10">#żyrafywchodządoszafy<br>[PASSED]</span>
+                    <!-- Hand-drawn Red Circle SVG -->
+                    <svg class="red-circle-svg" viewBox="0 0 200 80" preserveAspectRatio="none">
+                        <path d="M10,40 C20,10 180,10 190,40 C195,70 15,80 10,40 Z" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <!-- Marker Arrow pointing to the left card -->
+                    <svg class="absolute -left-12 top-6 w-12 h-12 text-red-600 rotate-[-15deg]" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path d="M10 19l-7-7m0 0l7-7m-7 7h18" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </div>
-
-                <div class="space-y-2 font-handwriting text-red-500 text-xl font-bold">
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-                        +48 783 035 162
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        /in/bohdan-shvets
-                    </div>
+                
+                <p class="font-handwriting text-red-600 text-[20px] font-semibold leading-tight mt-4">
+                    Przeczytałem ogłoszenie od A do Z! Gwarantuję, że zrobimy razem #wszystkodobrze!
+                </p>
+                <div class="font-handwriting text-red-600 text-[18px] font-bold mt-3 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    /in/bohdan-shvets
                 </div>
             </div>
         </header>
 
-        <!-- BODY SECTION (Two Columns) -->
+        <!-- MAIN BODY SECTION -->
         <main class="flex-grow grid grid-cols-12 gap-8 relative z-10">
             
-            <!-- LEFT COLUMN (Timeline) -->
-            <div class="col-span-6 pr-4">
+            <!-- LEFT COLUMN -->
+            <div class="col-span-7 pr-2">
+                <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Doświadczenie</span></h2>
                 
-                <h2 class="text-2xl font-bold mb-6"><span class="yellow-highlight px-1">Doświadczenie</span></h2>
-                
-                <div class="relative border-l-2 border-dashed border-gray-400 pl-6 pb-6 ml-2 space-y-8">
-                    
-                    <!-- Job 1 -->
+                <!-- Timeline -->
+                <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-6 ml-2">
+                    <!-- Item 1 -->
                     <div class="relative">
                         <!-- Timeline Dot -->
-                        <div class="absolute -left-[31px] top-1.5 w-[14px] h-[14px] border-2 border-gray-800 rounded-full bg-white z-10"></div>
-                        <div class="text-[12px] font-semibold text-gray-500 mb-0.5">Kwi 2025 - Kwi 2026 • 1 rok</div>
-                        <h3 class="text-[17px] font-bold text-gray-900 leading-tight">Specjalista ds. Administracji i Obsługi B2B</h3>
-                        <div class="text-[13px] font-medium text-gray-700 mb-2">POL-SERVICE • Poznań</div>
-                        <ul class="text-[13px] text-gray-600 space-y-1">
-                            <li>• Ewidencja i obieg <span class="green-marker font-semibold text-gray-900">ok. 200 dokumentów B2B</span> miesięcznie.</li>
-                            <li>• Przejęcie samodzielnego zarządzania operacjami biura po 1 miesiącu.</li>
+                        <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
+                        <div class="text-[12px] font-bold text-slate-500 mb-1">Kwi 2025 – Kwi 2026 • POL-SERVICE, Poznań</div>
+                        <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-2">Specjalista ds. Administracji i Obsługi B2B</h3>
+                        <ul class="text-[14px] text-slate-700 space-y-2 leading-snug">
+                            <li>• Ewidencja i obieg ok. <span class="marker-green">200 dokumentów B2B</span> miesięcznie.</li>
+                            <li>• Przejęcie zarządzania operacjami po 1 miesiącu.</li>
+                            <li>• Zaawansowane raporty w MS Excel.</li>
                         </ul>
-                    </div>
-
-                    <!-- Job 2 -->
-                    <div class="relative">
-                        <!-- Timeline Dot -->
-                        <div class="absolute -left-[31px] top-1.5 w-[14px] h-[14px] border-2 border-gray-800 rounded-full bg-white z-10"></div>
-                        <div class="text-[12px] font-semibold text-gray-500 mb-0.5">Maj 2026 - Obecnie</div>
-                        <h3 class="text-[17px] font-bold text-gray-900 leading-tight">Freelance & Wdrożenia IT</h3>
-                        <div class="text-[13px] font-medium text-gray-700 mb-2">Autorska Aplikacja Webowa (AppSheet)</div>
-                        <ul class="text-[13px] text-gray-600 space-y-1">
-                            <li>• Zaprojektowanie aplikacji eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <h2 class="text-2xl font-bold mt-4 mb-6"><span class="yellow-highlight px-1">Edukacja</span></h2>
-                
-                <div class="relative border-l-2 border-dashed border-gray-400 pl-6 pb-2 ml-2 space-y-5">
-                    <!-- Edu 1 -->
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-1.5 w-[14px] h-[14px] border-2 border-gray-800 rounded-full bg-white z-10"></div>
-                        <div class="text-[13px] text-gray-800 leading-snug">
-                            <span class="font-bold">2021 - 2025</span> | Technik Informatyk | Technikum ZSŁ, Poznań
-                        </div>
-                    </div>
-                    <!-- Edu 2 -->
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-1.5 w-[14px] h-[14px] border-2 border-gray-800 rounded-full bg-white z-10"></div>
-                        <div class="text-[13px] text-gray-800 leading-snug">
-                            <span class="font-bold">2021 - 2025</span> | Informatyka | Uniwersytet im. W. Karazina (Niestacjonarne)
-                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN (Stickers & Software) -->
-            <div class="col-span-6 pl-2 flex flex-col">
-                
-                <h2 class="text-2xl font-bold mb-4 text-center"><span class="yellow-highlight px-1">Karta Urządzenia</span></h2>
+            <!-- RIGHT COLUMN -->
+            <div class="col-span-5 pl-2">
+                <h2 class="text-2xl font-bold mb-8 text-center"><span class="highlight-yellow px-1">Karta Urządzenia</span></h2>
                 
                 <!-- Floating Collage Area -->
-                <div class="relative h-[220px] w-full mb-8">
+                <div class="relative h-[250px] w-full mt-4">
                     
-                    <!-- Tape 1 -->
-                    <div class="tape absolute top-2 left-6 px-4 py-2 text-[14px] font-bold font-handwriting text-gray-800 z-30">
-                        Rozliczanie Kosztów
+                    <!-- Orange Tape/Sticker -->
+                    <div class="absolute top-0 left-2 bg-orange-300 px-4 py-2 shadow-md rotate-[-4deg] border border-orange-200 z-30">
+                        <span class="font-handwriting font-bold text-[18px] text-slate-900">Rozliczanie Kosztów</span>
                     </div>
 
                     <!-- Red Triangle -->
-                    <div class="absolute top-12 left-8 z-20 filter drop-shadow-[0_10px_8px_rgba(0,0,0,0.3)]">
-                        <div class="triangle flex items-end justify-center pb-2 transform -rotate-12">
-                            <span class="text-white text-[11px] font-bold tracking-wider mb-1">Excel & Dane</span>
+                    <div class="absolute top-12 left-6 z-20 filter drop-shadow-[0_8px_8px_rgba(0,0,0,0.3)]">
+                        <div class="bg-red-500 w-28 h-28 clip-triangle rotate-[12deg] flex items-end justify-center pb-2">
+                            <span class="text-white font-bold text-[11px] mb-1">Excel & Automatyzacja</span>
                         </div>
                     </div>
 
-                    <!-- Green Torn Square -->
-                    <div class="absolute top-8 right-12 z-10 filter drop-shadow-[0_8px_6px_rgba(0,0,0,0.25)]">
-                        <div class="torn-square w-24 h-24 flex items-center justify-center transform rotate-6 bg-green-300">
-                            <span class="text-gray-900 font-bold text-[13px] text-center px-2 transform -rotate-6">Ewidencja B2B</span>
+                    <!-- Green Torn Paper -->
+                    <div class="absolute top-10 right-2 z-10 filter drop-shadow-[0_8px_6px_rgba(0,0,0,0.25)]">
+                        <div class="bg-[#4ade80] w-24 h-24 clip-torn rotate-[-8deg] flex items-center justify-center p-2">
+                            <span class="text-slate-900 font-bold text-[13px] text-center transform -rotate-3">Ewidencja B2B</span>
                         </div>
                     </div>
 
-                    <!-- Light Blue Circle -->
-                    <div class="absolute bottom-4 right-4 z-20 filter drop-shadow-[0_12px_10px_rgba(0,0,0,0.3)]">
-                        <div class="w-28 h-28 bg-blue-300 rounded-full flex flex-col items-center justify-center p-3 text-center transform -rotate-3">
-                            <span class="font-handwriting font-bold text-gray-900 text-[15px] leading-tight">Azjatycka Kuchnia<br>& Logistyka</span>
+                    <!-- Blue Circle -->
+                    <div class="absolute bottom-6 right-8 z-20 filter drop-shadow-[0_10px_8px_rgba(0,0,0,0.3)]">
+                        <div class="bg-blue-300 w-[100px] h-[100px] rounded-full rotate-[5deg] flex items-center justify-center p-2">
+                            <span class="font-handwriting font-bold text-[16px] text-slate-900 text-center leading-tight">Uber / InPost Logistics</span>
                         </div>
+                    </div>
+
+                    <!-- Frog in Fire Sticker -->
+                    <img src="image_f3c827.png" alt="Frog in fire" class="absolute -bottom-10 -left-6 w-[110px] h-[110px] -rotate-12 drop-shadow-xl z-40">
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- PAGE 2                                     -->
+    <!-- ========================================== -->
+    <div class="grid-paper w-full max-w-[800px] aspect-[1/1.414] relative p-10 lg:p-12 flex flex-col overflow-hidden">
+        
+        <!-- TOP SECTION: Wdrożenia & Projekty -->
+        <section class="mb-10 z-10">
+            <h2 class="text-2xl font-bold mb-8"><span class="highlight-yellow px-1">Wdrożenia & Projekty</span></h2>
+            
+            <div class="relative border-l-2 border-dashed border-slate-400 pl-6 pb-2 ml-2 space-y-8">
+                <!-- Project 1 -->
+                <div class="relative">
+                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
+                    <h3 class="text-[17px] font-bold text-slate-900 leading-tight mb-1">Autorska Aplikacja Webowa (AppSheet)</h3>
+                    <p class="text-[14px] text-slate-700 leading-snug">
+                        Zaprojektowanie i wdrożenie aplikacji eliminującej błędy magazynowe i automatyzującej powtarzalne operacje biurowe.
+                    </p>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="relative">
+                    <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 border-2 border-slate-800 rounded-full bg-white"></div>
+                    <div class="text-[12px] font-bold text-slate-500 mb-1">Maj 2026 – Obecnie</div>
+                    <h3 class="text-[17px] font-bold text-slate-900 leading-tight">Freelance / Admin Support</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- MIDDLE SECTION: RAM & CPU -->
+        <section class="mb-12 z-10">
+            <h2 class="text-[18px] font-bold mb-6 text-slate-800 uppercase tracking-wide border-b-2 border-slate-300 inline-block pb-1">
+                Podział Zasobów Procesora (RAM & CPU)
+            </h2>
+            
+            <div class="space-y-5 w-3/4">
+                <!-- Bar 1 -->
+                <div>
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                        <span>Walka z chaosem, Excel, faktury i kontrola kosztów</span>
+                        <span>60%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                        <div class="bg-red-500 h-full w-[60%]"></div>
                     </div>
                 </div>
+                <!-- Bar 2 -->
+                <div>
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                        <span>Jedzenie, kurierzy, klimat na Jeżycach</span>
+                        <span>25%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                        <div class="bg-blue-500 h-full w-[25%]"></div>
+                    </div>
+                </div>
+                <!-- Bar 3 -->
+                <div>
+                    <div class="flex justify-between text-[13px] font-bold text-slate-700 mb-1">
+                        <span>Słuchanie opowieści o Atenach i pakowanie walizki w Alpach</span>
+                        <span>15%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden shadow-inner border border-slate-300">
+                        <div class="bg-green-500 h-full w-[15%]"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <h2 class="text-2xl font-bold mb-6"><span class="yellow-highlight px-1">Software Skills</span></h2>
+        <!-- BOTTOM SECTION: Edukacja & Software Skills -->
+        <section class="grid grid-cols-12 gap-8 z-10 mb-auto">
+            <!-- Left: Edukacja -->
+            <div class="col-span-7">
+                <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Edukacja</span></h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
+                        <h3 class="text-[14px] font-bold text-slate-900">Technik Informatyk</h3>
+                        <p class="text-[13px] text-slate-600">Technikum ZSŁ w Poznaniu</p>
+                    </div>
+                    <div class="bg-white p-3 border border-slate-300 shadow-sm rounded-sm">
+                        <div class="text-[11px] font-bold text-slate-500 mb-0.5">2021–2025</div>
+                        <h3 class="text-[14px] font-bold text-slate-900">Informatyka (Niestacjonarne)</h3>
+                        <p class="text-[13px] text-slate-600">Uniwersytet im. W. Karazina</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Software Skills -->
+            <div class="col-span-5">
+                <h2 class="text-2xl font-bold mb-6"><span class="highlight-yellow px-1">Software Skills</span></h2>
                 
-                <!-- Software Grid -->
-                <div class="grid grid-cols-2 gap-x-8 gap-y-6 px-2">
+                <div class="grid grid-cols-2 gap-x-6 gap-y-6">
                     
-                    <!-- Skill 1 -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-[#107c41] rounded-md shadow-md flex items-center justify-center text-white font-bold text-lg border-b-2 border-[#094725]">
+                    <!-- Excel -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2">
+                            <!-- Styled Folder Icon -->
+                            <div class="w-10 h-10 bg-[#107c41] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#094725] shadow-md flex items-center justify-center text-white font-bold text-sm">
                                 Ex
                             </div>
-                            <span class="text-[13px] font-bold text-gray-800">MS Excel</span>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">MS Excel<br><span class="text-[10px] font-normal text-slate-500">(Advanced)</span></span>
                         </div>
-                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden shadow-inner">
-                            <div class="bg-gray-800 h-full w-[95%]"></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-slate-800 h-full w-[95%]"></div>
                         </div>
                     </div>
 
-                    <!-- Skill 2 -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-yellow-400 rounded-md shadow-md flex items-center justify-center text-white font-bold text-lg border-b-2 border-gray-600">
+                    <!-- Python -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2">
+                            <!-- Styled Folder Icon -->
+                            <div class="w-10 h-10 bg-[#3776ab] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#ffdf76] shadow-md flex items-center justify-center text-white font-bold text-sm">
                                 Py
                             </div>
-                            <span class="text-[13px] font-bold text-gray-800">Python</span>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Python</span>
                         </div>
-                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden shadow-inner">
-                            <div class="bg-gray-800 h-full w-[60%]"></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-slate-800 h-full w-[65%]"></div>
                         </div>
                     </div>
 
-                    <!-- Skill 3 -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-[#8c34f7] rounded-md shadow-md flex items-center justify-center text-white font-bold text-lg border-b-2 border-[#5c1cbf]">
+                    <!-- AppSheet -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2">
+                            <!-- Styled Folder Icon -->
+                            <div class="w-10 h-10 bg-[#8c34f7] rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-[#5c1cbf] shadow-md flex items-center justify-center text-white font-bold text-sm">
                                 Ap
                             </div>
-                            <span class="text-[13px] font-bold text-gray-800">AppSheet</span>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">AppSheet</span>
                         </div>
-                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden shadow-inner">
-                            <div class="bg-gray-800 h-full w-[85%]"></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-slate-800 h-full w-[85%]"></div>
                         </div>
                     </div>
 
-                    <!-- Skill 4 -->
-                    <div class="flex flex-col gap-2">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-white border border-gray-300 rounded-md shadow-md flex items-center justify-center text-gray-800 font-bold text-lg border-b-2 border-gray-400 relative overflow-hidden">
-                                <span class="z-10 text-gray-800">Gw</span>
-                                <!-- Small multi-color accent -->
-                                <div class="absolute bottom-0 w-full h-1 bg-gradient-to-r from-blue-500 via-red-500 to-yellow-500"></div>
+                    <!-- Google Workspace -->
+                    <div class="flex flex-col gap-1.5">
+                        <div class="flex items-center gap-2">
+                            <!-- Styled Folder Icon -->
+                            <div class="w-10 h-10 bg-white border-2 border-slate-200 rounded-b-lg rounded-tr-lg rounded-tl-sm border-t-8 border-t-blue-500 shadow-md flex items-center justify-center text-slate-700 font-bold text-sm relative overflow-hidden">
+                                Gw
+                                <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 via-yellow-400 to-red-400"></div>
                             </div>
-                            <span class="text-[13px] font-bold text-gray-800">Google Workspace</span>
+                            <span class="text-[12px] font-bold text-slate-800 leading-tight">Google<br>Workspace</span>
                         </div>
-                        <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden shadow-inner">
-                            <div class="bg-gray-800 h-full w-[90%]"></div>
+                        <div class="w-full bg-slate-300 h-1.5 rounded-full overflow-hidden mt-1">
+                            <div class="bg-slate-800 h-full w-[90%]"></div>
                         </div>
                     </div>
 
                 </div>
             </div>
-        </main>
+        </section>
 
-        <!-- FOOTER -->
-        <footer class="mt-auto pt-6 w-full relative z-10">
-            <p class="text-[8px] text-gray-400 text-right">
-                Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji zgodnie z RODO.
+        <!-- FOOTER RODO -->
+        <footer class="mt-8 pt-4 border-t border-slate-300 border-dashed z-10">
+            <p class="text-[9px] text-slate-400 text-justify leading-relaxed">
+                Wyrażam zgodę na przetwarzanie moich danych osobowych dla potrzeb niezbędnych do realizacji procesu rekrutacji (zgodnie z ustawą z dnia 10 maja 2018 roku o ochronie danych osobowych).
             </p>
         </footer>
 
