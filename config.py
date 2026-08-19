@@ -1,5 +1,5 @@
 # Порог Match Score для отправки в Telegram (от 0 до 100)
-SCORE_THRESHOLD = 50
+SCORE_THRESHOLD = 0
 
 # Обязательный город или формат
 TARGET_CITY = "poznań"
