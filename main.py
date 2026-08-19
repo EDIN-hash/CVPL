@@ -1,19 +1,11 @@
 import os
 import re
+import time
 import requests
 from supabase import create_client, Client
 import config
-import time
 
-# Твой основной код...
-
-if __name__ == "__main__":
-    while True:
-        print("Запуск мониторинга...")
-        main()
-        print("Ожидание 3 часа...")
-        time.sleep(10800)  # 10800 секунд = 3 часа
-# Инициализация клиентов
+# Инициализация клиентов (Render берет их из Environment Variables)
 supabase_url = os.environ.get("SUPABASE_URL")
 supabase_key = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(supabase_url, supabase_key)
@@ -77,7 +69,6 @@ def calculate_score(title: str, description: str, location: str, is_remote: bool
     return min(max(score, 0), 100), matched_skills
 
 def fetch_justjoin_it():
-    # Пример использования прямого REST API JustJoin.it
     url = "https://justjoin.it/api/offers"
     try:
         res = requests.get(url, timeout=10)
@@ -88,7 +79,6 @@ def fetch_justjoin_it():
                 city = item.get('city', '').lower()
                 is_remote = item.get('workplace_type') == 'remote'
                 
-                # Фильтруем сразу по локации Познань или Remote
                 if city == config.TARGET_CITY or is_remote:
                     parsed.append({
                         'id': f"jjit_{item.get('id')}",
@@ -105,34 +95,43 @@ def fetch_justjoin_it():
     return []
 
 def main():
-    # 1. Получаем список уже сохраненных ID из Supabase
-    existing_records = supabase.table('jobs').select('id').execute()
-    existing_ids = {item['id'] for item in existing_records.data}
+    print("Собираю вакансии...")
+    try:
+        # Получаем уже сохраненные ID
+        existing_records = supabase.table('jobs').select('id').execute()
+        existing_ids = {item['id'] for item in existing_records.data}
 
-    # 2. Собираем вакансии
-    jobs = []
-    jobs.extend(fetch_justjoin_it())
-    # Сюда подключаются функции для NoFluffJobs, Pracuj, OLX
+        # Парсинг
+        jobs = []
+        jobs.extend(fetch_justjoin_it())
 
-    # 3. Обработка и фильтрация
-    for job in jobs:
-        job_id = str(job['id'])
-        if job_id in existing_ids:
-            continue  # Пропускаем дубли
+        # Фильтрация и отправка
+        for job in jobs:
+            job_id = str(job['id'])
+            if job_id in existing_ids:
+                continue
 
-        score, matches = calculate_score(
-            job['title'], 
-            job['description'], 
-            job['location'], 
-            job['is_remote']
-        )
+            score, matches = calculate_score(
+                job['title'], 
+                job['description'], 
+                job['location'], 
+                job['is_remote']
+            )
 
-        # Сохраняем в Supabase, чтобы больше не обрабатывать
-        supabase.table('jobs').insert({'id': job_id, 'url': job['url']}).execute()
+            # Сохраняем в Supabase
+            supabase.table('jobs').insert({'id': job_id, 'url': job['url']}).execute()
 
-        # 4. Отправляем уведомление, если Match Score выше порога
-        if score >= config.SCORE_THRESHOLD:
-            send_telegram_alert(job, score, matches)
+            # Отправляем в Telegram
+            if score >= config.SCORE_THRESHOLD:
+                send_telegram_alert(job, score, matches)
+                
+        print("Сбор завершен.")
+    except Exception as e:
+        print(f"Ошибка во время выполнения: {e}")
 
 if __name__ == "__main__":
-    main()
+    while True:
+        print("Запуск мониторинга...")
+        main()
+        print("Ожидание 3 часа...")
+        time.sleep(10800)
