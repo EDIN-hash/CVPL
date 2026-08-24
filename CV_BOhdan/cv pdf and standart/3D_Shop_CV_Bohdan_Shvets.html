@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV</title>
     <style>
-        /* Import czcionek: Graffiti, Maszynowa (Zine) i Czytelna do tekstu */
         @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
         :root {
@@ -29,12 +28,10 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Space Mono', monospace;
-            /* Wymuszenie druku kolorów tła */
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
-        /* Dodanie filtru szumu (noise) dla efektu grunge */
         body::before {
             content: "";
             position: fixed;
@@ -44,7 +41,6 @@
             z-index: 50;
         }
 
-        /* Format A4 */
         .cv-a4 {
             width: 210mm;
             height: 297mm;
@@ -55,9 +51,10 @@
             padding: 15mm;
             color: white;
             z-index: 1;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* Tło przypominające przetarcia */
         .cv-a4::after {
             content: "";
             position: absolute;
@@ -66,7 +63,6 @@
             z-index: -1;
         }
 
-        /* Nagłówki Graffiti */
         h1, h2 {
             font-family: 'Permanent Marker', cursive;
             text-transform: uppercase;
@@ -77,160 +73,160 @@
             color: white;
             text-shadow: 3px 3px 0 #000, 5px 5px 0 var(--blue-accent);
             transform: rotate(-2deg);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             animation: float 4s ease-in-out infinite;
         }
 
-        /* Elementy z papieru */
         .paper {
             background: var(--paper-color);
             color: var(--text-dark);
-            padding: 15px 20px;
             box-shadow: 4px 4px 15px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.05);
             position: relative;
         }
 
+        /* КОНТАКТЫ - ИСПРАВЛЕНО */
         .paper-contact {
             transform: rotate(1deg);
-            width: 60%;
-            margin-bottom: 30px;
+            padding: 15px 25px;
             border-radius: 2px 10px 3px 8px;
+            margin-bottom: 35px;
+            width: max-content; /* Ширина по контенту */
+            max-width: 95%;
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .student-tag {
+            position: absolute;
+            right: -15px;
+            bottom: -15px; /* Перенес вниз, чтобы не перекрывало телефон */
+            background: black;
+            color: white;
+            border: 2px solid white;
+            padding: 5px 8px;
+            transform: rotate(-5deg);
+            font-weight: bold;
+            font-size: 0.8rem;
+            z-index: 15;
+            box-shadow: 2px 2px 0 var(--blue-accent);
+        }
+
+        /* ГЛАВНАЯ СЕТКА - ИСПРАВЛЕНО НА FLEXBOX */
+        .main-layout {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex: 1;
+            gap: 25px;
         }
 
         .paper-main {
             transform: rotate(-1deg);
-            width: 65%;
-            float: left;
+            width: 63%; /* Фиксированная ширина бумаги */
             border-radius: 10px 2px 8px 3px;
-            padding-bottom: 30px;
+            padding: 25px 25px 30px 25px;
         }
 
-        /* Taśma klejąca (Duct Tape) */
+        .right-column {
+            width: 33%; /* Фиксированная ширина колонки скиллов */
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding-top: 10px;
+        }
+
+        /* ТАЙПЫ (СКОТЧ) */
         .tape {
             position: absolute;
             background: rgba(255, 255, 255, 0.4);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 4px rgba(255,255,255,0.3);
             width: 120px;
             height: 25px;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-3deg);
             z-index: 10;
             backdrop-filter: blur(2px);
-            transition: transform 0.3s;
         }
-        .tape:hover { transform: translateX(-50%) rotate(-1deg) scale(1.05); }
-        .tape.tape-corner { top: -10px; left: -10px; transform: rotate(-45deg); width: 80px; }
-
-        /* Kontakt - siatka */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
+        .tape-contact {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+        }
+        .tape-corner {
+            top: -10px; 
+            left: -15px; 
+            transform: rotate(-45deg); 
+            width: 80px;
         }
 
-        /* Niebieskie markery do nagłówków sekcji */
+        /* ЗАГОЛОВКИ И ТЕКСТ */
         .marker-blue {
             color: var(--blue-accent);
             font-size: 2.2rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             display: inline-block;
             transform: rotate(-2deg);
         }
-
         .marker-blue span { color: #000; font-size: 1.5rem; }
 
-        /* Tekst w głównych sekcjach */
-        .section { margin-bottom: 25px; }
+        .section { margin-bottom: 30px; }
+        .section:last-child { margin-bottom: 0; }
+        
         .section p, .section ul {
             font-size: 0.85rem;
-            line-height: 1.4;
+            line-height: 1.5;
             font-family: 'Space Mono', monospace;
         }
-        .section ul { padding-left: 20px; margin-top: 5px; }
-        .section li { margin-bottom: 4px; }
+        .section ul { padding-left: 20px; margin-top: 8px; }
+        .section li { margin-bottom: 6px; }
 
-        .job-title { font-weight: 700; text-transform: uppercase; font-size: 0.95rem; margin-top: 10px; }
-        .job-date { font-size: 0.75rem; color: #555; margin-bottom: 5px; font-weight: bold; }
+        .job-title { font-weight: 700; text-transform: uppercase; font-size: 1rem; margin-top: 15px; }
+        .job-date { font-size: 0.75rem; color: #555; margin-bottom: 8px; font-weight: bold; }
 
-        /* Prawa kolumna (Ciemna - Skille) */
-        .right-column {
-            float: right;
-            width: 32%;
-            padding-left: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-top: 10px;
-        }
-
-        /* Sekcja umiejętności */
+        /* СКИЛЛЫ */
         .skills-title {
             color: white;
             font-family: 'Rock Salt', cursive;
             font-size: 1.2rem;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             transform: rotate(-5deg);
         }
 
-        .hard-skills .skill-bar {
-            margin-bottom: 20px;
-        }
+        .hard-skills .skill-bar { margin-bottom: 20px; }
         .skill-bar span {
             display: block;
             font-size: 0.8rem;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-transform: uppercase;
         }
-        .bar-bg {
-            width: 100%; height: 14px;
-            background: #333;
-            border: 1px solid white;
-        }
-        .bar-fill {
-            height: 100%; background: white;
-        }
+        .bar-bg { width: 100%; height: 12px; background: #333; border: 1px solid white; }
+        .bar-fill { height: 100%; background: white; }
 
         .soft-skills {
             text-align: right;
             font-size: 0.9rem;
-            line-height: 1.8;
+            line-height: 2;
             color: #ddd;
         }
-        .soft-skills b {
-            color: var(--blue-glow);
-            font-size: 1.2rem;
-        }
+        .soft-skills b { color: var(--blue-glow); font-size: 1.2rem; }
 
-        /* Doodles / Bazgroły */
-        .doodle { position: absolute; font-family: 'Permanent Marker', cursive; color: white; }
-        .d1 { top: 40px; right: 50px; font-size: 2rem; color: var(--blue-glow); transform: rotate(15deg); }
+        /* ГРАФИКА */
+        .doodle { position: absolute; font-family: 'Permanent Marker', cursive; color: white; pointer-events: none; }
+        .d1 { top: 40px; right: 40px; font-size: 2rem; color: var(--blue-glow); transform: rotate(15deg); }
         .d2 { bottom: 30px; left: -10px; font-size: 3rem; opacity: 0.2; transform: rotate(-25deg); }
-        .student-tag {
-            position: absolute;
-            right: -20px;
-            top: 20px;
-            background: black;
-            color: white;
-            border: 2px solid white;
-            padding: 5px;
-            transform: rotate(10deg);
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
 
-        /* Animacje (wyłączane przy druku) */
         @keyframes float {
             0% { transform: translateY(0px) rotate(-2deg); }
             50% { transform: translateY(-5px) rotate(-1deg); }
             100% { transform: translateY(0px) rotate(-2deg); }
         }
 
-        /* Media Queries dla druku (ZAPIS DO PDF) */
         @media print {
             body { background: none; margin: 0; padding: 0; }
             body::before { display: none; }
@@ -242,98 +238,97 @@
                 padding: 10mm;
             }
             .main-title { animation: none !important; }
-            .tape:hover { transform: translateX(-50%) rotate(-3deg); }
         }
     </style>
 </head>
 <body>
 
     <div class="cv-a4">
-        <!-- Bazgroły w tle -->
         <div class="doodle d1">3D CRAFT</div>
         <div class="doodle d2">PYRKON</div>
 
         <h1 class="main-title">Bohdan Shvets</h1>
 
         <div class="paper paper-contact">
-            <div class="tape"></div>
+            <div class="tape tape-contact"></div>
             <div class="student-tag">🎓 STUDENT: TAK</div>
-            <div class="contact-grid">
-                <div>📍 Poznań</div>
-                <div>📞 +48 783 035 162</div>
-                <div>✉️ 0662982401w@gmail.com</div>
+            <div class="contact-info">
+                <span>📍 Poznań</span>
+                <span>📞 +48 783 035 162</span>
+                <span>✉️ 0662982401w@gmail.com</span>
             </div>
         </div>
 
-        <!-- Prawa kolumna - skille -->
-        <div class="right-column">
-            
-            <div class="skills-section mt-3">
-                <div class="skills-title">HARD SKILLS</div>
-                <div class="hard-skills">
-                    <div class="skill-bar">
-                        <span>Modelowanie 3D & Sprzęt PC</span>
-                        <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Język: Polski (Biegły)</span>
-                        <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
-                    </div>
-                    <div class="skill-bar">
-                        <span>Język: Angielski</span>
-                        <div class="bar-bg"><div class="bar-fill" style="width: 70%;"></div></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="skills-section mt-3">
-                <div class="skills-title" style="transform: rotate(3deg); margin-top: 30px;">SOFT SKILLS</div>
-                <div class="soft-skills">
-                    <b>#</b> KOMUNIKACJA <br>
-                    PODEJŚCIE DO KLIENTA <b>#</b> <br>
-                    <b>#</b> PASJA DO POPKULTURY <br>
-                    OBSŁUGA EVENTÓW <b>#</b> <br>
-                    <b>#</b> ZNAJOMOŚĆ GIER / ANIME
-                </div>
-            </div>
-        </div>
-
-        <!-- Lewa kolumna - główny papier -->
-        <div class="paper paper-main">
-            <div class="tape tape-corner"></div>
-            
-            <div class="section">
-                <h2 class="marker-blue">O MNIE <span>!!</span></h2>
-                <p>
-                    Interesuję się nowymi technologiami, w tym drukiem 3D, a także grami, anime i cosplayem. Od lat jestem stałym bywalcem Pyrkonu, więc doskonale znam klimat konwentów od środka. Łatwo nawiązuję kontakt z ludźmi, w tym z młodzieżą. Szukam pracy, w której będę mógł połączyć swoje zainteresowania popkulturą z codziennymi obowiązkami i obsługą klientów.
-                </p>
-            </div>
-
-            <div class="section">
-                <h2 class="marker-blue" style="font-size: 1.8rem;">DOŚWIADCZENIE <span>⚡</span></h2>
+        <div class="main-layout">
+            <!-- Левая колонка - бумага -->
+            <div class="paper paper-main">
+                <div class="tape tape-corner"></div>
                 
-                <div class="job-title">Sprzedaż i obsługa klienta</div>
-                <div class="job-date">POL-SERVICE, Poznań | 04.2025 – 04.2026</div>
-                <ul>
-                    <li>Bezpośrednia obsługa klientów – ustalanie szczegółów, doradzanie i sprzedaż.</li>
-                    <li>Realizacja zamówień i dbanie o sprawne działanie procesów w firmie.</li>
-                </ul>
+                <div class="section">
+                    <h2 class="marker-blue">O MNIE <span>!!</span></h2>
+                    <p>
+                        Interesuję się nowymi technologiami, w tym drukiem 3D, a także grami, anime i cosplayem. Od lat jestem stałym bywalcem Pyrkonu, więc doskonale znam klimat konwentów od środka. Łatwo nawiązuję kontakt z ludźmi, w tym z młodzieżą. Szukam pracy, w której będę mógł połączyć swoje zainteresowania popkulturą z codziennymi obowiązkami i obsługą klientów.
+                    </p>
+                </div>
 
-                <div class="job-title" style="margin-top: 15px;">Wolontariat eventowy</div>
-                <div class="job-date">Organizacja Wolontariacka "Fajny", Poznań | 07.2026</div>
-                <ul>
-                    <li>Praca przy międzynarodowych eventach i pomoc zagranicznym uczestnikom.</li>
-                    <li>Bieżący kontakt z ludźmi – dobre przygotowanie do pracy na targach i konwentach.</li>
-                </ul>
+                <div class="section">
+                    <h2 class="marker-blue" style="font-size: 1.8rem;">DOŚWIADCZENIE <span>⚡</span></h2>
+                    
+                    <div class="job-title">Sprzedaż i obsługa klienta</div>
+                    <div class="job-date">POL-SERVICE, Poznań | 04.2025 – 04.2026</div>
+                    <ul>
+                        <li>Bezpośrednia obsługa klientów – ustalanie szczegółów, doradzanie i sprzedaż.</li>
+                        <li>Realizacja zamówień i dbanie o sprawne działanie procesów w firmie.</li>
+                    </ul>
+
+                    <div class="job-title">Wolontariat eventowy</div>
+                    <div class="job-date">Organizacja Wolontariacka "Fajny", Poznań | 07.2026</div>
+                    <ul>
+                        <li>Praca przy międzynarodowych eventach i pomoc zagranicznym uczestnikom.</li>
+                        <li>Bieżący kontakt z ludźmi – dobre przygotowanie do pracy na targach i konwentach.</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(1deg);">PROFIL <span>✎</span></h2>
+                    <ul>
+                        <li>Naturalne podejście do klienta i swoboda w rozmowie.</li>
+                        <li>Zrozumienie specyfiki branży gamingowej i konwentowej (Cosplay, Anime).</li>
+                        <li>Rosyjski - ojczysty.</li>
+                    </ul>
+                </div>
             </div>
 
-            <div class="section" style="margin-bottom: 0;">
-                <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(1deg);">PROFIL <span>✎</span></h2>
-                <ul>
-                    <li>Naturalne podejście do klienta i swoboda w rozmowie.</li>
-                    <li>Zrozumienie specyfiki branży gamingowej i konwentowej (Cosplay, Anime).</li>
-                    <li>Rosyjski - ojczysty.</li>
-                </ul>
+            <!-- Правая колонка - темная -->
+            <div class="right-column">
+                <div class="skills-section">
+                    <div class="skills-title">HARD SKILLS</div>
+                    <div class="hard-skills">
+                        <div class="skill-bar">
+                            <span>Modelowanie 3D & Sprzęt PC</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 75%;"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Język: Polski (Biegły)</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 95%;"></div></div>
+                        </div>
+                        <div class="skill-bar">
+                            <span>Język: Angielski</span>
+                            <div class="bar-bg"><div class="bar-fill" style="width: 70%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-section">
+                    <div class="skills-title" style="transform: rotate(3deg);">SOFT SKILLS</div>
+                    <div class="soft-skills">
+                        <b>#</b> KOMUNIKACJA <br>
+                        PODEJŚCIE DO KLIENTA <b>#</b> <br>
+                        <b>#</b> PASJA DO POPKULTURY <br>
+                        OBSŁUGA EVENTÓW <b>#</b> <br>
+                        <b>#</b> ZNAJOMOŚĆ GIER / ANIME
+                    </div>
+                </div>
             </div>
         </div>
 
