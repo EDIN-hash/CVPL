@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bohdan Shvets - CV</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+        /* Zestaw fontów: Graffiti, Maszynowy (nowy), Retro-Pixel (nowy) i Monospace do czytania */
+        @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Rock+Salt&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Special+Elite&family=VT323&display=swap');
 
         :root {
             --bg-color: #111;
@@ -24,9 +25,9 @@
         body {
             background-color: #222;
             display: flex;
-            flex-direction: column; /* Изменено для нескольких страниц */
+            flex-direction: column;
             align-items: center;
-            gap: 40px; /* Отступ между страницами в браузере */
+            gap: 40px;
             padding: 40px 0;
             min-height: 100vh;
             font-family: 'Space Mono', monospace;
@@ -34,7 +35,6 @@
             print-color-adjust: exact !important;
         }
 
-        /* Глобальный шум для браузера */
         body::before {
             content: "";
             position: fixed;
@@ -44,7 +44,6 @@
             z-index: 50;
         }
 
-        /* Формат страницы А4 */
         .cv-page {
             width: 210mm;
             height: 297mm;
@@ -60,7 +59,6 @@
             flex-shrink: 0;
         }
 
-        /* Градиентное затенение на каждой странице */
         .cv-page::after {
             content: "";
             position: absolute;
@@ -83,7 +81,6 @@
             animation: float 4s ease-in-out infinite;
         }
 
-        /* Бумага */
         .paper {
             background: var(--paper-color);
             color: var(--text-dark);
@@ -98,6 +95,7 @@
             margin-bottom: 35px;
             width: max-content;
             max-width: 95%;
+            z-index: 20;
         }
 
         .contact-info {
@@ -123,7 +121,6 @@
             box-shadow: 2px 2px 0 var(--blue-accent);
         }
 
-        /* Сетка для первой страницы */
         .main-layout {
             display: flex;
             justify-content: space-between;
@@ -139,11 +136,12 @@
             padding: 25px 25px 30px 25px;
         }
 
-        /* Бумага для второй страницы (чуть шире) */
         .paper-page-2 {
-            width: 80%;
+            width: 70%;
+            margin: 0 auto;
             transform: rotate(1deg);
-            margin-top: 20px;
+            margin-top: 50px;
+            z-index: 10;
         }
 
         .right-column {
@@ -154,21 +152,19 @@
             padding-top: 10px;
         }
 
-        /* Скотч */
         .tape {
             position: absolute;
             background: rgba(255, 255, 255, 0.4);
             box-shadow: 0 1px 3px rgba(0,0,0,0.2), inset 0 0 4px rgba(255,255,255,0.3);
             width: 120px;
             height: 25px;
-            z-index: 10;
+            z-index: 25;
             backdrop-filter: blur(2px);
         }
         .tape-contact { top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); }
         .tape-corner { top: -10px; left: -15px; transform: rotate(-45deg); width: 80px; }
         .tape-corner-right { top: -10px; right: -15px; transform: rotate(45deg); width: 80px; }
 
-        /* Текст и маркеры */
         .marker-blue {
             color: var(--blue-accent);
             font-size: 2.2rem;
@@ -189,10 +185,23 @@
         .section ul { padding-left: 20px; margin-top: 8px; }
         .section li { margin-bottom: 6px; }
 
-        .job-title { font-weight: 700; text-transform: uppercase; font-size: 1rem; margin-top: 15px; }
-        .job-date { font-size: 0.75rem; color: #555; margin-bottom: 8px; font-weight: bold; }
+        /* NOWE FOTNY DLA TYTUŁÓW I DAT */
+        .job-title { 
+            font-family: 'Special Elite', cursive; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            font-size: 1.1rem; 
+            margin-top: 15px; 
+            color: #000;
+        }
+        .job-date { 
+            font-family: 'VT323', monospace; 
+            font-size: 1.1rem; 
+            color: var(--blue-accent); 
+            margin-bottom: 8px; 
+            letter-spacing: 1px;
+        }
 
-        /* Скиллы */
         .skills-title {
             color: white;
             font-family: 'Rock Salt', cursive;
@@ -213,13 +222,43 @@
         }
         .soft-skills b { color: var(--blue-glow); font-size: 1.2rem; }
 
-        /* Графика (Doodles) */
         .doodle { position: absolute; font-family: 'Permanent Marker', cursive; color: white; pointer-events: none; }
         .d1 { top: 40px; right: 40px; font-size: 2rem; color: var(--blue-glow); transform: rotate(15deg); }
         .d2 { bottom: 30px; left: -10px; font-size: 3rem; opacity: 0.2; transform: rotate(-25deg); }
-        
-        .d3 { top: 60px; right: 60px; font-size: 2.5rem; opacity: 0.15; transform: rotate(10deg); }
-        .d4 { bottom: 60px; right: -20px; font-size: 4rem; color: var(--blue-glow); transform: rotate(-15deg); opacity: 0.3;}
+        .d3 { top: 60px; left: 60px; font-size: 2.5rem; opacity: 0.15; transform: rotate(-10deg); }
+        .d4 { bottom: 40px; right: 20px; font-size: 4rem; color: var(--blue-glow); transform: rotate(-15deg); opacity: 0.3;}
+
+        /* STYLIZACJA MEMÓW NA STRONIE 2 */
+        .meme-box {
+            position: absolute;
+            background-color: #222;
+            border: 4px solid white;
+            box-shadow: 5px 5px 0 var(--blue-accent);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-family: 'Permanent Marker', cursive;
+            font-size: 1.2rem;
+            text-align: center;
+            z-index: 15;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Animacje memów (pływanie i obrót) */
+        @keyframes float-meme {
+            0% { transform: translateY(0px) rotate(var(--rot)); }
+            50% { transform: translateY(-8px) rotate(calc(var(--rot) + 3deg)); }
+            100% { transform: translateY(0px) rotate(var(--rot)); }
+        }
+
+        /* Rozmieszczenie memów (~1/8 strony) */
+        .meme1 { top: 60px; right: 40px; width: 170px; height: 170px; --rot: 12deg; animation: float-meme 4s ease-in-out infinite; }
+        .meme2 { top: 300px; left: 30px; width: 190px; height: 140px; --rot: -8deg; animation: float-meme 5s ease-in-out infinite 1s; }
+        .meme3 { bottom: 250px; right: 30px; width: 160px; height: 200px; --rot: -15deg; animation: float-meme 4.5s ease-in-out infinite 0.5s; }
+        .meme4 { bottom: 50px; left: 50px; width: 180px; height: 180px; --rot: 5deg; animation: float-meme 6s ease-in-out infinite 2s; }
 
         @keyframes float {
             0% { transform: translateY(0px) rotate(-2deg); }
@@ -227,34 +266,23 @@
             100% { transform: translateY(0px) rotate(-2deg); }
         }
 
-        /* Настройки для печати в PDF */
         @media print {
-            body { 
-                background: none; 
-                margin: 0; 
-                padding: 0; 
-                gap: 0;
-            }
+            body { background: none; margin: 0; padding: 0; gap: 0; }
             body::before { display: none; }
             .cv-page {
-                box-shadow: none;
-                margin: 0;
-                padding: 15mm;
-                /* Разрыв страницы */
-                break-after: page;
-                page-break-after: always; 
+                box-shadow: none; margin: 0; padding: 15mm;
+                break-after: page; page-break-after: always; 
             }
-            .cv-page:last-child {
-                break-after: auto;
-                page-break-after: auto;
-            }
+            .cv-page:last-child { break-after: auto; page-break-after: auto; }
             .main-title { animation: none !important; }
+            /* Zatrzymanie animacji memów przy druku, zachowując ich kąt */
+            .meme-box { animation: none !important; transform: rotate(var(--rot)) !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- СТРАНИЦА 1 -->
+    <!-- STRONA 1 -->
     <div class="cv-page">
         <div class="doodle d1">3D CRAFT</div>
         <div class="doodle d2">PYRKON</div>
@@ -272,7 +300,6 @@
         </div>
 
         <div class="main-layout">
-            <!-- Левая колонка - бумага -->
             <div class="paper paper-main">
                 <div class="tape tape-corner"></div>
                 
@@ -302,7 +329,6 @@
                 </div>
             </div>
 
-            <!-- Правая колонка - темная -->
             <div class="right-column">
                 <div class="skills-section">
                     <div class="skills-title">HARD SKILLS</div>
@@ -336,16 +362,22 @@
         </div>
     </div>
 
-    <!-- СТРАНИЦА 2 -->
+    <!-- STRONA 2 -->
     <div class="cv-page">
-        <!-- Новые надписи на фоне для второй страницы -->
         <div class="doodle d3">GAMING</div>
         <div class="doodle d4">CREATIVE</div>
 
-        <!-- Центральный лист второй страницы -->
+        <!-- MIEJSCA NA MEMY / ZDJĘCIA (Rozrzucone dookoła papieru) -->
+        <!-- ABY DODAĆ ZDJĘCIE: podmień background-image w stylu wpisując ścieżkę do pliku zamiast usuwać tekst -->
+        <div class="meme-box meme1" style="background-image: url('https://i.pinimg.com/736x/05/27/6f/05276f87906f392f3ee32aab2e8e9ee5.jpg');">MEME 1</div>
+        <div class="meme-box meme2" style="background-image: url('https://i.pinimg.com/736x/eb/41/88/eb41882d5f00c15a2a0c26e0e037164b.jpg');">MEME 2</div>
+        <div class="meme-box meme3" style="background-image: url('https://i.pinimg.com/736x/a7/f7/36/a7f736f037df5786d73353bada62f815.jpg');">MEME 3</div>
+        <div class="meme-box meme4" style="background-image: url('https://i.pinimg.com/736x/96/18/01/9618015b391e224550512e937e56b767.jpg');">MEME 4</div>
+
+        <!-- Główny papier na środku -->
         <div class="paper paper-main paper-page-2">
             <div class="tape tape-corner"></div>
-            <div class="tape tape-corner-right" style="top: -10px; right: -15px; transform: rotate(45deg); width: 80px;"></div>
+            <div class="tape tape-corner-right"></div>
 
             <div class="section">
                 <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(1deg);">PROFIL <span>✎</span></h2>
@@ -359,7 +391,13 @@
             <div class="section" style="margin-top: 30px;">
                 <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(-1deg);">EDUKACJA <span>🎓</span></h2>
                 
-                <div class="job-title">Technik Informatyk</div>
+                <div class="job-title">Informatyka (Computer Science)</div>
+                <div class="job-date">Uniwersytet Narodowy im. W. Karazina</div>
+                <ul>
+                    <li>Kierunek informatyczny – poszerzanie wiedzy z zakresu nowych technologii i programowania.</li>
+                </ul>
+
+                <div class="job-title" style="margin-top: 20px;">Technik Informatyk</div>
                 <div class="job-date">Technikum ZSŁ w Poznaniu | Ukończono: 04.2025</div>
                 <ul>
                     <li>Podstawy modelowania 3D i znajomość środowiska graficznego.</li>
