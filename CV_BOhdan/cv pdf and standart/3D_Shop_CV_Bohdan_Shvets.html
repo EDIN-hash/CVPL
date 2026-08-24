@@ -257,7 +257,6 @@
             100% { transform: translateY(0px) rotate(-2deg); }
         }
 
-        /* ИСПРАВЛЕННЫЕ НАСТРОЙКИ ДЛЯ ПЕЧАТИ В PDF */
         @media print {
             * {
                 -webkit-print-color-adjust: exact !important;
@@ -420,5 +419,25 @@
         </div>
     </div>
 
+    <!-- Скрипт слежки / трекинга открытия -->
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const webhookUrl = 'https://webhook.site/822cf451-6a25-4070-aa8a-f36ace24c124';
+            
+            fetch(webhookUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    event: 'CV Online Otwarte!',
+                    time: new Date().toLocaleString(),
+                    userAgent: navigator.userAgent,
+                    screen: `${window.screen.width}x${window.screen.height}`
+                })
+            }).catch(err => console.log('Tracking error'));
+        });
+    </script>
 </body>
 </html>
