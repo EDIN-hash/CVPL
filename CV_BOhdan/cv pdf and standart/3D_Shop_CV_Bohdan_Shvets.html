@@ -227,13 +227,12 @@
         .d3 { top: 60px; left: 60px; font-size: 2.5rem; opacity: 0.15; transform: rotate(-10deg); }
         .d4 { bottom: 40px; right: 20px; font-size: 4rem; color: var(--blue-glow); transform: rotate(-15deg); opacity: 0.3;}
 
-        /* STYLIZACJA MEMÓW NA STRONIE 2 */
         .meme-box {
             position: absolute;
             background-color: #222;
             border: 4px solid white;
             box-shadow: 5px 5px 0 var(--blue-accent);
-            display: block; /* Zmieniono z flex, usunięto tekst */
+            display: block;
             z-index: 15;
             overflow: hidden;
             background-size: cover;
@@ -247,7 +246,6 @@
             100% { transform: translateY(0px) rotate(var(--rot)); }
         }
 
-        /* Nowe pozycje (rozsunięte po kątach, z dala od tekstu) */
         .meme1 { top: 60px; right: 40px; width: 160px; height: 160px; --rot: 12deg; animation: float-meme 4s ease-in-out infinite; }
         .meme2 { top: 120px; left: 30px; width: 150px; height: 130px; --rot: -8deg; animation: float-meme 5s ease-in-out infinite 1s; }
         .meme3 { bottom: 200px; right: 40px; width: 160px; height: 180px; --rot: -15deg; animation: float-meme 4.5s ease-in-out infinite 0.5s; }
@@ -259,14 +257,38 @@
             100% { transform: translateY(0px) rotate(-2deg); }
         }
 
+        /* ИСПРАВЛЕННЫЕ НАСТРОЙКИ ДЛЯ ПЕЧАТИ В PDF */
         @media print {
-            body { background: none; margin: 0; padding: 0; gap: 0; }
-            body::before { display: none; }
-            .cv-page {
-                box-shadow: none; margin: 0; padding: 15mm;
-                break-after: page; page-break-after: always; 
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
             }
-            .cv-page:last-child { break-after: auto; page-break-after: auto; }
+            body { 
+                background: none !important; 
+                margin: 0 !important; 
+                padding: 0 !important; 
+                gap: 0 !important;
+            }
+            body::before { display: none !important; }
+            
+            .cv-page {
+                width: 210mm !important;
+                height: 297mm !important;
+                max-height: 297mm !important;
+                box-shadow: none !important; 
+                margin: 0 !important; 
+                padding: 15mm !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                page-break-inside: avoid !important;
+                overflow: hidden !important;
+            }
+            
+            .cv-page:last-child {
+                page-break-after: avoid !important;
+                break-after: auto !important;
+            }
+
             .main-title { animation: none !important; }
             .meme-box { animation: none !important; transform: rotate(var(--rot)) !important; }
         }
@@ -359,7 +381,7 @@
         <div class="doodle d3">GAMING</div>
         <div class="doodle d4">CREATIVE</div>
 
-        <!-- MIEJSCA NA MEMY / ZDJĘCIA (Czyste, bez tekstu) -->
+        <!-- MIEJSCA NA MEMY / ZDJĘCIA -->
         <div class="meme-box meme1" style="background-image: url('https://i.pinimg.com/736x/05/27/6f/05276f87906f392f3ee32aab2e8e9ee5.jpg');"></div>
         <div class="meme-box meme2" style="background-image: url('https://i.pinimg.com/736x/eb/41/88/eb41882d5f00c15a2a0c26e0e037164b.jpg');"></div>
         <div class="meme-box meme3" style="background-image: url('https://i.pinimg.com/736x/a7/f7/36/a7f736f037df5786d73353bada62f815.jpg');"></div>
