@@ -24,14 +24,17 @@
         body {
             background-color: #222;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Изменено для нескольких страниц */
             align-items: center;
+            gap: 40px; /* Отступ между страницами в браузере */
+            padding: 40px 0;
             min-height: 100vh;
             font-family: 'Space Mono', monospace;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
         }
 
+        /* Глобальный шум для браузера */
         body::before {
             content: "";
             position: fixed;
@@ -41,7 +44,8 @@
             z-index: 50;
         }
 
-        .cv-a4 {
+        /* Формат страницы А4 */
+        .cv-page {
             width: 210mm;
             height: 297mm;
             background: var(--bg-color);
@@ -53,9 +57,11 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
+            flex-shrink: 0;
         }
 
-        .cv-a4::after {
+        /* Градиентное затенение на каждой странице */
+        .cv-page::after {
             content: "";
             position: absolute;
             top: -50%; left: -50%; width: 200%; height: 200%;
@@ -77,6 +83,7 @@
             animation: float 4s ease-in-out infinite;
         }
 
+        /* Бумага */
         .paper {
             background: var(--paper-color);
             color: var(--text-dark);
@@ -84,13 +91,12 @@
             position: relative;
         }
 
-        /* КОНТАКТЫ - ИСПРАВЛЕНО */
         .paper-contact {
             transform: rotate(1deg);
             padding: 15px 25px;
             border-radius: 2px 10px 3px 8px;
             margin-bottom: 35px;
-            width: max-content; /* Ширина по контенту */
+            width: max-content;
             max-width: 95%;
         }
 
@@ -105,7 +111,7 @@
         .student-tag {
             position: absolute;
             right: -15px;
-            bottom: -15px; /* Перенес вниз, чтобы не перекрывало телефон */
+            bottom: -15px;
             background: black;
             color: white;
             border: 2px solid white;
@@ -117,7 +123,7 @@
             box-shadow: 2px 2px 0 var(--blue-accent);
         }
 
-        /* ГЛАВНАЯ СЕТКА - ИСПРАВЛЕНО НА FLEXBOX */
+        /* Сетка для первой страницы */
         .main-layout {
             display: flex;
             justify-content: space-between;
@@ -128,20 +134,27 @@
 
         .paper-main {
             transform: rotate(-1deg);
-            width: 63%; /* Фиксированная ширина бумаги */
+            width: 63%; 
             border-radius: 10px 2px 8px 3px;
             padding: 25px 25px 30px 25px;
         }
 
+        /* Бумага для второй страницы (чуть шире) */
+        .paper-page-2 {
+            width: 80%;
+            transform: rotate(1deg);
+            margin-top: 20px;
+        }
+
         .right-column {
-            width: 33%; /* Фиксированная ширина колонки скиллов */
+            width: 33%;
             display: flex;
             flex-direction: column;
             gap: 40px;
             padding-top: 10px;
         }
 
-        /* ТАЙПЫ (СКОТЧ) */
+        /* Скотч */
         .tape {
             position: absolute;
             background: rgba(255, 255, 255, 0.4);
@@ -151,19 +164,11 @@
             z-index: 10;
             backdrop-filter: blur(2px);
         }
-        .tape-contact {
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%) rotate(-2deg);
-        }
-        .tape-corner {
-            top: -10px; 
-            left: -15px; 
-            transform: rotate(-45deg); 
-            width: 80px;
-        }
+        .tape-contact { top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg); }
+        .tape-corner { top: -10px; left: -15px; transform: rotate(-45deg); width: 80px; }
+        .tape-corner-right { top: -10px; right: -15px; transform: rotate(45deg); width: 80px; }
 
-        /* ЗАГОЛОВКИ И ТЕКСТ */
+        /* Текст и маркеры */
         .marker-blue {
             color: var(--blue-accent);
             font-size: 2.2rem;
@@ -187,7 +192,7 @@
         .job-title { font-weight: 700; text-transform: uppercase; font-size: 1rem; margin-top: 15px; }
         .job-date { font-size: 0.75rem; color: #555; margin-bottom: 8px; font-weight: bold; }
 
-        /* СКИЛЛЫ */
+        /* Скиллы */
         .skills-title {
             color: white;
             font-family: 'Rock Salt', cursive;
@@ -196,30 +201,25 @@
             margin-bottom: 25px;
             transform: rotate(-5deg);
         }
-
         .hard-skills .skill-bar { margin-bottom: 20px; }
         .skill-bar span {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 6px;
-            text-transform: uppercase;
+            display: block; font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; text-transform: uppercase;
         }
         .bar-bg { width: 100%; height: 12px; background: #333; border: 1px solid white; }
         .bar-fill { height: 100%; background: white; }
 
         .soft-skills {
-            text-align: right;
-            font-size: 0.9rem;
-            line-height: 2;
-            color: #ddd;
+            text-align: right; font-size: 0.9rem; line-height: 2; color: #ddd;
         }
         .soft-skills b { color: var(--blue-glow); font-size: 1.2rem; }
 
-        /* ГРАФИКА */
+        /* Графика (Doodles) */
         .doodle { position: absolute; font-family: 'Permanent Marker', cursive; color: white; pointer-events: none; }
         .d1 { top: 40px; right: 40px; font-size: 2rem; color: var(--blue-glow); transform: rotate(15deg); }
         .d2 { bottom: 30px; left: -10px; font-size: 3rem; opacity: 0.2; transform: rotate(-25deg); }
+        
+        .d3 { top: 60px; right: 60px; font-size: 2.5rem; opacity: 0.15; transform: rotate(10deg); }
+        .d4 { bottom: 60px; right: -20px; font-size: 4rem; color: var(--blue-glow); transform: rotate(-15deg); opacity: 0.3;}
 
         @keyframes float {
             0% { transform: translateY(0px) rotate(-2deg); }
@@ -227,15 +227,26 @@
             100% { transform: translateY(0px) rotate(-2deg); }
         }
 
+        /* Настройки для печати в PDF */
         @media print {
-            body { background: none; margin: 0; padding: 0; }
+            body { 
+                background: none; 
+                margin: 0; 
+                padding: 0; 
+                gap: 0;
+            }
             body::before { display: none; }
-            .cv-a4 {
-                width: 210mm;
-                height: 297mm;
+            .cv-page {
                 box-shadow: none;
                 margin: 0;
-                padding: 10mm;
+                padding: 15mm;
+                /* Разрыв страницы */
+                break-after: page;
+                page-break-after: always; 
+            }
+            .cv-page:last-child {
+                break-after: auto;
+                page-break-after: auto;
             }
             .main-title { animation: none !important; }
         }
@@ -243,7 +254,8 @@
 </head>
 <body>
 
-    <div class="cv-a4">
+    <!-- СТРАНИЦА 1 -->
+    <div class="cv-page">
         <div class="doodle d1">3D CRAFT</div>
         <div class="doodle d2">PYRKON</div>
 
@@ -288,15 +300,6 @@
                         <li>Bieżący kontakt z ludźmi – dobre przygotowanie do pracy na targach i konwentach.</li>
                     </ul>
                 </div>
-
-                <div class="section">
-                    <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(1deg);">PROFIL <span>✎</span></h2>
-                    <ul>
-                        <li>Naturalne podejście do klienta i swoboda w rozmowie.</li>
-                        <li>Zrozumienie specyfiki branży gamingowej i konwentowej (Cosplay, Anime).</li>
-                        <li>Rosyjski - ojczysty.</li>
-                    </ul>
-                </div>
             </div>
 
             <!-- Правая колонка - темная -->
@@ -331,7 +334,39 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <!-- СТРАНИЦА 2 -->
+    <div class="cv-page">
+        <!-- Новые надписи на фоне для второй страницы -->
+        <div class="doodle d3">GAMING</div>
+        <div class="doodle d4">CREATIVE</div>
+
+        <!-- Центральный лист второй страницы -->
+        <div class="paper paper-main paper-page-2">
+            <div class="tape tape-corner"></div>
+            <div class="tape tape-corner-right" style="top: -10px; right: -15px; transform: rotate(45deg); width: 80px;"></div>
+
+            <div class="section">
+                <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(1deg);">PROFIL <span>✎</span></h2>
+                <ul>
+                    <li>Naturalne podejście do klienta i swoboda w rozmowie.</li>
+                    <li>Zrozumienie specyfiki branży gamingowej i konwentowej (Cosplay, Anime).</li>
+                    <li>Rosyjski - ojczysty.</li>
+                </ul>
+            </div>
+
+            <div class="section" style="margin-top: 30px;">
+                <h2 class="marker-blue" style="font-size: 1.8rem; transform: rotate(-1deg);">EDUKACJA <span>🎓</span></h2>
+                
+                <div class="job-title">Technik Informatyk</div>
+                <div class="job-date">Technikum ZSŁ w Poznaniu | Ukończono: 04.2025</div>
+                <ul>
+                    <li>Podstawy modelowania 3D i znajomość środowiska graficznego.</li>
+                    <li>Game development (Roblox Studio, C#).</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
 </body>
