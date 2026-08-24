@@ -32,6 +32,40 @@
 </head>
 <body class="antialiased min-h-screen flex flex-col justify-between">
 
+    <!-- Auth Modal / Overlay -->
+    <div id="auth-overlay" class="fixed inset-0 bg-slate-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 rounded-2xl w-full max-w-md p-8 shadow-2xl">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-sky-500/10 text-sky-400 mb-3 text-xl">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h2 class="text-xl font-bold">Вход в систему</h2>
+                <p class="text-slate-400 text-sm mt-1">Введите учетные данные для доступа к проекту</p>
+            </div>
+
+            <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Логин</label>
+                    <input type="text" id="username-input" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-sky-500 transition" placeholder="admin">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Пароль</label>
+                    <input type="password" id="password-input" required class="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-sky-500 transition" placeholder="••••••••">
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center gap-2 cursor-pointer text-slate-400">
+                        <input type="checkbox" id="remember-me" class="rounded bg-slate-950 border-slate-700 text-sky-600 focus:ring-0">
+                        <span>Запомнить меня</span>
+                    </label>
+                </div>
+                <p id="login-error" class="text-red-400 text-xs hidden text-center">Неверный логин или пароль</p>
+                <button type="submit" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-semibold py-2.5 rounded-lg transition shadow-lg shadow-sky-600/20">
+                    Войти
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Main Content Area -->
     <main class="max-w-4xl mx-auto w-full p-6 my-auto">
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-xl">
@@ -39,7 +73,12 @@
                 <h2 class="text-2xl font-bold flex items-center gap-3">
                     <i class="fas fa-folder-open text-sky-400"></i> Файлы проекта
                 </h2>
-                <span id="repo-badge" class="text-xs bg-slate-700 text-sky-300 px-3 py-1 rounded-full font-mono">Загрузка...</span>
+                <div class="flex items-center gap-3">
+                    <span id="repo-badge" class="text-xs bg-slate-700 text-sky-300 px-3 py-1 rounded-full font-mono">Загрузка...</span>
+                    <button onclick="logout()" title="Выйти" class="text-slate-400 hover:text-red-400 transition text-sm px-2 py-1">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
             </div>
             <p class="text-slate-400 text-sm mb-6">Структура репозитория с поддержкой папок и быстрого просмотра.</p>
             
@@ -87,6 +126,43 @@
         const repo = pathArray.length > 1 && pathArray[1] !== '' ? pathArray[1] : '';
 
         document.getElementById('repo-badge').textContent = repo || `${username}.github.io`;
+
+        // Проверка авторизации при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            const isAuth = localStorage.getItem('isAuth') || sessionStorage.getItem('isAuth');
+            if (isAuth === 'true') {
+                document.getElementById('auth-overlay').classList.add('hidden');
+                fetchRepoFiles();
+            }
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const user = document.getElementById('username-input').value;
+            const pass = document.getElementById('password-input').value;
+            const remember = document.getElementById('remember-me').checked;
+            const errorEl = document.getElementById('login-error');
+
+            if (user === 'admin' && pass === 'admin') {
+                errorEl.classList.add('hidden');
+                if (remember) {
+                    localStorage.setItem('isAuth', 'true');
+                } else {
+                    sessionStorage.setItem('isAuth', 'true');
+                }
+                document.getElementById('auth-overlay').classList.add('hidden');
+                fetchRepoFiles();
+            } else {
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isAuth');
+            sessionStorage.removeItem('isAuth');
+            document.getElementById('auth-overlay').classList.remove('hidden');
+            document.getElementById('login-form').reset();
+        }
 
         async function fetchRepoFiles() {
             const treeEl = document.getElementById('file-tree');
@@ -211,8 +287,6 @@
             document.getElementById('file-modal').classList.add('hidden');
             document.getElementById('modal-iframe').src = '';
         }
-
-        fetchRepoFiles();
     </script>
 </body>
 </html>
