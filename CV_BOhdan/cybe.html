@@ -87,7 +87,7 @@
       <aside class="side-panel">
         <p class="section-label">[ SYSTEM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>FEED SOURCE</span><b>RSS (Gaming)</b></div>
+          <div class="readout-line"><span>FEED SOURCE</span><b>HACKER NEWS / API</b></div>
           <div class="readout-line"><span>HYPE ENGINE</span><b class="online">ARMED</b></div>
           <div class="readout-line"><span>REC. FOUND</span><b id="postCount">000</b></div>
         </div>
@@ -100,7 +100,7 @@
         </div>
         <div id="digest" class="digest">
           <div class="empty-state">
-            <div><strong>NO RECORDS LOADED</strong><br>PRESS FETCH_DIGEST TO INITIALIZE RSS FEED</div>
+            <div><strong>NO RECORDS LOADED</strong><br>PRESS FETCH_DIGEST TO INITIALIZE STREAM</div>
           </div>
         </div>
       </section>
@@ -113,10 +113,8 @@
 </div>
 <script>
 (() => {
-  const CONFIG = {
-    // Используем публичный RSS-поток, который не блокирует CORS в браузерах
-    rssUrl: "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://www.rockpapershotgun.com/feed/news")
-  };
+  // Используем официальный нативный JSON API от Hacker News (работает везде без CORS и прокси)
+  const API_ENDPOINT = "https://hacker-news.firebaseio.com/v0/topstories.json";
 
   const els = {
     fetchButton: document.getElementById("fetchButton"),
@@ -132,12 +130,12 @@
     els.log.innerHTML = `<b>[SYS]</b> <span style="color:${err?'var(--red)':'inherit'}">${msg}</span>`;
   }
 
-  function calculateHype(title) {
+  function calculateHype(title, score = 50) {
     const t = title.toLowerCase();
-    let score = 100;
-    if(t.includes("fail") || t.includes("worst") || t.includes("bug") || t.includes("scandal")) score += 150;
-    if(t.includes("update") || t.includes("release") || t.includes("patch")) score += 50;
-    return score;
+    let hype = score;
+    if(t.includes("fail") || t.includes("worst") || t.includes("bug") || t.includes("scandal") || t.includes("down")) hype += 200;
+    if(t.includes("launch") || t.includes("release") || t.includes("update")) hype += 100;
+    return hype;
   }
 
   async function loadDigest() {
@@ -146,33 +144,37 @@
     els.connectionState.textContent = "UPLINK STATUS: FETCHING";
 
     try {
-      const res = await fetch(CONFIG.rssUrl);
+      const res = await fetch(API_ENDPOINT);
       if(!res.ok) throw new Error(`HTTP error ${res.status}`);
-      const text = await res.text();
-      const xml = new DOMParser().parseFromString(text, "text/xml");
-      const items = Array.from(xml.querySelectorAll("item")).slice(0, 30);
+      const ids = await res.json();
+      
+      // Берем первые 20 топовых айдишников и подтягиваем их параллельно
+      const topIds = ids.slice(0, 20);
+      const promises = topIds.map(id => 
+        fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json())
+      );
+      
+      const items = await Promise.all(promises);
 
-      const posts = items.map(item => {
-        const title = item.querySelector("title")?.textContent || "Untitled";
-        const link = item.querySelector("link")?.textContent || "#";
-        const dateStr = item.querySelector("pubDate")?.textContent;
+      const posts = items.filter(item => item && item.title).map(item => {
         return {
-          title,
-          url: link,
-          date: dateStr ? new Date(dateStr).toLocaleDateString() : "RECENT",
-          hype: calculateHype(title)
+          title: item.title,
+          url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
+          score: item.score || 10,
+          comments: item.descendants || 0,
+          hype: calculateHype(item.title, item.score)
         };
       }).sort((a, b) => b.hype - a.hype);
 
-      els.digest.innerHTML = posts.map((p, i) => `
+      els.digest.innerHTML = posts.map(p => `
         <article class="news-card">
           <div class="card-top">
-            <span class="source">RSS // ${p.date}</span>
+            <span class="source">HN // ⌁</span>
             <div class="score">${p.hype} PTS</div>
           </div>
           <h3>${p.title}</h3>
           <div class="card-foot">
-            <span>PRIORITY FEED</span>
+            <span>▲ ${p.score} // 💬 ${p.comments}</span>
             <a class="open-link" href="${p.url}" target="_blank" rel="noopener">OPEN ↗</a>
           </div>
         </article>
@@ -181,7 +183,7 @@
       els.postCount.textContent = String(posts.length).padStart(3, '0');
       els.recordLabel.textContent = `${posts.length} RECORDS INDEXED`;
       els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log("RSS sync complete.");
+      log("Data stream synchronized successfully.");
     } catch(err) {
       els.connectionState.textContent = "UPLINK STATUS: FAULT";
       log(err.message, true);
