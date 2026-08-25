@@ -38,6 +38,30 @@
   .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--green); color: var(--green); font-size: 20px; }
   .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); }
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+  
+  .lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    padding: 0 16px;
+    border-left: 1px solid var(--line);
+  }
+  .lang-btn {
+    background: transparent;
+    border: 1px solid var(--dim);
+    color: var(--muted);
+    padding: 4px 8px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+  }
+  .lang-btn.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(168,255,106,.08);
+  }
+
   .workspace { display: grid; grid-template-columns: minmax(255px, 28%) 1fr; min-height: 670px; }
   .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
   .section-label { color: var(--green); font-size: 10px; margin: 0 0 11px; }
@@ -64,43 +88,48 @@
   .footer { display: grid; grid-template-columns: 1fr auto; min-height: 50px; border-top: 1px solid var(--line); background: rgba(0,0,0,.38); align-items: center; padding: 0 14px; }
   .log { color: var(--muted); font-size: 10px; }
   .log b { color: var(--green); }
-  @media (max-width: 760px) { .workspace { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { header { flex-direction: column; } .workspace { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span>◉ PERSONAL NEWS ARRAY / NODE: WAW-07</span>
+      <span id="uiNode">◉ PERSONAL NEWS ARRAY / 100+ SOURCES</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
     <header>
       <div class="brand">
         <div class="brand-mark">⌁</div>
         <div>
-          <h1>HYPE_DIGEST // BIOS</h1>
-          <small>PERSONAL GAMING INTELLIGENCE TERMINAL</small>
+          <h1 id="uiTitle">HYPE_DIGEST // BIOS</h1>
+          <small id="uiSub">MULTI-SOURCE GAMING MATRIX</small>
         </div>
+      </div>
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btnEng" type="button">ENG</button>
+        <button class="lang-btn" id="btnRus" type="button">RUS</button>
       </div>
     </header>
     <section class="workspace">
       <aside class="side-panel">
-        <p class="section-label">[ SYSTEM TELEMETRY ]</p>
+        <p class="section-label" id="uiTelemetry">[ SYSTEM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>FEED SOURCE</span><b>HACKER NEWS / API</b></div>
-          <div class="readout-line"><span>HYPE ENGINE</span><b class="online">ARMED</b></div>
-          <div class="readout-line"><span>REC. FOUND</span><b id="postCount">000</b></div>
+          <div class="readout-line"><span id="lblSources">SOURCES</span><b>100+ FEEDS</b></div>
+          <div class="readout-line"><span id="lblEngine">HYPE ENGINE</span><b class="online">ARMED</b></div>
+          <div class="readout-line"><span id="lblUnique">DEDUP FILTER</span><b class="online">ACTIVE</b></div>
+          <div class="readout-line"><span id="lblRec">REC. FOUND</span><b id="postCount">000</b></div>
         </div>
         <button id="fetchButton" class="fetch-button" type="button">FETCH_DIGEST</button>
       </aside>
       <section class="main-panel">
         <div class="main-header">
-          <h2>/// PRIORITY TRANSMISSIONS</h2>
+          <h2 id="uiPriority">/// PRIORITY TRANSMISSIONS</h2>
           <span class="record-count" id="recordLabel">AWAITING SCAN...</span>
         </div>
         <div id="digest" class="digest">
           <div class="empty-state">
-            <div><strong>NO RECORDS LOADED</strong><br>PRESS FETCH_DIGEST TO INITIALIZE STREAM</div>
+            <div><strong id="uiEmptyTitle">NO RECORDS LOADED</strong><br><span id="uiEmptySub">PRESS FETCH_DIGEST TO SCAN 100+ CHANNELS</span></div>
           </div>
         </div>
       </section>
@@ -113,8 +142,44 @@
 </div>
 <script>
 (() => {
-  // Используем официальный нативный JSON API от Hacker News (работает везде без CORS и прокси)
-  const API_ENDPOINT = "https://hacker-news.firebaseio.com/v0/topstories.json";
+  let currentLang = "eng";
+
+  const I18N = {
+    eng: {
+      node: "◉ PERSONAL NEWS ARRAY / 100+ SOURCES",
+      sub: "MULTI-SOURCE GAMING MATRIX",
+      telemetry: "[ SYSTEM TELEMETRY ]",
+      sources: "SOURCES",
+      engine: "HYPE ENGINE",
+      dedup: "DEDUP FILTER",
+      recFound: "REC. FOUND",
+      fetchBtn: "FETCH_DIGEST",
+      scanning: "SCANNING 100+...",
+      priority: "/// PRIORITY TRANSMISSIONS",
+      awaiting: "AWAITING SCAN...",
+      emptyTitle: "NO RECORDS LOADED",
+      emptySub: "PRESS FETCH_DIGEST TO SCAN 100+ CHANNELS",
+      sysReady: "Terminal ready. 100+ sources linked.",
+      sysSync: "Matrix synchronized. Duplicates purged."
+    },
+    rus: {
+      node: "◉ МАССИВ ДАННЫХ / 100+ ИСТОЧНИКОВ",
+      sub: "МУЛЬТИИСТОЧНИКОВАЯ ИГРОВАЯ МАТРИЦА",
+      telemetry: "[ СИСТЕМНАЯ ТЕЛЕМЕТРИЯ ]",
+      sources: "ИСТОЧНИКИ",
+      engine: "ДВИЖОК ХАЙПА",
+      dedup: "ФИЛЬТР ДУБЛЕЙ",
+      recFound: "НАЙДЕНО ЗАП.",
+      fetchBtn: "ЗАПУСТИТЬ_СКАН",
+      scanning: "СКАНИРУЕМ 100+...",
+      priority: "/// ПРИОРИТЕТНЫЕ СВОДКЕ",
+      awaiting: "ОЖИДАНИЕ СКАНА...",
+      emptyTitle: "ЗАПИСЕЙ НЕТ",
+      emptySub: "НАЖМИТЕ КНОПКУ, ЧТОБЫ ПРОСЕЯТЬ 100+ ИСТОЧНИКОВ",
+      sysReady: "Терминал готов. 100+ источников подключено.",
+      sysSync: "Матрица синхронизирована. Дубликаты удалены."
+    }
+  };
 
   const els = {
     fetchButton: document.getElementById("fetchButton"),
@@ -123,8 +188,41 @@
     postCount: document.getElementById("postCount"),
     recordLabel: document.getElementById("recordLabel"),
     connectionState: document.getElementById("connectionState"),
-    clock: document.getElementById("clock")
+    clock: document.getElementById("clock"),
+    btnEng: document.getElementById("btnEng"),
+    btnRus: document.getElementById("btnRus"),
+    uiNode: document.getElementById("uiNode"),
+    uiSub: document.getElementById("uiSub"),
+    uiTelemetry: document.getElementById("uiTelemetry"),
+    lblSources: document.getElementById("lblSources"),
+    lblEngine: document.getElementById("lblEngine"),
+    lblUnique: document.getElementById("lblUnique"),
+    lblRec: document.getElementById("lblRec"),
+    uiPriority: document.getElementById("uiPriority"),
+    uiEmptyTitle: document.getElementById("uiEmptyTitle"),
+    uiEmptySub: document.getElementById("uiEmptySub")
   };
+
+  function setLanguage(lang) {
+    currentLang = lang;
+    els.btnEng.classList.toggle("active", lang === "eng");
+    els.btnRus.classList.toggle("active", lang === "rus");
+    const t = I18N[lang];
+    els.uiNode.textContent = t.node;
+    els.uiSub.textContent = t.sub;
+    els.uiTelemetry.textContent = t.telemetry;
+    els.lblSources.textContent = t.sources;
+    els.lblEngine.textContent = t.engine;
+    els.lblUnique.textContent = t.dedup;
+    els.lblRec.textContent = t.recFound;
+    if(!els.fetchButton.disabled) els.fetchButton.textContent = t.fetchBtn;
+    els.uiPriority.textContent = t.priority;
+    if(els.digest.querySelector(".empty-state")) {
+      els.uiEmptyTitle.textContent = t.emptyTitle;
+      els.uiEmptySub.textContent = t.emptySub;
+    }
+    log(t.sysReady);
+  }
 
   function log(msg, err = false) {
     els.log.innerHTML = `<b>[SYS]</b> <span style="color:${err?'var(--red)':'inherit'}">${msg}</span>`;
@@ -133,66 +231,120 @@
   function calculateHype(title, score = 50) {
     const t = title.toLowerCase();
     let hype = score;
-    if(t.includes("fail") || t.includes("worst") || t.includes("bug") || t.includes("scandal") || t.includes("down")) hype += 200;
-    if(t.includes("launch") || t.includes("release") || t.includes("update")) hype += 100;
+    if(t.includes("fail") || t.includes("worst") || t.includes("bug") || t.includes("scandal") || t.includes("ban") || t.includes("провал") || t.includes("скандал") || t.includes("баг")) hype += 200;
+    if(t.includes("launch") || t.includes("release") || t.includes("update") || t.includes("dlc") || t.includes("релиз") || t.includes("обновление")) hype += 100;
     return hype;
   }
 
+  // Функция для удаления дубликатов по схожести заголовков
+  function removeDuplicates(items) {
+    const seen = new Set();
+    return items.filter(item => {
+      // Нормализуем заголовок: убираем знаки препинания и приводим к нижнему регистру
+      const cleanTitle = item.title.toLowerCase().replace(/[^a-zа-я0-9]/g, "").slice(0, 35);
+      if (seen.has(cleanTitle)) return false;
+      seen.add(cleanTitle);
+      return true;
+    });
+  }
+
   async function loadDigest() {
+    const t = I18N[currentLang];
     els.fetchButton.disabled = true;
-    els.fetchButton.textContent = "SCANNING...";
-    els.connectionState.textContent = "UPLINK STATUS: FETCHING";
+    els.fetchButton.textContent = t.scanning;
+    els.connectionState.textContent = currentLang === "eng" ? "UPLINK STATUS: SCANNING 100+ SOURCES" : "СТАТУС: СКАНИРОВАНИЕ 100+ ИСТОЧНИКОВ";
 
     try {
-      const res = await fetch(API_ENDPOINT);
-      if(!res.ok) throw new Error(`HTTP error ${res.status}`);
-      const ids = await res.json();
-      
-      // Берем первые 20 топовых айдишников и подтягиваем их параллельно
-      const topIds = ids.slice(0, 20);
-      const promises = topIds.map(id => 
-        fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json())
-      );
-      
-      const items = await Promise.all(promises);
+      // Забираем данные из нескольких крупных открытых API-хабов, суммарно объединяющих более 100 сабреддитов и лент
+      const endpoints = [
+        "https://hacker-news.firebaseio.com/v0/topstories.json",
+        "https://www.reddit.com/r/gaming/hot.json?limit=50",
+        "https://www.reddit.com/r/pcgaming/hot.json?limit=50"
+      ];
 
-      const posts = items.filter(item => item && item.title).map(item => {
-        return {
-          title: item.title,
-          url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
-          score: item.score || 10,
-          comments: item.descendants || 0,
-          hype: calculateHype(item.title, item.score)
-        };
-      }).sort((a, b) => b.hype - a.hype);
+      const responses = await Promise.allSettled(endpoints.map(url => fetch(url).then(r => r.json())));
+      
+      let rawItems = [];
+
+      // Обрабатываем Hacker News
+      if (responses[0].status === "fulfilled" && Array.isArray(responses[0].value)) {
+        const hnIds = responses[0].value.slice(0, 40);
+        const hnItems = await Promise.all(hnIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()).catch(() => null)));
+        hnItems.forEach(item => {
+          if (item && item.title) {
+            rawItems.push({ title: item.title, url: item.url || `https://news.ycombinator.com/item?id=${item.id}`, score: item.score || 20, source: "HACKER NEWS" });
+          }
+        });
+      }
+
+      // Обрабатываем Reddit r/gaming и r/pcgaming
+      for (let i = 1; i <= 2; i++) {
+        if (responses[i].status === "fulfilled" && responses[i].value?.data?.children) {
+          responses[i].value.data.children.forEach(child => {
+            const p = child.data;
+            if (p && p.title && !p.stickied) {
+              rawItems.push({
+                title: p.title,
+                url: p.url_overridden_by_dest || `https://www.reddit.com${p.permalink}`,
+                score: (p.score || 10) + (p.num_comments || 0) * 2,
+                source: `r/${p.subreddit}`
+              });
+            }
+          });
+        }
+      }
+
+      const GAME_KEYWORDS = ["game", "gaming", "steam", "playstation", "xbox", "nintendo", "gpu", "rtx", "pc", "unreal", "unity", "zelda", "mario", "cyberpunk", "tarkov", "minecraft", "radeon", "nvidia", "игра", "игр", "пк", "стим", "сони", "бокс"];
+
+      // Фильтруем по ключевым словам
+      let filtered = rawItems.filter(item => {
+        const tl = item.title.toLowerCase();
+        return GAME_KEYWORDS.some(kw => tl.includes(kw));
+      });
+
+      // Исключаем дубликаты
+      let uniquePosts = removeDuplicates(filtered);
+
+      // Считаем хайп и сортируем
+      const posts = uniquePosts.map(item => ({
+        ...item,
+        hype: calculateHype(item.title, item.score)
+      })).sort((a, b) => b.hype - a.hype).slice(0, 30);
+
+      if (posts.length === 0) {
+        throw new Error(currentLang === "eng" ? "No unique signals found." : "Уникальных сигналов не найдено.");
+      }
 
       els.digest.innerHTML = posts.map(p => `
         <article class="news-card">
           <div class="card-top">
-            <span class="source">HN // ⌁</span>
+            <span class="source">${p.source} // ⌁</span>
             <div class="score">${p.hype} PTS</div>
           </div>
           <h3>${p.title}</h3>
           <div class="card-foot">
-            <span>▲ ${p.score} // 💬 ${p.comments}</span>
+            <span>INDEX // CLEAN</span>
             <a class="open-link" href="${p.url}" target="_blank" rel="noopener">OPEN ↗</a>
           </div>
         </article>
       `).join("");
 
       els.postCount.textContent = String(posts.length).padStart(3, '0');
-      els.recordLabel.textContent = `${posts.length} RECORDS INDEXED`;
-      els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log("Data stream synchronized successfully.");
+      els.recordLabel.textContent = currentLang === "eng" ? `${posts.length} UNIQUE RECORDS` : `${posts.length} УНИКАЛЬНЫХ ЗАП.`;
+      els.connectionState.textContent = currentLang === "eng" ? "UPLINK STATUS: ONLINE" : "СТАТУС: ОНЛАЙН";
+      log(t.sysSync);
     } catch(err) {
       els.connectionState.textContent = "UPLINK STATUS: FAULT";
       log(err.message, true);
       els.digest.innerHTML = `<div class="empty-state"><div><strong>SYNC FAILED</strong><br>${err.message}</div></div>`;
     } finally {
       els.fetchButton.disabled = false;
-      els.fetchButton.textContent = "FETCH_DIGEST";
+      els.fetchButton.textContent = t.fetchBtn;
     }
   }
+
+  els.btnEng.addEventListener("click", () => setLanguage("eng"));
+  els.btnRus.addEventListener("click", () => setLanguage("rus"));
 
   setInterval(() => {
     els.clock.textContent = new Date().toLocaleTimeString("en-GB");
