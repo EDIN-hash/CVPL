@@ -617,11 +617,11 @@
 
   async function fetchNode(subreddit) {
     const rawUrl = sourceUrl(subreddit);
-    // Интегрирован твой персональный Cloudflare Worker в качестве приоритетного шлюза
+    const workerProxyUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
+    
     const endpoints = [
-      { label: "MY_WORKER", url: `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}` },
-      { label: "ALLORIGINS", url: `https://api.allorigins.win/raw?url=${encodeURIComponent(rawUrl)}` },
-      { label: "DIRECT", url: rawUrl }
+      { label: "MY_WORKER", url: workerProxyUrl },
+      { label: "ALLORIGINS", url: `https://api.allorigins.win/raw?url=${encodeURIComponent(rawUrl)}` }
     ];
     let lastError;
     for (const endpoint of endpoints) {
@@ -634,6 +634,41 @@
       }
     }
     throw lastError || new Error(`${subreddit} unavailable`);
+  }
+
+  async function fetchFeed() {
+    try {
+      const results = await Promise.allSettled(CONFIG.subreddits.map(fetchNode));
+      const successes = results.filter(result => result.status === "fulfilled").map(result => result.value);
+      if (!successes.length) throw new Error("Reddit nodes failed");
+
+      const children = successes.flatMap(result => result.payload.data.children);
+      const routes = [...new Set(successes.map(result => result.route))].join("+");
+      return {
+        payload: { data: { children } },
+        route: `REDDIT // ${routes}`
+      };
+    } catch (e) {
+      // Железобетонный фоллбек на Hacker News, если Реддит полностью забанил IP
+      log("Reddit nodes throttled. Switching to backup global feed...", "error");
+      const res = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
+      const ids = await res.json();
+      const topIds = ids.slice(0, 40);
+      const items = await Promise.all(topIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()).catch(() => null)));
+      
+      const children = items.filter(i => i && i.title).map(item => ({
+        data: {
+          title: item.title,
+          url_overridden_by_dest: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
+          permalink: `/item?id=${item.id}`,
+          score: item.score || 10,
+          num_comments: item.descendants || 0,
+          created_utc: item.time || Date.now() / 1000,
+          subreddit: "tech_global"
+        }
+      }));
+      return { payload: { data: { children } }, route: "BACKUP_FEED // HN" };
+    }
   }
 
   async function fetchFeed() {
