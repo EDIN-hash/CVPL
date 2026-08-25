@@ -15,6 +15,7 @@
     --muted: #5b9392;
     --dim: #183638;
     --red: #ff5f7e;
+    --orange: #ff9b5e;
     --line: rgba(86, 246, 255, .42);
     --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14);
     --mono: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
@@ -23,460 +24,141 @@
   * { box-sizing: border-box; }
   html { background: var(--bg); }
   body {
-    margin: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
-    color: var(--cyan);
-    background:
-      radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem),
-      radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem),
-      var(--bg);
-    font-family: var(--mono);
-    font-size: 13px;
-    letter-spacing: .035em;
+    margin: 0; min-height: 100vh; overflow-x: hidden; color: var(--cyan);
+    background: radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem),
+                radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem), var(--bg);
+    font-family: var(--mono); font-size: 13px; letter-spacing: .035em;
   }
 
   body::before {
-    content: "";
-    position: fixed;
-    z-index: 20;
-    inset: 0;
-    pointer-events: none;
-    opacity: .32;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 2px,
-      rgba(0, 0, 0, .5) 3px,
-      rgba(0, 0, 0, .5) 4px
-    );
+    content: ""; position: fixed; z-index: 20; inset: 0; pointer-events: none; opacity: .32;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .5) 3px, rgba(0, 0, 0, .5) 4px);
     mix-blend-mode: overlay;
   }
 
   body::after {
-    content: "";
-    position: fixed;
-    z-index: 21;
-    inset: 0;
-    pointer-events: none;
-    opacity: .035;
+    content: ""; position: fixed; z-index: 21; inset: 0; pointer-events: none; opacity: .035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
     animation: noise .18s steps(2) infinite;
   }
 
   @keyframes noise { 0% { transform: translate(0, 0); } 25% { transform: translate(1%, -1%); } 50% { transform: translate(-1%, 1%); } 75% { transform: translate(1%, 1%); } }
-  @keyframes flicker { 0%, 100% { opacity: 1; } 48% { opacity: .96; } 49% { opacity: .86; } 50% { opacity: 1; } 77% { opacity: .91; } 78% { opacity: 1; } }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 48% { opacity: .96; } 49% { opacity: .86; } 50% { opacity: 1; } }
   @keyframes blink { 50% { opacity: 0; } }
-  @keyframes pulse { 50% { box-shadow: 0 0 8px var(--green), 0 0 26px rgba(168,255,106,.35); } }
   @keyframes loading { to { transform: rotate(360deg); } }
 
-  .screen {
-    min-height: 100vh;
-    padding: 17px;
-    animation: flicker 8s infinite;
-  }
+  .screen { min-height: 100vh; padding: 17px; animation: flicker 8s infinite; }
+  .frame { width: min(1500px, 100%); margin: 0 auto; border: 1px solid var(--line); background: rgba(3, 10, 12, .77); box-shadow: var(--glow), inset 0 0 34px rgba(0, 218, 234, .035); position: relative; }
+  .frame::before, .frame::after { content: "╋"; position: absolute; color: var(--green); font-size: 18px; text-shadow: 0 0 8px var(--green); }
+  .frame::before { top: -11px; left: -7px; } .frame::after { right: -7px; bottom: -11px; }
 
-  .frame {
-    width: min(1500px, 100%);
-    margin: 0 auto;
-    border: 1px solid var(--line);
-    background: rgba(3, 10, 12, .77);
-    box-shadow: var(--glow), inset 0 0 34px rgba(0, 218, 234, .035);
-    position: relative;
-  }
-
-  .frame::before,
-  .frame::after {
-    content: "╋";
-    position: absolute;
-    color: var(--green);
-    font-size: 18px;
-    text-shadow: 0 0 8px var(--green);
-  }
-  .frame::before { top: -11px; left: -7px; }
-  .frame::after { right: -7px; bottom: -11px; }
-
-  .topline {
-    min-height: 30px;
-    padding: 6px 12px;
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    border-bottom: 1px solid var(--line);
-    color: var(--green);
-    font-size: 10px;
-    text-transform: uppercase;
-  }
-
-  .topline span:last-child { color: var(--muted); text-align: right; }
-
-  header {
-    display: flex;
-    align-items: stretch;
-    border-bottom: 1px solid var(--line);
-    min-height: 66px;
-    flex-wrap: wrap;
-  }
-
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    min-width: 290px;
-    padding: 10px 16px;
-    border-right: 1px solid var(--line);
-  }
-
-  .brand-mark {
-    width: 36px;
-    height: 36px;
-    display: grid;
-    place-items: center;
-    border: 1px solid var(--green);
-    color: var(--green);
-    font-size: 20px;
-    box-shadow: inset 0 0 15px rgba(168,255,106,.1), 0 0 9px rgba(168,255,106,.25);
-  }
-
-  .brand h1 {
-    font-size: 15px;
-    letter-spacing: .12em;
-    margin: 0;
-    color: var(--cyan);
-    text-shadow: 0 0 9px rgba(86, 246, 255, .55);
-  }
-
+  .topline { min-height: 30px; padding: 6px 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--green); font-size: 10px; }
+  header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 66px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 11px; min-width: 290px; padding: 10px 16px; border-right: 1px solid var(--line); }
+  .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--green); color: var(--green); font-size: 20px; box-shadow: inset 0 0 15px rgba(168,255,106,.1), 0 0 9px rgba(168,255,106,.25); }
+  .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); text-shadow: 0 0 9px rgba(86, 246, 255, .55); }
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
 
-  /* Свитч источников в шапке */
-  .source-switcher {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 16px;
-    margin-left: auto;
-    border-left: 1px solid var(--line);
-  }
-  .source-btn {
-    appearance: none;
-    border: 1px solid var(--dim);
-    background: transparent;
-    color: var(--muted);
-    padding: 6px 12px;
-    cursor: pointer;
-    font: inherit;
-    font-size: 10px;
-    letter-spacing: .08em;
-    transition: .2s;
-  }
-  .source-btn.active {
-    border-color: var(--green);
-    color: var(--green);
-    background: rgba(168,255,106,.08);
-    box-shadow: 0 0 10px rgba(168,255,106,.2);
-  }
+  .source-switcher { display: flex; align-items: center; gap: 8px; padding: 0 16px; margin-left: auto; border-left: 1px solid var(--line); }
+  .source-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
+  .source-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); box-shadow: 0 0 10px rgba(168,255,106,.2); }
 
-  .workspace {
-    display: grid;
-    grid-template-columns: minmax(255px, 28%) 1fr;
-    min-height: 670px;
-  }
-
-  .side-panel {
-    border-right: 1px solid var(--line);
-    padding: 15px;
-    position: relative;
-    background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%);
-  }
-
-  .section-label {
-    color: var(--green);
-    font-size: 10px;
-    letter-spacing: .13em;
-    margin: 0 0 11px;
-  }
-
-  .system-readout {
-    border: 1px solid var(--dim);
-    padding: 10px;
-    margin-bottom: 13px;
-    background: rgba(0, 0, 0, .22);
-  }
-
-  .readout-line {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 5px 0;
-    color: var(--muted);
-    font-size: 10px;
-    border-bottom: 1px dotted rgba(86,246,255,.16);
-  }
+  .workspace { display: grid; grid-template-columns: minmax(255px, 28%) 1fr; min-height: 670px; }
+  .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
+  .section-label { color: var(--green); font-size: 10px; margin: 0 0 11px; }
+  .system-readout { border: 1px solid var(--dim); padding: 10px; margin-bottom: 13px; background: rgba(0, 0, 0, .22); }
+  .readout-line { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; color: var(--muted); font-size: 10px; border-bottom: 1px dotted rgba(86,246,255,.16); }
   .readout-line:last-child { border: 0; }
-  .readout-line b { color: var(--cyan); font-weight: 500; text-align: right; }
+  .readout-line b { color: var(--cyan); }
   .online { color: var(--green) !important; }
 
-  .fetch-button {
-    width: 100%;
-    border: 1px solid var(--green);
-    background: rgba(168, 255, 106, .08);
-    color: var(--green);
-    padding: 14px 10px;
-    cursor: pointer;
-    font: 700 12px var(--mono);
-    letter-spacing: .13em;
-    transition: .2s;
-    box-shadow: inset 0 0 17px rgba(168,255,106,.06);
-  }
-
-  .fetch-button:hover:not(:disabled) {
-    background: var(--green);
-    color: var(--bg);
-    box-shadow: 0 0 19px rgba(168,255,106,.65);
-  }
+  .fetch-button { width: 100%; border: 1px solid var(--green); background: rgba(168, 255, 106, .08); color: var(--green); padding: 14px 10px; cursor: pointer; font: 700 12px var(--mono); transition: .2s; }
+  .fetch-button:hover:not(:disabled) { background: var(--green); color: var(--bg); box-shadow: 0 0 19px rgba(168,255,106,.65); }
   .fetch-button:disabled { cursor: wait; opacity: .7; }
-  button:focus-visible, a:focus-visible {
-    outline: 2px solid var(--green);
-    outline-offset: 3px;
-  }
-  .fetch-button.loading::before {
-    content: "";
-    display: inline-block;
-    width: 9px;
-    height: 9px;
-    margin-right: 9px;
-    border: 2px solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: loading .65s linear infinite;
-  }
-
-  .legend { margin-top: 22px; color: var(--muted); font-size: 9px; line-height: 2; }
-  .legend i { display: inline-block; width: 7px; height: 7px; margin-right: 7px; background: var(--cyan); }
-  .legend i.green { background: var(--green); }
-  .legend i.red { background: var(--red); }
+  .fetch-button.loading::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 9px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: loading .65s linear infinite; }
 
   .main-panel { min-width: 0; display: flex; flex-direction: column; }
-  .main-header {
-    padding: 14px 17px 11px;
-    display: flex;
-    gap: 12px;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--dim);
-  }
-
+  .main-header { padding: 14px 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); }
   .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); font-weight: 500; }
   .record-count { color: var(--green); font-size: 10px; }
 
-  .digest {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(278px, 1fr));
-    align-content: start;
-    gap: 10px;
-    padding: 13px;
-    flex: 1;
-  }
-
-  .news-card {
-    position: relative;
-    min-height: 182px;
-    display: flex;
-    flex-direction: column;
-    padding: 13px;
-    border: 1px solid var(--dim);
-    background:
-      linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px,
-      linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px,
-      rgba(7, 18, 21, .7);
-    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-  }
-
-  .news-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--cyan);
-    box-shadow: var(--glow);
-  }
-
-  .news-card::before {
-    content: "MEM::" attr(data-slot);
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    color: rgba(86,246,255,.35);
-    font-size: 8px;
-  }
-
-  .card-top {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(86,246,255,.22);
-  }
-
-  .score {
-    color: var(--bg);
-    background: var(--green);
-    min-width: 60px;
-    padding: 4px 7px;
-    text-align: center;
-    font-size: 12px;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(168,255,106,.45);
-  }
-
+  .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); align-content: start; gap: 10px; padding: 13px; flex: 1; }
+  .news-card { position: relative; min-height: 182px; display: flex; flex-direction: column; padding: 13px; border: 1px solid var(--dim); background: linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px, rgba(7, 18, 21, .7); transition: transform .25s ease, border-color .25s ease; }
+  .news-card:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow); }
+  
+  .card-top { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
+  .score { color: var(--bg); background: var(--cyan); min-width: 60px; padding: 4px 7px; text-align: center; font-size: 12px; font-weight: bold; }
   .score small { display: block; font-size: 7px; font-weight: normal; margin-top: 1px; }
+  
+  .tag-flame { color: var(--red); font-size: 9px; border: 1px solid var(--red); padding: 1px 4px; margin-right: 5px; animation: blink 2s infinite; }
+  .tag-trend { color: var(--orange); font-size: 9px; border: 1px solid var(--orange); padding: 1px 4px; margin-right: 5px; }
 
-  .source { color: var(--muted); font-size: 9px; max-width: 65%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .source { color: var(--muted); font-size: 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; font-weight: 500; }
+  .card-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
+  .open-link { color: var(--green); text-decoration: none; }
+  .open-link:hover { border-bottom: 1px solid var(--green); }
 
-  .news-card h3 {
-    margin: 12px 0 12px;
-    color: var(--cyan);
-    font-size: 13px;
-    line-height: 1.45;
-    font-weight: 500;
-    text-shadow: 0 0 6px rgba(86,246,255,.18);
-  }
-
-  .card-foot {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    color: var(--muted);
-    font-size: 9px;
-  }
-
-  .open-link { color: var(--green); text-decoration: none; border-bottom: 1px solid transparent; }
-  .open-link:hover { border-color: var(--green); }
-
-  .empty-state {
-    grid-column: 1 / -1;
-    min-height: 250px;
-    display: grid;
-    place-items: center;
-    border: 1px dashed var(--dim);
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.8;
-  }
-
+  .empty-state { grid-column: 1 / -1; min-height: 250px; display: grid; place-items: center; border: 1px dashed var(--dim); color: var(--muted); text-align: center; }
   .empty-state strong { color: var(--cyan); font-weight: 400; }
   .cursor::after { content: "█"; color: var(--green); animation: blink .9s steps(1) infinite; margin-left: 4px; }
 
-  .footer {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    min-height: 62px;
-    border-top: 1px solid var(--line);
-    background: rgba(0,0,0,.38);
-  }
-
-  .log {
-    padding: 9px 14px;
-    overflow: hidden;
-    color: var(--muted);
-    font-size: 10px;
-    line-height: 1.85;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .log b { color: var(--green); font-weight: 500; }
+  .footer { display: grid; grid-template-columns: 1fr auto; min-height: 62px; border-top: 1px solid var(--line); background: rgba(0,0,0,.38); }
+  .log { padding: 9px 14px; color: var(--muted); font-size: 10px; line-height: 1.85; }
+  .log b { color: var(--green); }
   .log .error { color: var(--red); }
+  .clock { padding: 10px 14px; border-left: 1px solid var(--line); color: var(--cyan); text-align: right; font-size: 10px; line-height: 1.8; }
 
-  .clock {
-    min-width: 220px;
-    padding: 10px 14px;
-    border-left: 1px solid var(--line);
-    color: var(--cyan);
-    text-align: right;
-    font-size: 10px;
-    line-height: 1.8;
-  }
-  .clock b { color: var(--green); font-weight: normal; }
-
-  @media (max-width: 760px) {
-    .screen { padding: 8px; }
-    .topline { font-size: 8px; }
-    header { display: block; }
-    .brand { min-width: 0; border-right: 0; border-bottom: 1px solid var(--line); }
-    .source-switcher { border-left: 0; border-top: 1px solid var(--line); padding: 10px; }
-    .workspace { grid-template-columns: 1fr; }
-    .side-panel { border-right: 0; border-bottom: 1px solid var(--line); }
-    .footer { grid-template-columns: 1fr; }
-    .clock { display: none; }
-    .digest { grid-template-columns: 1fr; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-  }
+  @media (max-width: 760px) { header { flex-direction: column; } .workspace { grid-template-columns: 1fr; } .clock { display: none; } }
 </style>
 </head>
 <body>
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span>◉ PERSONAL NEWS ARRAY / NODE: WAW-07</span>
+      <span>◉ HYPE MATRIX / DEEP ANALYTICS NODE</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
-
     <header>
       <div class="brand">
         <div class="brand-mark">⌁</div>
         <div>
           <h1>HYPE_DIGEST // BIOS</h1>
-          <small>PERSONAL GAMING INTELLIGENCE TERMINAL</small>
+          <small>ROBUST STATISTICAL ENGINE v2.0</small>
         </div>
       </div>
-      
-      <!-- СВИТЧ ИСТОЧНИКОВ В ШАПКЕ -->
       <div class="source-switcher">
         <span style="font-size: 9px; color: var(--muted);">SOURCE:</span>
-        <button class="source-btn active" id="btnReddit" type="button">REDDIT_WORKER</button>
-        <button class="source-btn" id="btnHN" type="button">GLOBAL_HN</button>
+        <button class="source-btn" id="btnReddit" type="button">REDDIT_WORKER</button>
+        <button class="source-btn active" id="btnHN" type="button">GLOBAL_HN</button>
       </div>
     </header>
-
     <section class="workspace">
       <aside class="side-panel">
-        <p class="section-label">[ SYSTEM TELEMETRY ]</p>
+        <p class="section-label">[ ALGORITHM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>ACTIVE FEED</span><b id="activeSourceLabel">REDDIT NODES</b></div>
-          <div class="readout-line"><span>HYPE ENGINE</span><b class="online">ARMED</b></div>
-          <div class="readout-line"><span>PROXY MATRIX</span><b id="proxyStatus">IDLE</b></div>
-          <div class="readout-line"><span>REC. FOUND</span><b id="postCount">000</b></div>
-          <div class="readout-line"><span>LAST SYNC</span><b id="lastSync">--:--:--</b></div>
+          <div class="readout-line"><span>DATA STREAM</span><b id="activeSourceLabel">GLOBAL HN</b></div>
+          <div class="readout-line"><span>MATH KERNEL</span><b class="online">MAD ROBUST</b></div>
+          <div class="readout-line"><span>HALF-LIFE</span><b>42 HOURS</b></div>
+          <div class="readout-line"><span>ANALYSED</span><b id="postCount">000</b></div>
         </div>
-
-        <button id="fetchButton" class="fetch-button" type="button">FETCH_DIGEST</button>
-
-        <div class="legend">
-          <div><i class="green"></i>HYPE INDEX / HIGH SIGNAL</div>
-          <div><i></i>DATA BANK / NEWS RECORD</div>
-          <div><i class="red"></i>LINK / UPLINK FAULT</div>
-        </div>
+        <button id="fetchButton" class="fetch-button" type="button">EXECUTE_SCAN</button>
       </aside>
-
       <section class="main-panel">
         <div class="main-header">
-          <h2>/// PRIORITY TRANSMISSIONS</h2>
-          <span class="record-count" id="recordLabel">AWAITING SCAN...</span>
+          <h2>/// PROCESSED ANOMALIES</h2>
+          <span class="record-count" id="recordLabel">AWAITING INPUT...</span>
         </div>
         <div id="digest" class="digest" aria-live="polite">
           <div class="empty-state">
-            <div><strong>NO RECORDS LOADED</strong><br><span class="cursor">PRESS FETCH_DIGEST TO INITIALIZE DATELINK</span></div>
+            <div><strong>ALGORITHM IDLE</strong><br><span class="cursor">PRESS EXECUTE_SCAN TO COMPUTE DATA</span></div>
           </div>
         </div>
       </section>
     </section>
-
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Terminal initialized. Select source and execute fetch.</div>
-      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>BUILD: EDGERUNNERS_7.4</div>
+      <div class="log" id="log"><b>[SYS]</b> Advanced analytics matrix ready. Awaiting scan.</div>
+      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>KERNEL: MAD_V2</div>
     </footer>
   </main>
 </div>
@@ -485,14 +167,15 @@
 (() => {
   "use strict";
 
-  let activeSource = "reddit"; // "reddit" или "hn"
+  let activeSource = "hn"; // По умолчанию HN, так как Реддит мертв
 
   const CONFIG = {
     subreddits: ["gaming", "pcgaming", "Games", "GameNews"],
     daysBack: 7,
-    limit: 35,
-    timeoutMs: 12000,
-    triggerWords: ["scandal", "fail", "crack", "bug", "worst"]
+    limit: 40,
+    timeoutMs: 15000,
+    triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
+    hnTags: ["show hn:", "launch hn:", "ask hn:"]
   };
 
   const els = {
@@ -501,8 +184,6 @@
     log: document.getElementById("log"),
     postCount: document.getElementById("postCount"),
     recordLabel: document.getElementById("recordLabel"),
-    proxyStatus: document.getElementById("proxyStatus"),
-    lastSync: document.getElementById("lastSync"),
     connectionState: document.getElementById("connectionState"),
     clock: document.getElementById("clock"),
     btnReddit: document.getElementById("btnReddit"),
@@ -512,7 +193,7 @@
 
   function log(message, type = "info") {
     const label = type === "error" ? '<span class="error">[FAULT]</span>' : "<b>[SYS]</b>";
-    els.log.innerHTML = `${label} ${escapeHtml(message)}`;
+    els.log.innerHTML = `${label} ${message}`;
   }
 
   function escapeHtml(value) {
@@ -521,43 +202,76 @@
     return div.innerHTML;
   }
 
-  function formatNumber(value) {
-    return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value || 0);
+  // --- РОБАСТНЫЙ АЛГОРИТМ С ФИЛОСОФИЕЙ HN ---
+  function calculateAdvancedHype(posts) {
+    if (!Array.isArray(posts) || posts.length === 0) return [];
+
+    const now = Date.now() / 1000;
+    const halfLifeHours = 42;
+    const lambda = Math.LN2 / halfLifeHours;
+
+    // Шаг 1: Сбор сырых метрик
+    const metrics = posts.map(post => {
+      const score = Math.max(0, Number(post.score) || 0);
+      const comments = Math.max(0, Number(post.comments) || 0);
+      const ageHours = Math.max(0.1, (now - post.created) / 3600); 
+
+      // Базовая масса
+      const baseMetric = Math.log1p(score) * 18 + Math.log1p(comments) * 24;
+      // Вектор скорости (Velocity)
+      const velocity = baseMetric / Math.max(0.5, ageHours);
+
+      return { ...post, score, comments, ageHours, baseMetric, velocity };
+    });
+
+    // Шаг 2: Вычисляем фон через MAD по скорости (ищем быстро взлетающие)
+    const sortedVelocity = metrics.map(p => p.velocity).sort((a, b) => a - b);
+    const median = sortedVelocity[Math.floor(sortedVelocity.length / 2)] || 0.1;
+    
+    const deviations = sortedVelocity.map(v => Math.abs(v - median)).sort((a, b) => a - b);
+    const mad = deviations[Math.floor(deviations.length / 2)] || 1;
+
+    // Шаг 3: Применяем веса и теги
+    return metrics.map(post => {
+      // Z-оценка устойчивости
+      const robustZ = (post.velocity - median) / (mad * 1.4826);
+      const trendBoost = 1 + Math.max(0, Math.min(robustZ, 4)) * 0.4;
+
+      // Холивар-детектор (Flame Ratio)
+      const engagementRatio = post.comments / (post.score + 1);
+      const discussionBoost = 1 + Math.min(engagementRatio, 3) * 0.25;
+      const flameBoost = engagementRatio > 1.3 ? 1.25 : 1; 
+
+      // Порог доверия
+      const confidence = Math.min(1, Math.log1p(post.score + post.comments) / Math.log(250));
+
+      // Распад по времени
+      const timeDecay = Math.exp(-lambda * post.ageHours);
+
+      // Ключевые слова
+      const title = String(post.title || "").toLowerCase();
+      const keywordCount = CONFIG.triggerWords.filter(w => title.includes(w)).length;
+      const isHnSpecial = CONFIG.hnTags.some(tag => title.includes(tag));
+      const keywordBoost = 1 + Math.min(keywordCount, 2) * 0.12 + (isHnSpecial ? 0.3 : 0);
+
+      // Итоговая оценка
+      post.hype = Math.round(
+        100 * trendBoost * discussionBoost * flameBoost * timeDecay * keywordBoost * (0.45 + confidence * 0.55)
+      );
+
+      // Разметка для интерфейса
+      post.isFlame = engagementRatio > 1.3 && post.comments > 30;
+      post.isTrending = robustZ > 2.5;
+
+      return post;
+    }).sort((a, b) => b.hype - a.hype);
   }
 
-  function formatAge(timestamp) {
-    const seconds = Math.max(0, Math.floor(Date.now() / 1000 - timestamp));
-    if (seconds < 3600) return `${Math.max(1, Math.floor(seconds / 60))}M AGO`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}H AGO`;
-    return `${Math.floor(seconds / 86400)}D AGO`;
-  }
-
-  function safeUrl(value, fallback) {
-    try {
-      const parsed = new URL(value);
-      return /^https?:$/.test(parsed.protocol) ? parsed.href : fallback;
-    } catch {
-      return fallback;
-    }
-  }
-
-  function calculateHype(title, score, comments = 0) {
-    const t = String(title || "").toLowerCase();
-    const keywordBonus = CONFIG.triggerWords.reduce(
-      (total, word) => total + (t.includes(word) ? 50 : 0), 0
-    );
-    return Math.max(0, Number(score) || 0) + (Math.max(0, Number(comments) || 0) * 2) + keywordBonus;
-  }
-
-  async function fetchWithTimeout(url, options = {}) {
+  async function fetchWithTimeout(url) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
     try {
-      const response = await fetch(url, {
-        ...options,
-        signal: controller.signal,
-        headers: { Accept: "application/json", ...(options.headers || {}) }
-      });
+      const response = await fetch(url, { signal: controller.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return await response.json();
     } finally {
@@ -565,145 +279,126 @@
     }
   }
 
-  // 1. Загрузка через Reddit воркер
-  async function fetchRedditNode(subreddit) {
-    const rawUrl = `https://www.reddit.com/r/${subreddit}/new.json?limit=${CONFIG.limit}&raw_json=1`;
-    const workerUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
-    const payload = await fetchWithTimeout(workerUrl);
-    if (!Array.isArray(payload?.data?.children)) throw new Error("Malformed node response");
-    return payload;
-  }
-
-  async function fetchRedditFeed() {
-    log("Querying Reddit via Cloudflare Worker gateway...");
-    const results = await Promise.allSettled(CONFIG.subreddits.map(fetchRedditNode));
-    const successes = results.filter(r => r.status === "fulfilled").map(r => r.value);
-    if (!successes.length) throw new Error("Reddit gateway blocked or unavailable.");
-
-    const cutoff = Date.now() / 1000 - (CONFIG.daysBack * 24 * 60 * 60 * 1000);
-    const children = successes.flatMap(r => r.data.children);
-    const seen = new Set();
-
-    return children
-      .map(item => item?.data)
-      .filter(post => post && post.title && post.created_utc >= cutoff && !post.stickied)
-      .filter(post => {
-        const key = post.id || post.title.toLowerCase();
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .map(post => ({
-        title: post.title,
-        url: safeUrl(post.url_overridden_by_dest, `https://www.reddit.com${post.permalink || ""}`),
-        score: Number(post.score) || 0,
-        comments: Number(post.num_comments) || 0,
-        created: Number(post.created_utc) || 0,
-        source: `r/${post.subreddit || "gaming"}`,
-        hype: calculateHype(post.title, post.score, post.num_comments)
-      }))
-      .sort((a, b) => b.hype - a.hype);
-  }
-
-  // 2. Загрузка через Hacker News (резервный надежный поток)
+  // Сбор HN
   async function fetchHNFeed() {
-    log("Querying global Hacker News stream...");
-    const res = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
-    const ids = res.slice(0, 45);
-    const items = await Promise.all(ids.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null)));
+    log("Tapping into Hacker News Global stream...");
+    const ids = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
+    const topIds = ids.slice(0, 50);
+    const items = await Promise.all(topIds.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null)));
 
-    return items
-      .filter(item => item && item.title)
-      .map(item => ({
-        title: item.title,
-        url: safeUrl(item.url, `https://news.ycombinator.com/item?id=${item.id}`),
-        score: Number(item.score) || 10,
-        comments: Number(item.descendants) || 0,
-        created: Number(item.time) || Math.floor(Date.now() / 1000),
-        source: "HACKER NEWS",
-        hype: calculateHype(item.title, item.score, item.descendants)
-      }))
-      .sort((a, b) => b.hype - a.hype);
+    const rawPosts = items.filter(item => item && item.title).map(item => ({
+      title: item.title,
+      url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
+      score: Number(item.score) || 0,
+      comments: Number(item.descendants) || 0,
+      created: Number(item.time) || Math.floor(Date.now() / 1000),
+      source: "HN"
+    }));
+    return calculateAdvancedHype(rawPosts);
+  }
+
+  // Сбор Reddit (Оставил твой воркер на случай, если он оживет)
+  async function fetchRedditFeed() {
+    log("Routing through Cloudflare Worker...");
+    const rawPosts = [];
+    for (const sub of CONFIG.subreddits) {
+      try {
+        const rawUrl = `https://www.reddit.com/r/${sub}/hot.json?limit=${CONFIG.limit}`;
+        const workerUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
+        const payload = await fetchWithTimeout(workerUrl);
+        if (payload?.data?.children) {
+          payload.data.children.forEach(child => {
+            const p = child.data;
+            if (p && p.title && !p.stickied) {
+              rawPosts.push({
+                title: p.title,
+                url: p.url_overridden_by_dest || `https://www.reddit.com${p.permalink}`,
+                score: Number(p.score) || 0,
+                comments: Number(p.num_comments) || 0,
+                created: Number(p.created_utc) || 0,
+                source: `r/${p.subreddit}`
+              });
+            }
+          });
+        }
+      } catch(e) { console.warn(e); }
+    }
+    if(!rawPosts.length) throw new Error("Reddit nodes rejected request (403/Limit).");
+    
+    // Чистка дублей перед математикой
+    const seen = new Set();
+    const uniquePosts = rawPosts.filter(p => {
+      const key = p.title.toLowerCase().substring(0,40);
+      if(seen.has(key)) return false;
+      seen.add(key); return true;
+    });
+
+    return calculateAdvancedHype(uniquePosts);
   }
 
   function renderPosts(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO SIGNALS FOUND</strong><br>Stream returned no records.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO DATA</strong><br>Stream is empty or algorithm rejected all points.</div></div>`;
       return;
     }
 
-    els.digest.innerHTML = posts.map((post, index) => `
+    els.digest.innerHTML = posts.map((post, index) => {
+      let tags = "";
+      if(post.isFlame) tags += `<span class="tag-flame">[FLAME]</span>`;
+      if(post.isTrending) tags += `<span class="tag-trend">[TRENDING]</span>`;
+
+      return `
       <article class="news-card" data-slot="${String(index + 1).padStart(3, "0")}">
         <div class="card-top">
-          <span class="source">${escapeHtml(post.source)}</span>
-          <div class="score">${formatNumber(post.hype)}<small>HYPE IDX</small></div>
+          <span class="source">${escapeHtml(post.source)} ${tags}</span>
+          <div class="score">${post.hype}<small>IDX</small></div>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <div class="card-foot">
-          <span>▲ ${formatNumber(post.score)} &nbsp; // &nbsp; ◌ ${formatNumber(post.comments)} &nbsp; // &nbsp; ${formatAge(post.created)}</span>
+          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments} &nbsp; // &nbsp; ${Math.max(0, Math.floor(post.ageHours))}H AGO</span>
           <a class="open-link" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
         </div>
       </article>
-    `).join("");
+      `;
+    }).join("");
   }
 
   async function loadDigest() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
-    els.fetchButton.textContent = "SCANNING_FEED";
-    els.connectionState.textContent = "UPLINK STATUS: ACQUIRING";
-    els.recordLabel.textContent = "PARSING TRANSMISSIONS...";
+    els.fetchButton.textContent = "COMPUTING...";
+    els.connectionState.textContent = "UPLINK STATUS: PROCESSING";
 
     try {
-      const posts = activeSource === "reddit" ? await fetchRedditFeed() : await fetchHNFeed();
+      const posts = activeSource === "hn" ? await fetchHNFeed() : await fetchRedditFeed();
       renderPosts(posts);
 
       els.postCount.textContent = String(posts.length).padStart(3, "0");
-      els.recordLabel.textContent = `${posts.length} RECORDS // MODE: ${activeSource.toUpperCase()}`;
-      els.proxyStatus.textContent = activeSource === "reddit" ? "WORKER_GATEWAY" : "DIRECT_API";
-      els.lastSync.textContent = new Date().toLocaleTimeString("en-GB");
+      els.recordLabel.textContent = `${posts.length} RECORDS COMPUTE COMPLETE`;
       els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log(`Stream synchronized via ${activeSource.toUpperCase()}: ${posts.length} records indexed.`);
+      log(`Computation done. Matrix stabilized.`);
     } catch (error) {
-      els.proxyStatus.textContent = "FAULT";
-      els.connectionState.textContent = "UPLINK STATUS: DEGRADED";
-      els.recordLabel.textContent = "NETWORK FAULT";
-      els.digest.innerHTML = `
-        <div class="empty-state">
-          <div><strong>DATELINK FAILED</strong><br>Source unavailable. Switch source in header or retry.<br><span class="cursor">ERROR: ${escapeHtml(error.message)}</span></div>
-        </div>`;
-      log(`Fetch failed: ${error.message}`, "error");
+      els.connectionState.textContent = "UPLINK STATUS: FAULT";
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>COMPUTE FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
+      log(`Core dump: ${error.message}`, "error");
     } finally {
       els.fetchButton.disabled = false;
       els.fetchButton.classList.remove("loading");
-      els.fetchButton.textContent = "FETCH_DIGEST";
+      els.fetchButton.textContent = "EXECUTE_SCAN";
     }
   }
 
-  // Переключение свитча в шапке
   els.btnReddit.addEventListener("click", () => {
-    activeSource = "reddit";
-    els.btnReddit.classList.add("active");
-    els.btnHN.classList.remove("active");
-    els.activeSourceLabel.textContent = "REDDIT NODES";
-    log("Source switched to: REDDIT_WORKER");
+    activeSource = "reddit"; els.btnReddit.classList.add("active"); els.btnHN.classList.remove("active");
+    els.activeSourceLabel.textContent = "REDDIT NODES"; log("Source switched: REDDIT");
   });
-
   els.btnHN.addEventListener("click", () => {
-    activeSource = "hn";
-    els.btnHN.classList.add("active");
-    els.btnReddit.classList.remove("active");
-    els.activeSourceLabel.textContent = "GLOBAL HN";
-    log("Source switched to: GLOBAL_HN");
+    activeSource = "hn"; els.btnHN.classList.add("active"); els.btnReddit.classList.remove("active");
+    els.activeSourceLabel.textContent = "GLOBAL HN"; log("Source switched: HN");
   });
 
-  function updateClock() {
-    els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false });
-  }
-
+  setInterval(() => els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }), 1000);
   els.fetchButton.addEventListener("click", loadDigest);
-  updateClock();
-  setInterval(updateClock, 1000);
 })();
 </script>
 </body>
