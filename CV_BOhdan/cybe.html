@@ -15,7 +15,6 @@
     --muted: #5b9392;
     --dim: #183638;
     --red: #ff5f7e;
-    --orange: #ff9b5e;
     --line: rgba(86, 246, 255, .42);
     --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14);
     --mono: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
@@ -59,9 +58,10 @@
   .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); text-shadow: 0 0 9px rgba(86, 246, 255, .55); }
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
 
-  .source-switcher { display: flex; align-items: center; gap: 8px; padding: 0 16px; margin-left: auto; border-left: 1px solid var(--line); }
-  .source-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
-  .source-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); box-shadow: 0 0 10px rgba(168,255,106,.2); }
+  /* Переключатель режимов в шапке */
+  .view-switcher { display: flex; align-items: center; gap: 8px; padding: 0 16px; margin-left: auto; }
+  .view-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
+  .view-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); box-shadow: 0 0 10px rgba(168,255,106,.2); }
 
   .workspace { display: grid; grid-template-columns: minmax(255px, 28%) 1fr; min-height: 670px; }
   .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
@@ -82,22 +82,27 @@
   .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); font-weight: 500; }
   .record-count { color: var(--green); font-size: 10px; }
 
+  /* Режим карточек */
   .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); align-content: start; gap: 10px; padding: 13px; flex: 1; }
   .news-card { position: relative; min-height: 182px; display: flex; flex-direction: column; padding: 13px; border: 1px solid var(--dim); background: linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px, rgba(7, 18, 21, .7); transition: transform .25s ease, border-color .25s ease; }
   .news-card:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow); }
-  
   .card-top { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
-  .score { color: var(--bg); background: var(--cyan); min-width: 60px; padding: 4px 7px; text-align: center; font-size: 12px; font-weight: bold; }
+  .score { color: var(--bg); background: var(--green); min-width: 60px; padding: 4px 7px; text-align: center; font-size: 12px; font-weight: bold; }
   .score small { display: block; font-size: 7px; font-weight: normal; margin-top: 1px; }
-  
-  .tag-flame { color: var(--red); font-size: 9px; border: 1px solid var(--red); padding: 1px 4px; margin-right: 5px; animation: blink 2s infinite; }
-  .tag-trend { color: var(--orange); font-size: 9px; border: 1px solid var(--orange); padding: 1px 4px; margin-right: 5px; }
-
   .source { color: var(--muted); font-size: 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; font-weight: 500; }
   .card-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
   .open-link { color: var(--green); text-decoration: none; }
   .open-link:hover { border-bottom: 1px solid var(--green); }
+
+  /* Режим таблицы базы данных (DB BROWSER) */
+  .db-table-container { flex: 1; overflow: auto; padding: 13px; display: none; }
+  .db-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
+  .db-table th { background: var(--dim); color: var(--green); padding: 8px 10px; border: 1px solid var(--line); cursor: pointer; user-select: none; }
+  .db-table th:hover { background: rgba(86,246,255,.1); }
+  .db-table td { padding: 7px 10px; border: 1px solid var(--dim); color: var(--cyan); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .db-table tr:nth-child(even) { background: rgba(255,255,255,.01); }
+  .db-table tr:hover td { background: rgba(86,246,255,.04); }
 
   .empty-state { grid-column: 1 / -1; min-height: 250px; display: grid; place-items: center; border: 1px dashed var(--dim); color: var(--muted); text-align: center; }
   .empty-state strong { color: var(--cyan); font-weight: 400; }
@@ -109,14 +114,14 @@
   .log .error { color: var(--red); }
   .clock { padding: 10px 14px; border-left: 1px solid var(--line); color: var(--cyan); text-align: right; font-size: 10px; line-height: 1.8; }
 
-  @media (max-width: 760px) { header { flex-direction: column; } .workspace { grid-template-columns: 1fr; } .clock { display: none; } }
+  @media (max-width: 760px) { .workspace { grid-template-columns: 1fr; } .clock { display: none; } }
 </style>
 </head>
 <body>
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span>◉ HYPE MATRIX / DEEP ANALYTICS NODE</span>
+      <span>◉ CLOUDFLARE D1 DATABASE BROWSER</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
     <header>
@@ -124,41 +129,64 @@
         <div class="brand-mark">⌁</div>
         <div>
           <h1>HYPE_DIGEST // BIOS</h1>
-          <small>ROBUST STATISTICAL ENGINE v2.0</small>
+          <small>DB-DRIVEN TELEMETRY TERMINAL</small>
         </div>
       </div>
-      <div class="source-switcher">
-        <span style="font-size: 9px; color: var(--muted);">SOURCE:</span>
-        <button class="source-btn" id="btnReddit" type="button">REDDIT_WORKER</button>
-        <button class="source-btn active" id="btnHN" type="button">GLOBAL_HN</button>
+      
+      <!-- Свитч режимов интерфейса -->
+      <div class="view-switcher">
+        <span style="font-size: 9px; color: var(--muted);">VIEW:</span>
+        <button class="view-btn active" id="btnDigest" type="button">DIGEST_VIEW</button>
+        <button class="view-btn" id="btnDB" type="button">DB_BROWSER</button>
       </div>
     </header>
     <section class="workspace">
       <aside class="side-panel">
-        <p class="section-label">[ ALGORITHM TELEMETRY ]</p>
+        <p class="section-label">[ SYSTEM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>DATA STREAM</span><b id="activeSourceLabel">GLOBAL HN</b></div>
-          <div class="readout-line"><span>MATH KERNEL</span><b class="online">MAD ROBUST</b></div>
-          <div class="readout-line"><span>HALF-LIFE</span><b>42 HOURS</b></div>
-          <div class="readout-line"><span>ANALYSED</span><b id="postCount">000</b></div>
+          <div class="readout-line"><span>STORAGE</span><b class="online">CLOUDFLARE D1</b></div>
+          <div class="readout-line"><span>SYNC MODE</span><b>AUTO (HOURLY)</b></div>
+          <div class="readout-line"><span>RECORDS LOADED</span><b id="postCount">000</b></div>
         </div>
-        <button id="fetchButton" class="fetch-button" type="button">EXECUTE_SCAN</button>
+        <button id="fetchButton" class="fetch-button" type="button">SYNC_FROM_DB</button>
       </aside>
+      
       <section class="main-panel">
         <div class="main-header">
-          <h2>/// PROCESSED ANOMALIES</h2>
-          <span class="record-count" id="recordLabel">AWAITING INPUT...</span>
+          <h2>/// <span id="panelTitle">INDEXED ANOMALIES</span></h2>
+          <span class="record-count" id="recordLabel">AWAITING SYNC...</span>
         </div>
+        
+        <!-- Представление 1: Карточки -->
         <div id="digest" class="digest" aria-live="polite">
           <div class="empty-state">
-            <div><strong>ALGORITHM IDLE</strong><br><span class="cursor">PRESS EXECUTE_SCAN TO COMPUTE DATA</span></div>
+            <div><strong>DATABASE READY</strong><br><span class="cursor">PRESS SYNC_FROM_DB TO PULL CACHED MATRIX</span></div>
           </div>
+        </div>
+
+        <!-- Представление 2: Полная таблица базы данных с сортировкой -->
+        <div id="dbTableContainer" class="db-table-container">
+          <table class="db-table" id="dbTable">
+            <thead>
+              <tr>
+                <th data-sort="id">ID ↕</th>
+                <th data-sort="title">TITLE ↕</th>
+                <th data-sort="score">SCORE ↕</th>
+                <th data-sort="comments">COMMENTS ↕</th>
+                <th data-sort="hype">HYPE IDX ↕</th>
+                <th data-sort="fetched_at">FETCHED TIME ↕</th>
+              </tr>
+            </thead>
+            <tbody id="dbTableBody">
+              <!-- Сюда динамически падают все данные из базы -->
+            </tbody>
+          </table>
         </div>
       </section>
     </section>
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Advanced analytics matrix ready. Awaiting scan.</div>
-      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>KERNEL: MAD_V2</div>
+      <div class="log" id="log"><b>[SYS]</b> Connected to Cloudflare Worker API. Ready.</div>
+      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>D1_BROWSER</div>
     </footer>
   </main>
 </div>
@@ -167,28 +195,24 @@
 (() => {
   "use strict";
 
-  let activeSource = "hn"; // По умолчанию HN, так как Реддит мертв
-
-  const CONFIG = {
-    subreddits: ["gaming", "pcgaming", "Games", "GameNews"],
-    daysBack: 7,
-    limit: 40,
-    timeoutMs: 15000,
-    triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
-    hnTags: ["show hn:", "launch hn:", "ask hn:"]
-  };
+  const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
+  let cachedData = [];
+  let currentSortField = "hype";
+  let sortDirectionDesc = true;
 
   const els = {
     fetchButton: document.getElementById("fetchButton"),
     digest: document.getElementById("digest"),
+    dbTableContainer: document.getElementById("dbTableContainer"),
+    dbTableBody: document.getElementById("dbTableBody"),
     log: document.getElementById("log"),
     postCount: document.getElementById("postCount"),
     recordLabel: document.getElementById("recordLabel"),
     connectionState: document.getElementById("connectionState"),
     clock: document.getElementById("clock"),
-    btnReddit: document.getElementById("btnReddit"),
-    btnHN: document.getElementById("btnHN"),
-    activeSourceLabel: document.getElementById("activeSourceLabel")
+    btnDigest: document.getElementById("btnDigest"),
+    btnDB: document.getElementById("btnDB"),
+    panelTitle: document.getElementById("panelTitle")
   };
 
   function log(message, type = "info") {
@@ -202,203 +226,134 @@
     return div.innerHTML;
   }
 
-  // --- РОБАСТНЫЙ АЛГОРИТМ С ФИЛОСОФИЕЙ HN ---
-  function calculateAdvancedHype(posts) {
-    if (!Array.isArray(posts) || posts.length === 0) return [];
-
-    const now = Date.now() / 1000;
-    const halfLifeHours = 42;
-    const lambda = Math.LN2 / halfLifeHours;
-
-    // Шаг 1: Сбор сырых метрик
-    const metrics = posts.map(post => {
-      const score = Math.max(0, Number(post.score) || 0);
-      const comments = Math.max(0, Number(post.comments) || 0);
-      const ageHours = Math.max(0.1, (now - post.created) / 3600); 
-
-      // Базовая масса
-      const baseMetric = Math.log1p(score) * 18 + Math.log1p(comments) * 24;
-      // Вектор скорости (Velocity)
-      const velocity = baseMetric / Math.max(0.5, ageHours);
-
-      return { ...post, score, comments, ageHours, baseMetric, velocity };
-    });
-
-    // Шаг 2: Вычисляем фон через MAD по скорости (ищем быстро взлетающие)
-    const sortedVelocity = metrics.map(p => p.velocity).sort((a, b) => a - b);
-    const median = sortedVelocity[Math.floor(sortedVelocity.length / 2)] || 0.1;
-    
-    const deviations = sortedVelocity.map(v => Math.abs(v - median)).sort((a, b) => a - b);
-    const mad = deviations[Math.floor(deviations.length / 2)] || 1;
-
-    // Шаг 3: Применяем веса и теги
-    return metrics.map(post => {
-      // Z-оценка устойчивости
-      const robustZ = (post.velocity - median) / (mad * 1.4826);
-      const trendBoost = 1 + Math.max(0, Math.min(robustZ, 4)) * 0.4;
-
-      // Холивар-детектор (Flame Ratio)
-      const engagementRatio = post.comments / (post.score + 1);
-      const discussionBoost = 1 + Math.min(engagementRatio, 3) * 0.25;
-      const flameBoost = engagementRatio > 1.3 ? 1.25 : 1; 
-
-      // Порог доверия
-      const confidence = Math.min(1, Math.log1p(post.score + post.comments) / Math.log(250));
-
-      // Распад по времени
-      const timeDecay = Math.exp(-lambda * post.ageHours);
-
-      // Ключевые слова
-      const title = String(post.title || "").toLowerCase();
-      const keywordCount = CONFIG.triggerWords.filter(w => title.includes(w)).length;
-      const isHnSpecial = CONFIG.hnTags.some(tag => title.includes(tag));
-      const keywordBoost = 1 + Math.min(keywordCount, 2) * 0.12 + (isHnSpecial ? 0.3 : 0);
-
-      // Итоговая оценка
-      post.hype = Math.round(
-        100 * trendBoost * discussionBoost * flameBoost * timeDecay * keywordBoost * (0.45 + confidence * 0.55)
-      );
-
-      // Разметка для интерфейса
-      post.isFlame = engagementRatio > 1.3 && post.comments > 30;
-      post.isTrending = robustZ > 2.5;
-
-      return post;
-    }).sort((a, b) => b.hype - a.hype);
-  }
-
-  async function fetchWithTimeout(url) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
-    try {
-      const response = await fetch(url, { signal: controller.signal });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return await response.json();
-    } finally {
-      clearTimeout(timeout);
-    }
-  }
-
-  // Сбор HN
-  async function fetchHNFeed() {
-    log("Tapping into Hacker News Global stream...");
-    const ids = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
-    const topIds = ids.slice(0, 50);
-    const items = await Promise.all(topIds.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null)));
-
-    const rawPosts = items.filter(item => item && item.title).map(item => ({
-      title: item.title,
-      url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
-      score: Number(item.score) || 0,
-      comments: Number(item.descendants) || 0,
-      created: Number(item.time) || Math.floor(Date.now() / 1000),
-      source: "HN"
-    }));
-    return calculateAdvancedHype(rawPosts);
-  }
-
-  // Сбор Reddit (Оставил твой воркер на случай, если он оживет)
-  async function fetchRedditFeed() {
-    log("Routing through Cloudflare Worker...");
-    const rawPosts = [];
-    for (const sub of CONFIG.subreddits) {
-      try {
-        const rawUrl = `https://www.reddit.com/r/${sub}/hot.json?limit=${CONFIG.limit}`;
-        const workerUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
-        const payload = await fetchWithTimeout(workerUrl);
-        if (payload?.data?.children) {
-          payload.data.children.forEach(child => {
-            const p = child.data;
-            if (p && p.title && !p.stickied) {
-              rawPosts.push({
-                title: p.title,
-                url: p.url_overridden_by_dest || `https://www.reddit.com${p.permalink}`,
-                score: Number(p.score) || 0,
-                comments: Number(p.num_comments) || 0,
-                created: Number(p.created_utc) || 0,
-                source: `r/${p.subreddit}`
-              });
-            }
-          });
-        }
-      } catch(e) { console.warn(e); }
-    }
-    if(!rawPosts.length) throw new Error("Reddit nodes rejected request (403/Limit).");
-    
-    // Чистка дублей перед математикой
-    const seen = new Set();
-    const uniquePosts = rawPosts.filter(p => {
-      const key = p.title.toLowerCase().substring(0,40);
-      if(seen.has(key)) return false;
-      seen.add(key); return true;
-    });
-
-    return calculateAdvancedHype(uniquePosts);
-  }
-
-  function renderPosts(posts) {
+  // Отрисовка режима карточек
+  function renderDigest(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO DATA</strong><br>Stream is empty or algorithm rejected all points.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>DATABASE EMPTY</strong><br>Run worker cron or wait for scheduler.</div></div>`;
       return;
     }
 
-    els.digest.innerHTML = posts.map((post, index) => {
-      let tags = "";
-      if(post.isFlame) tags += `<span class="tag-flame">[FLAME]</span>`;
-      if(post.isTrending) tags += `<span class="tag-trend">[TRENDING]</span>`;
-
-      return `
+    els.digest.innerHTML = posts.map((post, index) => `
       <article class="news-card" data-slot="${String(index + 1).padStart(3, "0")}">
         <div class="card-top">
-          <span class="source">${escapeHtml(post.source)} ${tags}</span>
+          <span class="source">${escapeHtml(post.source)}</span>
           <div class="score">${post.hype}<small>IDX</small></div>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <div class="card-foot">
-          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments} &nbsp; // &nbsp; ${Math.max(0, Math.floor(post.ageHours))}H AGO</span>
+          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments}</span>
           <a class="open-link" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
         </div>
       </article>
-      `;
-    }).join("");
+    `).join("");
+  }
+
+  // Отрисовка режима таблицы базы данных (все данные)
+  function renderTable(posts) {
+    if (!posts.length) {
+      els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--muted);">NO RECORDS FOUND IN D1 DATABASE</td></tr>`;
+      return;
+    }
+
+    els.dbTableBody.innerHTML = posts.map(post => `
+      <tr>
+        <td><code>${escapeHtml(post.id)}</code></td>
+        <td><a href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); text-decoration: none;">${escapeHtml(post.title)}</a></td>
+        <td>${post.score}</td>
+        <td>${post.comments}</td>
+        <td style="color: var(--green); font-weight: bold;">${post.hype}</td>
+        <td>${new Date(post.fetched_at).toLocaleString()}</td>
+      </tr>
+    `).join("");
+  }
+
+  // Сортировка данных по клику на заголовки таблицы
+  function sortData(field) {
+    if (currentSortField === field) {
+      sortDirectionDesc = !sortDirectionDesc;
+    } else {
+      currentSortField = field;
+      sortDirectionDesc = true;
+    }
+
+    cachedData.sort((a, b) => {
+      let valA = a[field];
+      let valB = b[field];
+
+      if (typeof valA === "string") {
+        valA = valA.toLowerCase();
+        valB = valB.toLowerCase();
+      }
+
+      if (valA < valB) return sortDirectionDesc ? 1 : -1;
+      if (valA > valB) return sortDirectionDesc ? -1 : 1;
+      return 0;
+    });
+
+    renderTable(cachedData);
+    log(Field sorted: ${field.toUpperCase()} (${sortDirectionDesc ? "DESC" : "ASC"}));
   }
 
   async function loadDigest() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
-    els.fetchButton.textContent = "COMPUTING...";
-    els.connectionState.textContent = "UPLINK STATUS: PROCESSING";
+    els.fetchButton.textContent = "FETCHING_DB";
+    els.connectionState.textContent = "UPLINK STATUS: QUERYING";
 
     try {
-      const posts = activeSource === "hn" ? await fetchHNFeed() : await fetchRedditFeed();
-      renderPosts(posts);
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      
+      cachedData = await response.json();
+      
+      renderDigest(cachedData);
+      renderTable(cachedData);
 
-      els.postCount.textContent = String(posts.length).padStart(3, "0");
-      els.recordLabel.textContent = `${posts.length} RECORDS COMPUTE COMPLETE`;
+      els.postCount.textContent = String(cachedData.length).padStart(3, "0");
+      els.recordLabel.textContent = `${cachedData.length} RECORDS SYNCED FROM SQL`;
       els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log(`Computation done. Matrix stabilized.`);
+      log("Successfully synchronized records from Cloudflare D1 database.");
     } catch (error) {
       els.connectionState.textContent = "UPLINK STATUS: FAULT";
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>COMPUTE FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
-      log(`Core dump: ${error.message}`, "error");
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>SYNC FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
+      log(`Database query failed: ${error.message}`, "error");
     } finally {
       els.fetchButton.disabled = false;
       els.fetchButton.classList.remove("loading");
-      els.fetchButton.textContent = "EXECUTE_SCAN";
+      els.fetchButton.textContent = "SYNC_FROM_DB";
     }
   }
 
-  els.btnReddit.addEventListener("click", () => {
-    activeSource = "reddit"; els.btnReddit.classList.add("active"); els.btnHN.classList.remove("active");
-    els.activeSourceLabel.textContent = "REDDIT NODES"; log("Source switched: REDDIT");
+  // Переключение представлений (Дигест / Таблица базы данных)
+  els.btnDigest.addEventListener("click", () => {
+    els.btnDigest.classList.add("active");
+    els.btnDB.classList.remove("active");
+    els.digest.style.display = "grid";
+    els.dbTableContainer.style.display = "none";
+    els.panelTitle.textContent = "INDEXED ANOMALIES";
+    log("Switched view to: DIGEST_VIEW");
   });
-  els.btnHN.addEventListener("click", () => {
-    activeSource = "hn"; els.btnHN.classList.add("active"); els.btnReddit.classList.remove("active");
-    els.activeSourceLabel.textContent = "GLOBAL HN"; log("Source switched: HN");
+
+  els.btnDB.addEventListener("click", () => {
+    els.btnDB.classList.add("active");
+    els.btnDigest.classList.remove("active");
+    els.digest.style.display = "none";
+    els.dbTableContainer.style.display = "block";
+    els.panelTitle.textContent = "RAW SQL DATABASE BROWSER";
+    log("Switched view to: DB_BROWSER");
+  });
+
+  // Навешиваем клики на заголовки таблицы для сортировки
+  document.querySelectorAll("#dbTable th[data-sort]").forEach(th => {
+    th.addEventListener("click", () => {
+      sortData(th.getAttribute("data-sort"));
+    });
   });
 
   setInterval(() => els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }), 1000);
   els.fetchButton.addEventListener("click", loadDigest);
+
+  loadDigest();
 })();
 </script>
 </body>
