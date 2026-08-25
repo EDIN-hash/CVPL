@@ -115,6 +115,7 @@
     align-items: stretch;
     border-bottom: 1px solid var(--line);
     min-height: 66px;
+    flex-wrap: wrap;
   }
 
   .brand {
@@ -147,30 +148,32 @@
 
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
 
-  .tabs {
+  /* Свитч источников в шапке */
+  .source-switcher {
     display: flex;
-    flex: 1;
-    overflow-x: auto;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    margin-left: auto;
+    border-left: 1px solid var(--line);
   }
-
-  .tab {
+  .source-btn {
     appearance: none;
-    border: 0;
-    border-right: 1px solid var(--line);
+    border: 1px solid var(--dim);
     background: transparent;
     color: var(--muted);
-    padding: 0 21px;
+    padding: 6px 12px;
     cursor: pointer;
     font: inherit;
-    font-size: 11px;
-    letter-spacing: .09em;
-    transition: color .2s, background .2s, box-shadow .2s;
+    font-size: 10px;
+    letter-spacing: .08em;
+    transition: .2s;
   }
-
-  .tab:hover, .tab.active {
-    color: var(--bg);
-    background: var(--cyan);
-    box-shadow: inset 0 0 0 2px rgba(255,255,255,.2), 0 0 18px rgba(86,246,255,.65);
+  .source-btn.active {
+    border-color: var(--green);
+    color: var(--green);
+    background: rgba(168,255,106,.08);
+    box-shadow: 0 0 10px rgba(168,255,106,.2);
   }
 
   .workspace {
@@ -184,18 +187,6 @@
     padding: 15px;
     position: relative;
     background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%);
-  }
-
-  .side-panel::after {
-    content: "GAME NEWS // ORBITAL FEED\A DATELINK: RSS/JSON\A SCAN INTERVAL: MANUAL";
-    white-space: pre;
-    position: absolute;
-    right: 14px;
-    bottom: 15px;
-    color: rgba(86,246,255,.2);
-    font-size: 9px;
-    line-height: 1.8;
-    text-align: right;
   }
 
   .section-label {
@@ -412,12 +403,9 @@
     .topline { font-size: 8px; }
     header { display: block; }
     .brand { min-width: 0; border-right: 0; border-bottom: 1px solid var(--line); }
-    .tabs { height: 46px; }
-    .tab { padding: 0 15px; flex: 1 0 auto; }
+    .source-switcher { border-left: 0; border-top: 1px solid var(--line); padding: 10px; }
     .workspace { grid-template-columns: 1fr; }
     .side-panel { border-right: 0; border-bottom: 1px solid var(--line); }
-    .side-panel::after { display: none; }
-    .system-readout { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
     .footer { grid-template-columns: 1fr; }
     .clock { display: none; }
     .digest { grid-template-columns: 1fr; }
@@ -444,21 +432,20 @@
           <small>PERSONAL GAMING INTELLIGENCE TERMINAL</small>
         </div>
       </div>
-      <nav class="tabs" aria-label="BIOS tabs">
-        <button class="tab active" type="button">SUMMARY</button>
-        <button class="tab" type="button">FIXED</button>
-        <button class="tab" type="button">BOOT</button>
-        <button class="tab" type="button">SEQ</button>
-        <button class="tab" type="button">MORE+</button>
-      </nav>
+      
+      <!-- СВИТЧ ИСТОЧНИКОВ В ШАПКЕ -->
+      <div class="source-switcher">
+        <span style="font-size: 9px; color: var(--muted);">SOURCE:</span>
+        <button class="source-btn active" id="btnReddit" type="button">REDDIT_WORKER</button>
+        <button class="source-btn" id="btnHN" type="button">GLOBAL_HN</button>
+      </div>
     </header>
 
     <section class="workspace">
       <aside class="side-panel">
         <p class="section-label">[ SYSTEM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>FEED SOURCE</span><b>4 REDDIT NODES</b></div>
-          <div class="readout-line"><span>WINDOW</span><b>LAST 7 DAYS</b></div>
+          <div class="readout-line"><span>ACTIVE FEED</span><b id="activeSourceLabel">REDDIT NODES</b></div>
           <div class="readout-line"><span>HYPE ENGINE</span><b class="online">ARMED</b></div>
           <div class="readout-line"><span>PROXY MATRIX</span><b id="proxyStatus">IDLE</b></div>
           <div class="readout-line"><span>REC. FOUND</span><b id="postCount">000</b></div>
@@ -488,7 +475,7 @@
     </section>
 
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Terminal initialized. Awaiting operator command.</div>
+      <div class="log" id="log"><b>[SYS]</b> Terminal initialized. Select source and execute fetch.</div>
       <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>BUILD: EDGERUNNERS_7.4</div>
     </footer>
   </main>
@@ -498,14 +485,14 @@
 (() => {
   "use strict";
 
+  let activeSource = "reddit"; // "reddit" или "hn"
+
   const CONFIG = {
     subreddits: ["gaming", "pcgaming", "Games", "GameNews"],
     daysBack: 7,
     limit: 35,
     timeoutMs: 12000,
-    triggerWords: ["scandal", "fail", "crack", "bug", "worst"],
-    cacheKey: "hype-digest-cache-v3",
-    cacheMaxAgeMs: 6 * 60 * 60 * 1000
+    triggerWords: ["scandal", "fail", "crack", "bug", "worst"]
   };
 
   const els = {
@@ -517,11 +504,11 @@
     proxyStatus: document.getElementById("proxyStatus"),
     lastSync: document.getElementById("lastSync"),
     connectionState: document.getElementById("connectionState"),
-    clock: document.getElementById("clock")
+    clock: document.getElementById("clock"),
+    btnReddit: document.getElementById("btnReddit"),
+    btnHN: document.getElementById("btnHN"),
+    activeSourceLabel: document.getElementById("activeSourceLabel")
   };
-
-  const sourceUrl = (subreddit) =>
-    `https://www.reddit.com/r/${subreddit}/new.json?limit=${CONFIG.limit}&raw_json=1`;
 
   function log(message, type = "info") {
     const label = type === "error" ? '<span class="error">[FAULT]</span>' : "<b>[SYS]</b>";
@@ -554,54 +541,17 @@
     }
   }
 
-  function postKey(post) {
-    return post.id || String(post.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 90);
-  }
-
-  function calculateHype(post) {
-    const title = String(post.title || "").toLowerCase();
+  function calculateHype(title, score, comments = 0) {
+    const t = String(title || "").toLowerCase();
     const keywordBonus = CONFIG.triggerWords.reduce(
-      (total, word) => total + (title.includes(word) ? 50 : 0), 0
+      (total, word) => total + (t.includes(word) ? 50 : 0), 0
     );
-    return Math.max(0, Number(post.score) || 0) + (Math.max(0, Number(post.num_comments) || 0) * 2) + keywordBonus;
-  }
-
-  function normalizePosts(payload) {
-    const cutoff = Date.now() / 1000 - (CONFIG.daysBack * 24 * 60 * 60 * 1000);
-    const children = payload?.data?.children;
-
-    if (!Array.isArray(children)) {
-      throw new Error("Invalid feed payload received.");
-    }
-
-    const seen = new Set();
-    return children
-      .map(item => item?.data)
-      .filter(post => post && post.title && post.created_utc >= cutoff && !post.stickied)
-      .filter(post => {
-        const key = postKey(post);
-        if (seen.has(key)) return false;
-        seen.add(key);
-        return true;
-      })
-      .map(post => ({
-        title: post.title,
-        url: safeUrl(post.url_overridden_by_dest, `https://www.reddit.com${post.permalink || ""}`),
-        permalink: `https://www.reddit.com${post.permalink || ""}`,
-        score: Number(post.score) || 0,
-        comments: Number(post.num_comments) || 0,
-        created: Number(post.created_utc) || 0,
-        author: post.author || "UNKNOWN",
-        source: `r/${post.subreddit || CONFIG.subreddits[0]}`,
-        hype: calculateHype(post)
-      }))
-      .sort((a, b) => b.hype - a.hype);
+    return Math.max(0, Number(score) || 0) + (Math.max(0, Number(comments) || 0) * 2) + keywordBonus;
   }
 
   async function fetchWithTimeout(url, options = {}) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
-
     try {
       const response = await fetch(url, {
         ...options,
@@ -615,79 +565,70 @@
     }
   }
 
-  async function fetchNode(subreddit) {
-    const rawUrl = sourceUrl(subreddit);
-    const workerProxyUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
-    
-    const endpoints = [
-      { label: "MY_WORKER", url: workerProxyUrl },
-      { label: "ALLORIGINS", url: `https://api.allorigins.win/raw?url=${encodeURIComponent(rawUrl)}` }
-    ];
-    let lastError;
-    for (const endpoint of endpoints) {
-      try {
-        const payload = await fetchWithTimeout(endpoint.url);
-        if (!Array.isArray(payload?.data?.children)) throw new Error("Malformed node response");
-        return { payload, route: endpoint.label };
-      } catch (error) {
-        lastError = error;
-      }
-    }
-    throw lastError || new Error(`${subreddit} unavailable`);
+  // 1. Загрузка через Reddit воркер
+  async function fetchRedditNode(subreddit) {
+    const rawUrl = `https://www.reddit.com/r/${subreddit}/new.json?limit=${CONFIG.limit}&raw_json=1`;
+    const workerUrl = `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}`;
+    const payload = await fetchWithTimeout(workerUrl);
+    if (!Array.isArray(payload?.data?.children)) throw new Error("Malformed node response");
+    return payload;
   }
 
-  async function fetchFeed() {
-    try {
-      const results = await Promise.allSettled(CONFIG.subreddits.map(fetchNode));
-      const successes = results.filter(result => result.status === "fulfilled").map(result => result.value);
-      if (!successes.length) throw new Error("Reddit nodes failed");
+  async function fetchRedditFeed() {
+    log("Querying Reddit via Cloudflare Worker gateway...");
+    const results = await Promise.allSettled(CONFIG.subreddits.map(fetchRedditNode));
+    const successes = results.filter(r => r.status === "fulfilled").map(r => r.value);
+    if (!successes.length) throw new Error("Reddit gateway blocked or unavailable.");
 
-      const children = successes.flatMap(result => result.payload.data.children);
-      const routes = [...new Set(successes.map(result => result.route))].join("+");
-      return {
-        payload: { data: { children } },
-        route: `REDDIT // ${routes}`
-      };
-    } catch (e) {
-      // Железобетонный фоллбек на Hacker News, если Реддит полностью забанил IP
-      log("Reddit nodes throttled. Switching to backup global feed...", "error");
-      const res = await fetch("https://hacker-news.firebaseio.com/v0/topstories.json");
-      const ids = await res.json();
-      const topIds = ids.slice(0, 40);
-      const items = await Promise.all(topIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()).catch(() => null)));
-      
-      const children = items.filter(i => i && i.title).map(item => ({
-        data: {
-          title: item.title,
-          url_overridden_by_dest: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
-          permalink: `/item?id=${item.id}`,
-          score: item.score || 10,
-          num_comments: item.descendants || 0,
-          created_utc: item.time || Date.now() / 1000,
-          subreddit: "tech_global"
-        }
-      }));
-      return { payload: { data: { children } }, route: "BACKUP_FEED // HN" };
-    }
+    const cutoff = Date.now() / 1000 - (CONFIG.daysBack * 24 * 60 * 60 * 1000);
+    const children = successes.flatMap(r => r.data.children);
+    const seen = new Set();
+
+    return children
+      .map(item => item?.data)
+      .filter(post => post && post.title && post.created_utc >= cutoff && !post.stickied)
+      .filter(post => {
+        const key = post.id || post.title.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map(post => ({
+        title: post.title,
+        url: safeUrl(post.url_overridden_by_dest, `https://www.reddit.com${post.permalink || ""}`),
+        score: Number(post.score) || 0,
+        comments: Number(post.num_comments) || 0,
+        created: Number(post.created_utc) || 0,
+        source: `r/${post.subreddit || "gaming"}`,
+        hype: calculateHype(post.title, post.score, post.num_comments)
+      }))
+      .sort((a, b) => b.hype - a.hype);
   }
 
-  async function fetchFeed() {
-    log("Scanning four independent gaming nodes via Worker gateway...");
-    const results = await Promise.allSettled(CONFIG.subreddits.map(fetchNode));
-    const successes = results.filter(result => result.status === "fulfilled").map(result => result.value);
-    if (!successes.length) throw new Error("All public feed routes failed.");
+  // 2. Загрузка через Hacker News (резервный надежный поток)
+  async function fetchHNFeed() {
+    log("Querying global Hacker News stream...");
+    const res = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
+    const ids = res.slice(0, 45);
+    const items = await Promise.all(ids.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null)));
 
-    const children = successes.flatMap(result => result.payload.data.children);
-    const routes = [...new Set(successes.map(result => result.route))].join("+");
-    return {
-      payload: { data: { children } },
-      route: `${successes.length}/${CONFIG.subreddits.length} NODES • ${routes}`
-    };
+    return items
+      .filter(item => item && item.title)
+      .map(item => ({
+        title: item.title,
+        url: safeUrl(item.url, `https://news.ycombinator.com/item?id=${item.id}`),
+        score: Number(item.score) || 10,
+        comments: Number(item.descendants) || 0,
+        created: Number(item.time) || Math.floor(Date.now() / 1000),
+        source: "HACKER NEWS",
+        hype: calculateHype(item.title, item.score, item.descendants)
+      }))
+      .sort((a, b) => b.hype - a.hype);
   }
 
   function renderPosts(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO RECENT SIGNALS FOUND</strong><br>Feed returned no eligible records within the 7-day window.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO SIGNALS FOUND</strong><br>Stream returned no records.</div></div>`;
       return;
     }
 
@@ -706,26 +647,6 @@
     `).join("");
   }
 
-  function saveCache(posts) {
-    try {
-      localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ savedAt: Date.now(), posts }));
-    } catch {
-      // Storage is optional
-    }
-  }
-
-  function loadFreshCache() {
-    try {
-      const cached = JSON.parse(localStorage.getItem(CONFIG.cacheKey));
-      if (cached && Array.isArray(cached.posts) && Date.now() - cached.savedAt < CONFIG.cacheMaxAgeMs) {
-        return cached.posts;
-      }
-    } catch {
-      return null;
-    }
-    return null;
-  }
-
   async function loadDigest() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
@@ -734,34 +655,24 @@
     els.recordLabel.textContent = "PARSING TRANSMISSIONS...";
 
     try {
-      const { payload, route } = await fetchFeed();
-      const posts = normalizePosts(payload);
+      const posts = activeSource === "reddit" ? await fetchRedditFeed() : await fetchHNFeed();
       renderPosts(posts);
-      saveCache(posts);
 
       els.postCount.textContent = String(posts.length).padStart(3, "0");
-      els.recordLabel.textContent = `${posts.length} RECORDS // SORT: HYPE DESC`;
-      els.proxyStatus.textContent = route;
+      els.recordLabel.textContent = `${posts.length} RECORDS // MODE: ${activeSource.toUpperCase()}`;
+      els.proxyStatus.textContent = activeSource === "reddit" ? "WORKER_GATEWAY" : "DIRECT_API";
       els.lastSync.textContent = new Date().toLocaleTimeString("en-GB");
       els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log(`Digest synchronized: ${posts.length} records indexed via ${route}.`);
+      log(`Stream synchronized via ${activeSource.toUpperCase()}: ${posts.length} records indexed.`);
     } catch (error) {
-      const cachedPosts = loadFreshCache();
       els.proxyStatus.textContent = "FAULT";
       els.connectionState.textContent = "UPLINK STATUS: DEGRADED";
-      if (cachedPosts) {
-        renderPosts(cachedPosts);
-        els.postCount.textContent = String(cachedPosts.length).padStart(3, "0");
-        els.recordLabel.textContent = "CACHED RECORDS // UPLINK DEGRADED";
-        log("Network unavailable. Rendered the latest local cache.", "error");
-      } else {
-        els.recordLabel.textContent = "NETWORK FAULT";
-        els.digest.innerHTML = `
-          <div class="empty-state">
-            <div><strong>DATELINK FAILED</strong><br>Unable to reach public feed. Retry transmission shortly.<br><span class="cursor">ERROR: ${escapeHtml(error.message)}</span></div>
-          </div>`;
-        log(`Digest fetch failed: ${error.message}`, "error");
-      }
+      els.recordLabel.textContent = "NETWORK FAULT";
+      els.digest.innerHTML = `
+        <div class="empty-state">
+          <div><strong>DATELINK FAILED</strong><br>Source unavailable. Switch source in header or retry.<br><span class="cursor">ERROR: ${escapeHtml(error.message)}</span></div>
+        </div>`;
+      log(`Fetch failed: ${error.message}`, "error");
     } finally {
       els.fetchButton.disabled = false;
       els.fetchButton.classList.remove("loading");
@@ -769,17 +680,26 @@
     }
   }
 
+  // Переключение свитча в шапке
+  els.btnReddit.addEventListener("click", () => {
+    activeSource = "reddit";
+    els.btnReddit.classList.add("active");
+    els.btnHN.classList.remove("active");
+    els.activeSourceLabel.textContent = "REDDIT NODES";
+    log("Source switched to: REDDIT_WORKER");
+  });
+
+  els.btnHN.addEventListener("click", () => {
+    activeSource = "hn";
+    els.btnHN.classList.add("active");
+    els.btnReddit.classList.remove("active");
+    els.activeSourceLabel.textContent = "GLOBAL HN";
+    log("Source switched to: GLOBAL_HN");
+  });
+
   function updateClock() {
     els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false });
   }
-
-  document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
-      tab.classList.add("active");
-      log(`BIOS tab switched: ${tab.textContent.trim()}. Summary feed remains active.`);
-    });
-  });
 
   els.fetchButton.addEventListener("click", loadDigest);
   updateClock();
