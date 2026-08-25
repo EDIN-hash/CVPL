@@ -9,6 +9,7 @@
   :root {
     --bg: #030507;
     --panel: #071014;
+    --panel-2: #09171a;
     --cyan: #56f6ff;
     --green: #a8ff6a;
     --muted: #5b9392;
@@ -16,169 +17,495 @@
     --red: #ff5f7e;
     --line: rgba(86, 246, 255, .42);
     --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14);
-    --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace;
+    --mono: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
   }
+
   * { box-sizing: border-box; }
   html { background: var(--bg); }
   body {
-    margin: 0; min-height: 100vh; overflow-x: hidden;
-    color: var(--cyan); background: var(--bg);
-    font-family: var(--mono); font-size: 13px; letter-spacing: .035em;
-  }
-  body::before {
-    content: ""; position: fixed; z-index: 20; inset: 0; pointer-events: none; opacity: .32;
-    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,.5) 3px, rgba(0,0,0,.5) 4px);
-    mix-blend-mode: overlay;
-  }
-  .screen { min-height: 100vh; padding: 17px; }
-  .frame { width: min(1500px, 100%); margin: 0 auto; border: 1px solid var(--line); background: rgba(3, 10, 12, .77); box-shadow: var(--glow); position: relative; }
-  .topline { min-height: 30px; padding: 6px 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--green); font-size: 10px; text-transform: uppercase; }
-  header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 66px; }
-  .brand { display: flex; align-items: center; gap: 11px; min-width: 290px; padding: 10px 16px; border-right: 1px solid var(--line); }
-  .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--green); color: var(--green); font-size: 20px; }
-  .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); }
-  .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
-  
-  .lang-switcher {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-    padding: 0 16px;
-    border-left: 1px solid var(--line);
-  }
-  .lang-btn {
-    background: transparent;
-    border: 1px solid var(--dim);
-    color: var(--muted);
-    padding: 4px 8px;
-    cursor: pointer;
-    font: inherit;
-    font-size: 10px;
-  }
-  .lang-btn.active {
-    border-color: var(--green);
-    color: var(--green);
-    background: rgba(168,255,106,.08);
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--cyan);
+    background:
+      radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem),
+      radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem),
+      var(--bg);
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: .035em;
   }
 
-  .workspace { display: grid; grid-template-columns: minmax(255px, 28%) 1fr; min-height: 670px; }
-  .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
-  .section-label { color: var(--green); font-size: 10px; margin: 0 0 11px; }
-  .system-readout { border: 1px solid var(--dim); padding: 10px; margin-bottom: 13px; background: rgba(0,0,0,.22); }
-  .readout-line { display: flex; justify-content: space-between; padding: 5px 0; color: var(--muted); font-size: 10px; border-bottom: 1px dotted rgba(86,246,255,.16); }
-  .readout-line b { color: var(--cyan); }
+  body::before {
+    content: "";
+    position: fixed;
+    z-index: 20;
+    inset: 0;
+    pointer-events: none;
+    opacity: .32;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, .5) 3px,
+      rgba(0, 0, 0, .5) 4px
+    );
+    mix-blend-mode: overlay;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: 21;
+    inset: 0;
+    pointer-events: none;
+    opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    animation: noise .18s steps(2) infinite;
+  }
+
+  @keyframes noise { 0% { transform: translate(0, 0); } 25% { transform: translate(1%, -1%); } 50% { transform: translate(-1%, 1%); } 75% { transform: translate(1%, 1%); } }
+  @keyframes flicker { 0%, 100% { opacity: 1; } 48% { opacity: .96; } 49% { opacity: .86; } 50% { opacity: 1; } 77% { opacity: .91; } 78% { opacity: 1; } }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes pulse { 50% { box-shadow: 0 0 8px var(--green), 0 0 26px rgba(168,255,106,.35); } }
+  @keyframes loading { to { transform: rotate(360deg); } }
+
+  .screen {
+    min-height: 100vh;
+    padding: 17px;
+    animation: flicker 8s infinite;
+  }
+
+  .frame {
+    width: min(1500px, 100%);
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    background: rgba(3, 10, 12, .77);
+    box-shadow: var(--glow), inset 0 0 34px rgba(0, 218, 234, .035);
+    position: relative;
+  }
+
+  .frame::before,
+  .frame::after {
+    content: "╋";
+    position: absolute;
+    color: var(--green);
+    font-size: 18px;
+    text-shadow: 0 0 8px var(--green);
+  }
+  .frame::before { top: -11px; left: -7px; }
+  .frame::after { right: -7px; bottom: -11px; }
+
+  .topline {
+    min-height: 30px;
+    padding: 6px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--line);
+    color: var(--green);
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+
+  .topline span:last-child { color: var(--muted); text-align: right; }
+
+  header {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid var(--line);
+    min-height: 66px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 290px;
+    padding: 10px 16px;
+    border-right: 1px solid var(--line);
+  }
+
+  .brand-mark {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--green);
+    color: var(--green);
+    font-size: 20px;
+    box-shadow: inset 0 0 15px rgba(168,255,106,.1), 0 0 9px rgba(168,255,106,.25);
+  }
+
+  .brand h1 {
+    font-size: 15px;
+    letter-spacing: .12em;
+    margin: 0;
+    color: var(--cyan);
+    text-shadow: 0 0 9px rgba(86, 246, 255, .55);
+  }
+
+  .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+
+  .tabs {
+    display: flex;
+    flex: 1;
+    overflow-x: auto;
+  }
+
+  .tab {
+    appearance: none;
+    border: 0;
+    border-right: 1px solid var(--line);
+    background: transparent;
+    color: var(--muted);
+    padding: 0 21px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    letter-spacing: .09em;
+    transition: color .2s, background .2s, box-shadow .2s;
+  }
+
+  .tab:hover, .tab.active {
+    color: var(--bg);
+    background: var(--cyan);
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.2), 0 0 18px rgba(86,246,255,.65);
+  }
+
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(255px, 28%) 1fr;
+    min-height: 670px;
+  }
+
+  .side-panel {
+    border-right: 1px solid var(--line);
+    padding: 15px;
+    position: relative;
+    background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%);
+  }
+
+  .side-panel::after {
+    content: "GAME NEWS // ORBITAL FEED\A DATELINK: RSS/JSON\A SCAN INTERVAL: MANUAL";
+    white-space: pre;
+    position: absolute;
+    right: 14px;
+    bottom: 15px;
+    color: rgba(86,246,255,.2);
+    font-size: 9px;
+    line-height: 1.8;
+    text-align: right;
+  }
+
+  .section-label {
+    color: var(--green);
+    font-size: 10px;
+    letter-spacing: .13em;
+    margin: 0 0 11px;
+  }
+
+  .system-readout {
+    border: 1px solid var(--dim);
+    padding: 10px;
+    margin-bottom: 13px;
+    background: rgba(0, 0, 0, .22);
+  }
+
+  .readout-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 5px 0;
+    color: var(--muted);
+    font-size: 10px;
+    border-bottom: 1px dotted rgba(86,246,255,.16);
+  }
+  .readout-line:last-child { border: 0; }
+  .readout-line b { color: var(--cyan); font-weight: 500; text-align: right; }
   .online { color: var(--green) !important; }
-  .fetch-button { width: 100%; border: 1px solid var(--green); background: rgba(168,255,106,.08); color: var(--green); padding: 14px; cursor: pointer; font: 700 12px var(--mono); letter-spacing: .13em; transition: .2s; }
-  .fetch-button:hover:not(:disabled) { background: var(--green); color: var(--bg); }
+
+  .fetch-button {
+    width: 100%;
+    border: 1px solid var(--green);
+    background: rgba(168, 255, 106, .08);
+    color: var(--green);
+    padding: 14px 10px;
+    cursor: pointer;
+    font: 700 12px var(--mono);
+    letter-spacing: .13em;
+    transition: .2s;
+    box-shadow: inset 0 0 17px rgba(168,255,106,.06);
+  }
+
+  .fetch-button:hover:not(:disabled) {
+    background: var(--green);
+    color: var(--bg);
+    box-shadow: 0 0 19px rgba(168,255,106,.65);
+  }
   .fetch-button:disabled { cursor: wait; opacity: .7; }
+  button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+  }
+  .fetch-button.loading::before {
+    content: "";
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    margin-right: 9px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: loading .65s linear infinite;
+  }
+
+  .legend { margin-top: 22px; color: var(--muted); font-size: 9px; line-height: 2; }
+  .legend i { display: inline-block; width: 7px; height: 7px; margin-right: 7px; background: var(--cyan); }
+  .legend i.green { background: var(--green); }
+  .legend i.red { background: var(--red); }
+
   .main-panel { min-width: 0; display: flex; flex-direction: column; }
-  .main-header { padding: 14px 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); }
-  .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); }
-  .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); gap: 10px; padding: 13px; flex: 1; align-content: start; }
-  .news-card { display: flex; flex-direction: column; padding: 13px; border: 1px solid var(--dim); background: rgba(7, 18, 21, .7); transition: .25s; }
-  .news-card:hover { border-color: var(--cyan); box-shadow: var(--glow); }
-  .card-top { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
-  .score { color: var(--bg); background: var(--green); padding: 3px 6px; font-size: 11px; font-weight: bold; }
-  .source { color: var(--muted); font-size: 9px; }
-  .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; }
-  .card-foot { margin-top: auto; display: flex; justify-content: space-between; color: var(--muted); font-size: 9px; }
-  .open-link { color: var(--green); text-decoration: none; }
-  .empty-state { grid-column: 1 / -1; min-height: 250px; display: grid; place-items: center; border: 1px dashed var(--dim); color: var(--muted); text-align: center; }
-  .footer { display: grid; grid-template-columns: 1fr auto; min-height: 50px; border-top: 1px solid var(--line); background: rgba(0,0,0,.38); align-items: center; padding: 0 14px; }
-  .log { color: var(--muted); font-size: 10px; }
-  .log b { color: var(--green); }
-  @media (max-width: 760px) { header { flex-direction: column; } .workspace { grid-template-columns: 1fr; } }
+  .main-header {
+    padding: 14px 17px 11px;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--dim);
+  }
+
+  .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); font-weight: 500; }
+  .record-count { color: var(--green); font-size: 10px; }
+
+  .digest {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(278px, 1fr));
+    align-content: start;
+    gap: 10px;
+    padding: 13px;
+    flex: 1;
+  }
+
+  .news-card {
+    position: relative;
+    min-height: 182px;
+    display: flex;
+    flex-direction: column;
+    padding: 13px;
+    border: 1px solid var(--dim);
+    background:
+      linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px,
+      linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px,
+      rgba(7, 18, 21, .7);
+    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+
+  .news-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--cyan);
+    box-shadow: var(--glow);
+  }
+
+  .news-card::before {
+    content: "MEM::" attr(data-slot);
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    color: rgba(86,246,255,.35);
+    font-size: 8px;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(86,246,255,.22);
+  }
+
+  .score {
+    color: var(--bg);
+    background: var(--green);
+    min-width: 60px;
+    padding: 4px 7px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(168,255,106,.45);
+  }
+
+  .score small { display: block; font-size: 7px; font-weight: normal; margin-top: 1px; }
+
+  .source { color: var(--muted); font-size: 9px; max-width: 65%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  .news-card h3 {
+    margin: 12px 0 12px;
+    color: var(--cyan);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 500;
+    text-shadow: 0 0 6px rgba(86,246,255,.18);
+  }
+
+  .card-foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 9px;
+  }
+
+  .open-link { color: var(--green); text-decoration: none; border-bottom: 1px solid transparent; }
+  .open-link:hover { border-color: var(--green); }
+
+  .empty-state {
+    grid-column: 1 / -1;
+    min-height: 250px;
+    display: grid;
+    place-items: center;
+    border: 1px dashed var(--dim);
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.8;
+  }
+
+  .empty-state strong { color: var(--cyan); font-weight: 400; }
+  .cursor::after { content: "█"; color: var(--green); animation: blink .9s steps(1) infinite; margin-left: 4px; }
+
+  .footer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    min-height: 62px;
+    border-top: 1px solid var(--line);
+    background: rgba(0,0,0,.38);
+  }
+
+  .log {
+    padding: 9px 14px;
+    overflow: hidden;
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.85;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .log b { color: var(--green); font-weight: 500; }
+  .log .error { color: var(--red); }
+
+  .clock {
+    min-width: 220px;
+    padding: 10px 14px;
+    border-left: 1px solid var(--line);
+    color: var(--cyan);
+    text-align: right;
+    font-size: 10px;
+    line-height: 1.8;
+  }
+  .clock b { color: var(--green); font-weight: normal; }
+
+  @media (max-width: 760px) {
+    .screen { padding: 8px; }
+    .topline { font-size: 8px; }
+    header { display: block; }
+    .brand { min-width: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+    .tabs { height: 46px; }
+    .tab { padding: 0 15px; flex: 1 0 auto; }
+    .workspace { grid-template-columns: 1fr; }
+    .side-panel { border-right: 0; border-bottom: 1px solid var(--line); }
+    .side-panel::after { display: none; }
+    .system-readout { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+    .footer { grid-template-columns: 1fr; }
+    .clock { display: none; }
+    .digest { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
 </style>
 </head>
 <body>
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span id="uiNode">◉ PERSONAL NEWS ARRAY / 100+ SOURCES</span>
+      <span>◉ PERSONAL NEWS ARRAY / NODE: WAW-07</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
+
     <header>
       <div class="brand">
         <div class="brand-mark">⌁</div>
         <div>
-          <h1 id="uiTitle">HYPE_DIGEST // BIOS</h1>
-          <small id="uiSub">MULTI-SOURCE GAMING MATRIX</small>
+          <h1>HYPE_DIGEST // BIOS</h1>
+          <small>PERSONAL GAMING INTELLIGENCE TERMINAL</small>
         </div>
       </div>
-      <div class="lang-switcher">
-        <button class="lang-btn active" id="btnEng" type="button">ENG</button>
-        <button class="lang-btn" id="btnRus" type="button">RUS</button>
-      </div>
+      <nav class="tabs" aria-label="BIOS tabs">
+        <button class="tab active" type="button">SUMMARY</button>
+        <button class="tab" type="button">FIXED</button>
+        <button class="tab" type="button">BOOT</button>
+        <button class="tab" type="button">SEQ</button>
+        <button class="tab" type="button">MORE+</button>
+      </nav>
     </header>
+
     <section class="workspace">
       <aside class="side-panel">
-        <p class="section-label" id="uiTelemetry">[ SYSTEM TELEMETRY ]</p>
+        <p class="section-label">[ SYSTEM TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span id="lblSources">SOURCES</span><b>100+ FEEDS</b></div>
-          <div class="readout-line"><span id="lblEngine">HYPE ENGINE</span><b class="online">ARMED</b></div>
-          <div class="readout-line"><span id="lblUnique">DEDUP FILTER</span><b class="online">ACTIVE</b></div>
-          <div class="readout-line"><span id="lblRec">REC. FOUND</span><b id="postCount">000</b></div>
+          <div class="readout-line"><span>FEED SOURCE</span><b>4 REDDIT NODES</b></div>
+          <div class="readout-line"><span>WINDOW</span><b>LAST 7 DAYS</b></div>
+          <div class="readout-line"><span>HYPE ENGINE</span><b class="online">ARMED</b></div>
+          <div class="readout-line"><span>PROXY MATRIX</span><b id="proxyStatus">IDLE</b></div>
+          <div class="readout-line"><span>REC. FOUND</span><b id="postCount">000</b></div>
+          <div class="readout-line"><span>LAST SYNC</span><b id="lastSync">--:--:--</b></div>
         </div>
+
         <button id="fetchButton" class="fetch-button" type="button">FETCH_DIGEST</button>
+
+        <div class="legend">
+          <div><i class="green"></i>HYPE INDEX / HIGH SIGNAL</div>
+          <div><i></i>DATA BANK / NEWS RECORD</div>
+          <div><i class="red"></i>LINK / UPLINK FAULT</div>
+        </div>
       </aside>
+
       <section class="main-panel">
         <div class="main-header">
-          <h2 id="uiPriority">/// PRIORITY TRANSMISSIONS</h2>
+          <h2>/// PRIORITY TRANSMISSIONS</h2>
           <span class="record-count" id="recordLabel">AWAITING SCAN...</span>
         </div>
-        <div id="digest" class="digest">
+        <div id="digest" class="digest" aria-live="polite">
           <div class="empty-state">
-            <div><strong id="uiEmptyTitle">NO RECORDS LOADED</strong><br><span id="uiEmptySub">PRESS FETCH_DIGEST TO SCAN 100+ CHANNELS</span></div>
+            <div><strong>NO RECORDS LOADED</strong><br><span class="cursor">PRESS FETCH_DIGEST TO INITIALIZE DATELINK</span></div>
           </div>
         </div>
       </section>
     </section>
+
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Terminal ready.</div>
-      <div id="clock">--:--:--</div>
+      <div class="log" id="log"><b>[SYS]</b> Terminal initialized. Awaiting operator command.</div>
+      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>BUILD: EDGERUNNERS_7.4</div>
     </footer>
   </main>
 </div>
+
 <script>
 (() => {
-  let currentLang = "eng";
+  "use strict";
 
-  const I18N = {
-    eng: {
-      node: "◉ PERSONAL NEWS ARRAY / 100+ SOURCES",
-      sub: "MULTI-SOURCE GAMING MATRIX",
-      telemetry: "[ SYSTEM TELEMETRY ]",
-      sources: "SOURCES",
-      engine: "HYPE ENGINE",
-      dedup: "DEDUP FILTER",
-      recFound: "REC. FOUND",
-      fetchBtn: "FETCH_DIGEST",
-      scanning: "SCANNING 100+...",
-      priority: "/// PRIORITY TRANSMISSIONS",
-      awaiting: "AWAITING SCAN...",
-      emptyTitle: "NO RECORDS LOADED",
-      emptySub: "PRESS FETCH_DIGEST TO SCAN 100+ CHANNELS",
-      sysReady: "Terminal ready. 100+ sources linked.",
-      sysSync: "Matrix synchronized. Duplicates purged."
-    },
-    rus: {
-      node: "◉ МАССИВ ДАННЫХ / 100+ ИСТОЧНИКОВ",
-      sub: "МУЛЬТИИСТОЧНИКОВАЯ ИГРОВАЯ МАТРИЦА",
-      telemetry: "[ СИСТЕМНАЯ ТЕЛЕМЕТРИЯ ]",
-      sources: "ИСТОЧНИКИ",
-      engine: "ДВИЖОК ХАЙПА",
-      dedup: "ФИЛЬТР ДУБЛЕЙ",
-      recFound: "НАЙДЕНО ЗАП.",
-      fetchBtn: "ЗАПУСТИТЬ_СКАН",
-      scanning: "СКАНИРУЕМ 100+...",
-      priority: "/// ПРИОРИТЕТНЫЕ СВОДКЕ",
-      awaiting: "ОЖИДАНИЕ СКАНА...",
-      emptyTitle: "ЗАПИСЕЙ НЕТ",
-      emptySub: "НАЖМИТЕ КНОПКУ, ЧТОБЫ ПРОСЕЯТЬ 100+ ИСТОЧНИКОВ",
-      sysReady: "Терминал готов. 100+ источников подключено.",
-      sysSync: "Матрица синхронизирована. Дубликаты удалены."
-    }
+  const CONFIG = {
+    subreddits: ["gaming", "pcgaming", "Games", "GameNews"],
+    daysBack: 7,
+    limit: 35,
+    timeoutMs: 12000,
+    triggerWords: ["scandal", "fail", "crack", "bug", "worst"],
+    cacheKey: "hype-digest-cache-v3",
+    cacheMaxAgeMs: 6 * 60 * 60 * 1000
   };
 
   const els = {
@@ -187,170 +514,241 @@
     log: document.getElementById("log"),
     postCount: document.getElementById("postCount"),
     recordLabel: document.getElementById("recordLabel"),
+    proxyStatus: document.getElementById("proxyStatus"),
+    lastSync: document.getElementById("lastSync"),
     connectionState: document.getElementById("connectionState"),
-    clock: document.getElementById("clock"),
-    btnEng: document.getElementById("btnEng"),
-    btnRus: document.getElementById("btnRus"),
-    uiNode: document.getElementById("uiNode"),
-    uiSub: document.getElementById("uiSub"),
-    uiTelemetry: document.getElementById("uiTelemetry"),
-    lblSources: document.getElementById("lblSources"),
-    lblEngine: document.getElementById("lblEngine"),
-    lblUnique: document.getElementById("lblUnique"),
-    lblRec: document.getElementById("lblRec"),
-    uiPriority: document.getElementById("uiPriority"),
-    uiEmptyTitle: document.getElementById("uiEmptyTitle"),
-    uiEmptySub: document.getElementById("uiEmptySub")
+    clock: document.getElementById("clock")
   };
 
-  function setLanguage(lang) {
-    currentLang = lang;
-    els.btnEng.classList.toggle("active", lang === "eng");
-    els.btnRus.classList.toggle("active", lang === "rus");
-    const t = I18N[lang];
-    els.uiNode.textContent = t.node;
-    els.uiSub.textContent = t.sub;
-    els.uiTelemetry.textContent = t.telemetry;
-    els.lblSources.textContent = t.sources;
-    els.lblEngine.textContent = t.engine;
-    els.lblUnique.textContent = t.dedup;
-    els.lblRec.textContent = t.recFound;
-    if(!els.fetchButton.disabled) els.fetchButton.textContent = t.fetchBtn;
-    els.uiPriority.textContent = t.priority;
-    if(els.digest.querySelector(".empty-state")) {
-      els.uiEmptyTitle.textContent = t.emptyTitle;
-      els.uiEmptySub.textContent = t.emptySub;
+  const sourceUrl = (subreddit) =>
+    `https://www.reddit.com/r/${subreddit}/new.json?limit=${CONFIG.limit}&raw_json=1`;
+
+  function log(message, type = "info") {
+    const label = type === "error" ? '<span class="error">[FAULT]</span>' : "<b>[SYS]</b>";
+    els.log.innerHTML = `${label} ${escapeHtml(message)}`;
+  }
+
+  function escapeHtml(value) {
+    const div = document.createElement("div");
+    div.textContent = String(value ?? "");
+    return div.innerHTML;
+  }
+
+  function formatNumber(value) {
+    return new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value || 0);
+  }
+
+  function formatAge(timestamp) {
+    const seconds = Math.max(0, Math.floor(Date.now() / 1000 - timestamp));
+    if (seconds < 3600) return `${Math.max(1, Math.floor(seconds / 60))}M AGO`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}H AGO`;
+    return `${Math.floor(seconds / 86400)}D AGO`;
+  }
+
+  function safeUrl(value, fallback) {
+    try {
+      const parsed = new URL(value);
+      return /^https?:$/.test(parsed.protocol) ? parsed.href : fallback;
+    } catch {
+      return fallback;
     }
-    log(t.sysReady);
   }
 
-  function log(msg, err = false) {
-    els.log.innerHTML = `<b>[SYS]</b> <span style="color:${err?'var(--red)':'inherit'}">${msg}</span>`;
+  function postKey(post) {
+    return post.id || String(post.title || "").toLowerCase().replace(/[^a-z0-9]+/g, "").slice(0, 90);
   }
 
-  function calculateHype(title, score = 50) {
-    const t = title.toLowerCase();
-    let hype = score;
-    if(t.includes("fail") || t.includes("worst") || t.includes("bug") || t.includes("scandal") || t.includes("ban") || t.includes("провал") || t.includes("скандал") || t.includes("баг")) hype += 200;
-    if(t.includes("launch") || t.includes("release") || t.includes("update") || t.includes("dlc") || t.includes("релиз") || t.includes("обновление")) hype += 100;
-    return hype;
+  function calculateHype(post) {
+    const title = String(post.title || "").toLowerCase();
+    const keywordBonus = CONFIG.triggerWords.reduce(
+      (total, word) => total + (title.includes(word) ? 50 : 0), 0
+    );
+    return Math.max(0, Number(post.score) || 0) + (Math.max(0, Number(post.num_comments) || 0) * 2) + keywordBonus;
   }
 
-  // Функция для удаления дубликатов по схожести заголовков
-  function removeDuplicates(items) {
+  function normalizePosts(payload) {
+    const cutoff = Date.now() / 1000 - (CONFIG.daysBack * 24 * 60 * 60 * 1000);
+    const children = payload?.data?.children;
+
+    if (!Array.isArray(children)) {
+      throw new Error("Invalid feed payload received.");
+    }
+
     const seen = new Set();
-    return items.filter(item => {
-      // Нормализуем заголовок: убираем знаки препинания и приводим к нижнему регистру
-      const cleanTitle = item.title.toLowerCase().replace(/[^a-zа-я0-9]/g, "").slice(0, 35);
-      if (seen.has(cleanTitle)) return false;
-      seen.add(cleanTitle);
-      return true;
-    });
+    return children
+      .map(item => item?.data)
+      .filter(post => post && post.title && post.created_utc >= cutoff && !post.stickied)
+      .filter(post => {
+        const key = postKey(post);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map(post => ({
+        title: post.title,
+        url: safeUrl(post.url_overridden_by_dest, `https://www.reddit.com${post.permalink || ""}`),
+        permalink: `https://www.reddit.com${post.permalink || ""}`,
+        score: Number(post.score) || 0,
+        comments: Number(post.num_comments) || 0,
+        created: Number(post.created_utc) || 0,
+        author: post.author || "UNKNOWN",
+        source: `r/${post.subreddit || CONFIG.subreddits[0]}`,
+        hype: calculateHype(post)
+      }))
+      .sort((a, b) => b.hype - a.hype);
+  }
+
+  async function fetchWithTimeout(url, options = {}) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+        headers: { Accept: "application/json", ...(options.headers || {}) }
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  async function fetchNode(subreddit) {
+    const rawUrl = sourceUrl(subreddit);
+    // Интегрирован твой персональный Cloudflare Worker в качестве приоритетного шлюза
+    const endpoints = [
+      { label: "MY_WORKER", url: `https://old-dew-2090.0662982401w.workers.dev/?url=${encodeURIComponent(rawUrl)}` },
+      { label: "ALLORIGINS", url: `https://api.allorigins.win/raw?url=${encodeURIComponent(rawUrl)}` },
+      { label: "DIRECT", url: rawUrl }
+    ];
+    let lastError;
+    for (const endpoint of endpoints) {
+      try {
+        const payload = await fetchWithTimeout(endpoint.url);
+        if (!Array.isArray(payload?.data?.children)) throw new Error("Malformed node response");
+        return { payload, route: endpoint.label };
+      } catch (error) {
+        lastError = error;
+      }
+    }
+    throw lastError || new Error(`${subreddit} unavailable`);
+  }
+
+  async function fetchFeed() {
+    log("Scanning four independent gaming nodes via Worker gateway...");
+    const results = await Promise.allSettled(CONFIG.subreddits.map(fetchNode));
+    const successes = results.filter(result => result.status === "fulfilled").map(result => result.value);
+    if (!successes.length) throw new Error("All public feed routes failed.");
+
+    const children = successes.flatMap(result => result.payload.data.children);
+    const routes = [...new Set(successes.map(result => result.route))].join("+");
+    return {
+      payload: { data: { children } },
+      route: `${successes.length}/${CONFIG.subreddits.length} NODES • ${routes}`
+    };
+  }
+
+  function renderPosts(posts) {
+    if (!posts.length) {
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO RECENT SIGNALS FOUND</strong><br>Feed returned no eligible records within the 7-day window.</div></div>`;
+      return;
+    }
+
+    els.digest.innerHTML = posts.map((post, index) => `
+      <article class="news-card" data-slot="${String(index + 1).padStart(3, "0")}">
+        <div class="card-top">
+          <span class="source">${escapeHtml(post.source)}</span>
+          <div class="score">${formatNumber(post.hype)}<small>HYPE IDX</small></div>
+        </div>
+        <h3>${escapeHtml(post.title)}</h3>
+        <div class="card-foot">
+          <span>▲ ${formatNumber(post.score)} &nbsp; // &nbsp; ◌ ${formatNumber(post.comments)} &nbsp; // &nbsp; ${formatAge(post.created)}</span>
+          <a class="open-link" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
+        </div>
+      </article>
+    `).join("");
+  }
+
+  function saveCache(posts) {
+    try {
+      localStorage.setItem(CONFIG.cacheKey, JSON.stringify({ savedAt: Date.now(), posts }));
+    } catch {
+      // Storage is optional
+    }
+  }
+
+  function loadFreshCache() {
+    try {
+      const cached = JSON.parse(localStorage.getItem(CONFIG.cacheKey));
+      if (cached && Array.isArray(cached.posts) && Date.now() - cached.savedAt < CONFIG.cacheMaxAgeMs) {
+        return cached.posts;
+      }
+    } catch {
+      return null;
+    }
+    return null;
   }
 
   async function loadDigest() {
-    const t = I18N[currentLang];
     els.fetchButton.disabled = true;
-    els.fetchButton.textContent = t.scanning;
-    els.connectionState.textContent = currentLang === "eng" ? "UPLINK STATUS: SCANNING 100+ SOURCES" : "СТАТУС: СКАНИРОВАНИЕ 100+ ИСТОЧНИКОВ";
+    els.fetchButton.classList.add("loading");
+    els.fetchButton.textContent = "SCANNING_FEED";
+    els.connectionState.textContent = "UPLINK STATUS: ACQUIRING";
+    els.recordLabel.textContent = "PARSING TRANSMISSIONS...";
 
     try {
-      // Забираем данные из нескольких крупных открытых API-хабов, суммарно объединяющих более 100 сабреддитов и лент
-      const endpoints = [
-        "https://hacker-news.firebaseio.com/v0/topstories.json",
-        "https://www.reddit.com/r/gaming/hot.json?limit=50",
-        "https://www.reddit.com/r/pcgaming/hot.json?limit=50"
-      ];
+      const { payload, route } = await fetchFeed();
+      const posts = normalizePosts(payload);
+      renderPosts(posts);
+      saveCache(posts);
 
-      const responses = await Promise.allSettled(endpoints.map(url => fetch(url).then(r => r.json())));
-      
-      let rawItems = [];
-
-      // Обрабатываем Hacker News
-      if (responses[0].status === "fulfilled" && Array.isArray(responses[0].value)) {
-        const hnIds = responses[0].value.slice(0, 40);
-        const hnItems = await Promise.all(hnIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()).catch(() => null)));
-        hnItems.forEach(item => {
-          if (item && item.title) {
-            rawItems.push({ title: item.title, url: item.url || `https://news.ycombinator.com/item?id=${item.id}`, score: item.score || 20, source: "HACKER NEWS" });
-          }
-        });
+      els.postCount.textContent = String(posts.length).padStart(3, "0");
+      els.recordLabel.textContent = `${posts.length} RECORDS // SORT: HYPE DESC`;
+      els.proxyStatus.textContent = route;
+      els.lastSync.textContent = new Date().toLocaleTimeString("en-GB");
+      els.connectionState.textContent = "UPLINK STATUS: ONLINE";
+      log(`Digest synchronized: ${posts.length} records indexed via ${route}.`);
+    } catch (error) {
+      const cachedPosts = loadFreshCache();
+      els.proxyStatus.textContent = "FAULT";
+      els.connectionState.textContent = "UPLINK STATUS: DEGRADED";
+      if (cachedPosts) {
+        renderPosts(cachedPosts);
+        els.postCount.textContent = String(cachedPosts.length).padStart(3, "0");
+        els.recordLabel.textContent = "CACHED RECORDS // UPLINK DEGRADED";
+        log("Network unavailable. Rendered the latest local cache.", "error");
+      } else {
+        els.recordLabel.textContent = "NETWORK FAULT";
+        els.digest.innerHTML = `
+          <div class="empty-state">
+            <div><strong>DATELINK FAILED</strong><br>Unable to reach public feed. Retry transmission shortly.<br><span class="cursor">ERROR: ${escapeHtml(error.message)}</span></div>
+          </div>`;
+        log(`Digest fetch failed: ${error.message}`, "error");
       }
-
-      // Обрабатываем Reddit r/gaming и r/pcgaming
-      for (let i = 1; i <= 2; i++) {
-        if (responses[i].status === "fulfilled" && responses[i].value?.data?.children) {
-          responses[i].value.data.children.forEach(child => {
-            const p = child.data;
-            if (p && p.title && !p.stickied) {
-              rawItems.push({
-                title: p.title,
-                url: p.url_overridden_by_dest || `https://www.reddit.com${p.permalink}`,
-                score: (p.score || 10) + (p.num_comments || 0) * 2,
-                source: `r/${p.subreddit}`
-              });
-            }
-          });
-        }
-      }
-
-      const GAME_KEYWORDS = ["game", "gaming", "steam", "playstation", "xbox", "nintendo", "gpu", "rtx", "pc", "unreal", "unity", "zelda", "mario", "cyberpunk", "tarkov", "minecraft", "radeon", "nvidia", "игра", "игр", "пк", "стим", "сони", "бокс"];
-
-      // Фильтруем по ключевым словам
-      let filtered = rawItems.filter(item => {
-        const tl = item.title.toLowerCase();
-        return GAME_KEYWORDS.some(kw => tl.includes(kw));
-      });
-
-      // Исключаем дубликаты
-      let uniquePosts = removeDuplicates(filtered);
-
-      // Считаем хайп и сортируем
-      const posts = uniquePosts.map(item => ({
-        ...item,
-        hype: calculateHype(item.title, item.score)
-      })).sort((a, b) => b.hype - a.hype).slice(0, 30);
-
-      if (posts.length === 0) {
-        throw new Error(currentLang === "eng" ? "No unique signals found." : "Уникальных сигналов не найдено.");
-      }
-
-      els.digest.innerHTML = posts.map(p => `
-        <article class="news-card">
-          <div class="card-top">
-            <span class="source">${p.source} // ⌁</span>
-            <div class="score">${p.hype} PTS</div>
-          </div>
-          <h3>${p.title}</h3>
-          <div class="card-foot">
-            <span>INDEX // CLEAN</span>
-            <a class="open-link" href="${p.url}" target="_blank" rel="noopener">OPEN ↗</a>
-          </div>
-        </article>
-      `).join("");
-
-      els.postCount.textContent = String(posts.length).padStart(3, '0');
-      els.recordLabel.textContent = currentLang === "eng" ? `${posts.length} UNIQUE RECORDS` : `${posts.length} УНИКАЛЬНЫХ ЗАП.`;
-      els.connectionState.textContent = currentLang === "eng" ? "UPLINK STATUS: ONLINE" : "СТАТУС: ОНЛАЙН";
-      log(t.sysSync);
-    } catch(err) {
-      els.connectionState.textContent = "UPLINK STATUS: FAULT";
-      log(err.message, true);
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>SYNC FAILED</strong><br>${err.message}</div></div>`;
     } finally {
       els.fetchButton.disabled = false;
-      els.fetchButton.textContent = t.fetchBtn;
+      els.fetchButton.classList.remove("loading");
+      els.fetchButton.textContent = "FETCH_DIGEST";
     }
   }
 
-  els.btnEng.addEventListener("click", () => setLanguage("eng"));
-  els.btnRus.addEventListener("click", () => setLanguage("rus"));
+  function updateClock() {
+    els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false });
+  }
 
-  setInterval(() => {
-    els.clock.textContent = new Date().toLocaleTimeString("en-GB");
-  }, 1000);
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(item => item.classList.remove("active"));
+      tab.classList.add("active");
+      log(`BIOS tab switched: ${tab.textContent.trim()}. Summary feed remains active.`);
+    });
+  });
 
   els.fetchButton.addEventListener("click", loadDigest);
+  updateClock();
+  setInterval(updateClock, 1000);
 })();
 </script>
 </body>
