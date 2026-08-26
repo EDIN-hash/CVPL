@@ -6,64 +6,30 @@
 <meta name="color-scheme" content="dark">
 <title>GAMING // HYPE DIGEST BIOS</title>
 <style>
-  :root {
-    --bg: #030507;
-    --panel: #071014;
-    --panel-2: #09171a;
-    --cyan: #56f6ff;
-    --green: #a8ff6a;
-    --muted: #5b9392;
-    --dim: #183638;
-    --red: #ff5f7e;
-    --orange: #ff9b5e;
-    --line: rgba(86, 246, 255, .42);
-    --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14);
-    --mono: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
-  }
-
+  :root { --bg: #030507; --cyan: #56f6ff; --green: #a8ff6a; --muted: #5b9392; --dim: #183638; --red: #ff5f7e; --orange: #ff9b5e; --line: rgba(86, 246, 255, .42); --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14); --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace; }
   * { box-sizing: border-box; }
   html { background: var(--bg); }
-  body {
-    margin: 0; min-height: 100vh; overflow-x: hidden; color: var(--cyan);
-    background: radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem),
-                radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem), var(--bg);
-    font-family: var(--mono); font-size: 13px; letter-spacing: .035em;
-  }
-
-  body::before {
-    content: ""; position: fixed; z-index: 20; inset: 0; pointer-events: none; opacity: .32;
-    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .5) 3px, rgba(0, 0, 0, .5) 4px);
-    mix-blend-mode: overlay;
-  }
-
-  body::after {
-    content: ""; position: fixed; z-index: 21; inset: 0; pointer-events: none; opacity: .035;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
-    animation: noise .18s steps(2) infinite;
-  }
-
+  body { margin: 0; min-height: 100vh; overflow-x: hidden; color: var(--cyan); background: radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem), radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem), var(--bg); font-family: var(--mono); font-size: 13px; letter-spacing: .035em; }
+  body::before { content: ""; position: fixed; z-index: 20; inset: 0; pointer-events: none; opacity: .32; background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .5) 3px, rgba(0, 0, 0, .5) 4px); mix-blend-mode: overlay; }
+  body::after { content: ""; position: fixed; z-index: 21; inset: 0; pointer-events: none; opacity: .035; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); animation: noise .18s steps(2) infinite; }
   @keyframes noise { 0% { transform: translate(0, 0); } 25% { transform: translate(1%, -1%); } 50% { transform: translate(-1%, 1%); } 75% { transform: translate(1%, 1%); } }
   @keyframes flicker { 0%, 100% { opacity: 1; } 48% { opacity: .96; } 49% { opacity: .86; } 50% { opacity: 1; } }
   @keyframes blink { 50% { opacity: 0; } }
   @keyframes loading { to { transform: rotate(360deg); } }
-
   .screen { min-height: 100vh; padding: 17px; animation: flicker 8s infinite; }
   .frame { width: min(1500px, 100%); margin: 0 auto; border: 1px solid var(--line); background: rgba(3, 10, 12, .77); box-shadow: var(--glow), inset 0 0 34px rgba(0, 218, 234, .035); position: relative; }
   .frame::before, .frame::after { content: "╋"; position: absolute; color: var(--green); font-size: 18px; text-shadow: 0 0 8px var(--green); }
   .frame::before { top: -11px; left: -7px; } .frame::after { right: -7px; bottom: -11px; }
-
-  .topline { min-height: 30px; padding: 6px 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--green); font-size: 10px; }
+  .topline { min-height: 30px; padding: 6px 12px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); color: var(--green); font-size: 10px; flex-wrap: wrap; }
   header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 66px; flex-wrap: wrap; }
   .brand { display: flex; align-items: center; gap: 11px; min-width: 290px; padding: 10px 16px; border-right: 1px solid var(--line); }
   .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--green); color: var(--green); font-size: 20px; box-shadow: inset 0 0 15px rgba(168,255,106,.1), 0 0 9px rgba(168,255,106,.25); }
   .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); text-shadow: 0 0 9px rgba(86, 246, 255, .55); }
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
-
-  /* Свитч режимов интерфейса */
-  .view-switcher { display: flex; align-items: center; gap: 8px; padding: 0 16px; margin-left: auto; }
+  .view-switcher { display: flex; align-items: center; gap: 8px; padding: 10px 16px; margin-left: auto; }
   .view-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
   .view-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); box-shadow: 0 0 10px rgba(168,255,106,.2); }
-
+  .view-btn:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
   .workspace { display: grid; grid-template-columns: minmax(255px, 28%) 1fr; min-height: 670px; }
   .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
   .section-label { color: var(--green); font-size: 10px; margin: 0 0 11px; }
@@ -72,34 +38,26 @@
   .readout-line:last-child { border: 0; }
   .readout-line b { color: var(--cyan); }
   .online { color: var(--green) !important; }
-
   .fetch-button { width: 100%; border: 1px solid var(--green); background: rgba(168, 255, 106, .08); color: var(--green); padding: 14px 10px; cursor: pointer; font: 700 12px var(--mono); transition: .2s; }
   .fetch-button:hover:not(:disabled) { background: var(--green); color: var(--bg); box-shadow: 0 0 19px rgba(168,255,106,.65); }
   .fetch-button:disabled { cursor: wait; opacity: .7; }
   .fetch-button.loading::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 9px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: loading .65s linear infinite; }
-
   .main-panel { min-width: 0; display: flex; flex-direction: column; }
-  .main-header { padding: 14px 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); }
+  .main-header { padding: 14px 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); flex-wrap: wrap; gap: 10px; }
   .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); font-weight: 500; }
   .record-count { color: var(--green); font-size: 10px; }
-
-  /* Режим карточек (Дигест) */
   .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); align-content: start; gap: 10px; padding: 13px; flex: 1; }
   .news-card { position: relative; min-height: 182px; display: flex; flex-direction: column; padding: 13px; border: 1px solid var(--dim); background: linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px, rgba(7, 18, 21, .7); transition: transform .25s ease, border-color .25s ease; }
   .news-card:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow); }
   .card-top { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
   .score { color: var(--bg); background: var(--green); min-width: 60px; padding: 4px 7px; text-align: center; font-size: 12px; font-weight: bold; }
   .score small { display: block; font-size: 7px; font-weight: normal; margin-top: 1px; }
-  
   .tag-flame { color: var(--red); font-size: 9px; border: 1px solid var(--red); padding: 1px 4px; margin-right: 5px; animation: blink 2s infinite; }
-  .tag-trend { color: var(--orange); font-size: 9px; border: 1px solid var(--orange); padding: 1px 4px; margin-right: 5px; }
   .source { color: var(--muted); font-size: 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; font-weight: 500; }
   .card-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
   .open-link { color: var(--green); text-decoration: none; }
   .open-link:hover { border-bottom: 1px solid var(--green); }
-
-  /* Режим таблицы базы данных (DB BROWSER) */
   .db-table-container { flex: 1; overflow: auto; padding: 13px; display: none; }
   .db-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
   .db-table th { background: var(--dim); color: var(--green); padding: 8px 10px; border: 1px solid var(--line); cursor: pointer; user-select: none; }
@@ -107,25 +65,23 @@
   .db-table td { padding: 7px 10px; border: 1px solid var(--dim); color: var(--cyan); max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .db-table tr:nth-child(even) { background: rgba(255,255,255,.01); }
   .db-table tr:hover td { background: rgba(86,246,255,.04); }
-
   .empty-state { grid-column: 1 / -1; min-height: 250px; display: grid; place-items: center; border: 1px dashed var(--dim); color: var(--muted); text-align: center; }
   .empty-state strong { color: var(--cyan); font-weight: 400; }
   .cursor::after { content: "█"; color: var(--green); animation: blink .9s steps(1) infinite; margin-left: 4px; }
-
   .footer { display: grid; grid-template-columns: 1fr auto; min-height: 62px; border-top: 1px solid var(--line); background: rgba(0,0,0,.38); }
   .log { padding: 9px 14px; color: var(--muted); font-size: 10px; line-height: 1.85; }
   .log b { color: var(--green); }
   .log .error { color: var(--red); }
   .clock { padding: 10px 14px; border-left: 1px solid var(--line); color: var(--cyan); text-align: right; font-size: 10px; line-height: 1.8; }
-
-  @media (max-width: 760px) { .workspace { grid-template-columns: 1fr; } .clock { display: none; } }
+  @media (max-width: 760px) { .workspace { grid-template-columns: 1fr; } .clock { display: none; } .brand { border-right: none; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; } }
 </style>
 </head>
 <body>
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span>◉ LIVE CLIENT SCANNER + D1 BROWSER</span>
+      <span>◉ READ-ONLY CLIENT TERMINAL</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
     <header>
@@ -133,64 +89,53 @@
         <div class="brand-mark">⌁</div>
         <div>
           <h1>HYPE_DIGEST // BIOS</h1>
-          <small>AUTONOMOUS TERMINAL v3.0</small>
+          <small>SECURE API GATEWAY</small>
         </div>
       </div>
-      
-      <!-- Переключатель режимов -->
-      <div class="view-switcher">
+      <div class="view-switcher" role="group">
         <span style="font-size: 9px; color: var(--muted);">VIEW:</span>
-        <button class="view-btn active" id="btnDigest" type="button">DIGEST_VIEW</button>
-        <button class="view-btn" id="btnDB" type="button">DB_BROWSER</button>
+        <button class="view-btn active" id="btnDigest" aria-pressed="true">DIGEST_VIEW</button>
+        <button class="view-btn" id="btnDB" aria-pressed="false">DB_BROWSER</button>
       </div>
     </header>
     <section class="workspace">
       <aside class="side-panel">
         <p class="section-label">[ TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>ENGINE</span><b class="online">CLIENT MATH</b></div>
-          <div class="readout-line"><span>FILTER</span><b>GAMING / HARDWARE</b></div>
+          <div class="readout-line"><span>ENGINE</span><b class="online">SERVER CORE</b></div>
+          <div class="readout-line"><span>STORAGE</span><b>CLOUDFLARE D1</b></div>
           <div class="readout-line"><span>RECORDS</span><b id="postCount">000</b></div>
         </div>
-        <button id="fetchButton" class="fetch-button" type="button">EXECUTE_SCAN</button>
+        <button id="fetchButton" class="fetch-button">PULL_DATA</button>
       </aside>
-      
       <section class="main-panel">
         <div class="main-header">
           <h2>/// <span id="panelTitle">LIVE HYPE STREAM</span></h2>
-          <span class="record-count" id="recordLabel">AWAITING SCAN...</span>
+          <span class="record-count" id="recordLabel">AWAITING PULL...</span>
         </div>
-        
-        <!-- Вкладка 1: Живой дигест с математикой -->
         <div id="digest" class="digest" aria-live="polite">
-          <div class="empty-state">
-            <div><strong>TERMINAL IDLE</strong><br><span class="cursor">PRESS EXECUTE_SCAN TO FETCH & COMPUTE</span></div>
-          </div>
+          <div class="empty-state"><div><strong>READY</strong><br><span class="cursor">PRESS PULL_DATA TO LOAD</span></div></div>
         </div>
-
-        <!-- Вкладка 2: Таблица базы данных -->
         <div id="dbTableContainer" class="db-table-container">
           <table class="db-table" id="dbTable">
             <thead>
               <tr>
-                <th data-sort="id">ID ↕</th>
-                <th data-sort="title">TITLE ↕</th>
-                <th data-sort="score">SCORE ↕</th>
-                <th data-sort="comments">COMMENTS ↕</th>
-                <th data-sort="hype">HYPE IDX ↕</th>
-                <th data-sort="fetched_at">FETCHED TIME ↕</th>
+                <th aria-sort="none" data-sort="external_id">ID ↕</th>
+                <th aria-sort="none" data-sort="title">TITLE ↕</th>
+                <th aria-sort="none" data-sort="score">SCORE ↕</th>
+                <th aria-sort="none" data-sort="comments">COMMENTS ↕</th>
+                <th aria-sort="descending" data-sort="hype">HYPE IDX ↕</th>
+                <th aria-sort="none" data-sort="last_seen_at">LAST SEEN ↕</th>
               </tr>
             </thead>
-            <tbody id="dbTableBody">
-              <tr><td colspan="6" style="text-align:center; color: var(--muted);">CLICK SYNC DB TO LOAD CACHED RECORDS</td></tr>
-            </tbody>
+            <tbody id="dbTableBody"></tbody>
           </table>
         </div>
       </section>
     </section>
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Autonomous terminal initialized. Ready for scan.</div>
-      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>CLIENT_CORE</div>
+      <div class="log" id="log"><b>[SYS]</b> Terminal initialized. Awaiting user action.</div>
+      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>SECURE_CLIENT</div>
     </footer>
   </main>
 </div>
@@ -201,34 +146,9 @@
 
   const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
   let currentView = "digest"; 
-  let cachedDbData = [];
+  let dbData = [];
   let currentSortField = "hype";
   let sortDirectionDesc = true;
-
-  const CONFIG = {
-    limit: 80, // Гребем шире, чтобы чистый гейминг точно пробился сквозь фильтры
-    timeoutMs: 15000,
-    
-    // Жесткие маркеры гейминга и железа
-    gamingKeywords: [
-      "game", "gaming", "steam", "playstation", "xbox", "nintendo", "switch", 
-      "gpu", "rtx", "radeon", "fps", "unreal", "unity", "engine", "emulator", 
-      "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", 
-      "proton", "raytracing", "dlss", "fsr", "vr", "oculus", "steamdeck"
-    ],
-
-    // Тотальный мусор, который выжигаем нахуй
-    excludeWords: [
-      "hiring", "job", "jobs", "career", "remote", "position", "positions", "founder", "cofounder", "intern", "internship", "salary", "resume", "cv",
-      "yc ", "y combinator", "saas", "startup", "startups", "bootstrapped", "revenue", "arr", "mrr", "waitlist", "pre-seed", "seed round", "vc ",
-      "lawsuit", "court", "antitrust", "sec ", "acquisition", "merger", "policy", "patent", "copyright", "lawyer", "regulation",
-      "crypto", "web3", "nft", "solana", "ethereum", "blockchain", "token", "bitcoin",
-      "react", "next.js", "tailwind", "typescript", "postgres", "docker", "kubernetes", "aws", "cloudflare", "api", "database", "sql"
-    ],
-
-    triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
-    hnTags: ["show hn:", "launch hn:", "ask hn:"]
-  };
 
   const els = {
     fetchButton: document.getElementById("fetchButton"),
@@ -245,144 +165,33 @@
     panelTitle: document.getElementById("panelTitle")
   };
 
-  function log(message, type = "info") {
-    const label = type === "error" ? '<span class="error">[FAULT]</span>' : "<b>[SYS]</b>";
-    els.log.innerHTML = `${label} ${message}`;
-  }
-
-  function escapeHtml(value) {
-    const div = document.createElement("div");
-    div.textContent = String(value ?? "");
-    return div.innerHTML;
-  }
-
-  // Математическое ядро
-  function calculateAdvancedHype(posts) {
-    if (!Array.isArray(posts) || posts.length === 0) return [];
-
-    const now = Date.now() / 1000;
-    const halfLifeHours = 42;
-    const lambda = Math.LN2 / halfLifeHours;
-
-    const metrics = posts.map(post => {
-      const score = Math.max(0, Number(post.score) || 0);
-      const comments = Math.max(0, Number(post.comments) || 0);
-      const ageHours = Math.max(0.1, (now - post.created) / 3600); 
-
-      const baseMetric = Math.log1p(score) * 18 + Math.log1p(comments) * 24;
-      const velocity = baseMetric / Math.max(0.5, ageHours);
-
-      return { ...post, score, comments, ageHours, baseMetric, velocity };
-    });
-
-    const sortedVelocity = metrics.map(p => p.velocity).sort((a, b) => a - b);
-    const median = sortedVelocity[Math.floor(sortedVelocity.length / 2)] || 0.1;
-    const deviations = sortedVelocity.map(v => Math.abs(v - median)).sort((a, b) => a - b);
-    const mad = deviations[Math.floor(deviations.length / 2)] || 1;
-
-    return metrics.map(post => {
-      const robustZ = (post.velocity - median) / (mad * 1.4826);
-      const trendBoost = 1 + Math.max(0, Math.min(robustZ, 4)) * 0.4;
-
-      const engagementRatio = post.comments / (post.score + 1);
-      const discussionBoost = 1 + Math.min(engagementRatio, 3) * 0.25;
-      const flameBoost = engagementRatio > 1.3 ? 1.25 : 1; 
-
-      const confidence = Math.min(1, Math.log1p(post.score + post.comments) / Math.log(250));
-      const timeDecay = Math.exp(-lambda * post.ageHours);
-
-      const title = String(post.title || "").toLowerCase();
-      const keywordCount = CONFIG.triggerWords.filter(w => title.includes(w)).length;
-      const isHnSpecial = CONFIG.hnTags.some(tag => title.includes(tag));
-      const keywordBoost = 1 + Math.min(keywordCount, 2) * 0.12 + (isHnSpecial ? 0.3 : 0);
-
-      post.hype = Math.round(
-        100 * trendBoost * discussionBoost * flameBoost * timeDecay * keywordBoost * (0.45 + confidence * 0.55)
-      );
-
-      post.isFlame = engagementRatio > 1.3 && post.comments > 30;
-      post.isTrending = robustZ > 2.5;
-
-      return post;
-    }).sort((a, b) => b.hype - a.hype);
-  }
-
-  async function fetchWithTimeout(url) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
-    try {
-      const response = await fetch(url, { signal: controller.signal });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return await response.json();
-    } finally {
-      clearTimeout(timeout);
-    }
-  }
-
-  async function scanLiveFeed() {
-    log("Scanning global stream with maximum exclusion filters...");
-    const ids = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
-    const topIds = ids.slice(0, CONFIG.limit);
-    
-    const items = await Promise.all(
-      topIds.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null))
-    );
-
-    const rawPosts = items.filter(item => item && item.title).map(item => {
-      const titleLower = item.title.toLowerCase();
-      
-      // Шаг 1: Проверяем на стоп-слова (если есть хоть одно — сразу брак)
-      const isExcluded = CONFIG.excludeWords.some(badWord => titleLower.includes(badWord));
-      if (isExcluded) return null;
-
-      // Шаг 2: Проверяем, есть ли хоть одно игровое/железное ключевое слово
-      const isGaming = CONFIG.gamingKeywords.some(kw => titleLower.includes(kw));
-      if (!isGaming) return null;
-
-      return {
-        title: item.title,
-        url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
-        score: Number(item.score) || 0,
-        comments: Number(item.descendants) || 0,
-        created: Number(item.time) || Math.floor(Date.now() / 1000),
-        source: "HN_PURE"
-      };
-    }).filter(Boolean);
-
-    return calculateAdvancedHype(rawPosts);
-  }
-
-  async function fetchDatabaseRecords() {
-    log("Querying Cloudflare D1 Database...");
-    const res = await fetch(API_URL);
-    if (!res.ok) throw new Error(`DB Error: ${res.status}`);
-    return await res.json();
+  function log(msg, type = "info") {
+    els.log.innerHTML = type === "error" ? `<span class="error">[FAULT]</span> ${msg}` : `<b>[SYS]</b> ${msg}`;
   }
 
   function renderDigest(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO MATCHING SIGNALS</strong><br>Filters dropped all records. Try expanding scan limit.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO DATA</strong><br>Server returned empty dataset.</div></div>`;
       return;
     }
-
-    els.digest.innerHTML = posts.map((post, index) => {
-      let tags = "";
-      if(post.isFlame) tags += `<span class="tag-flame">[FLAME]</span>`;
-      if(post.isTrending) tags += `<span class="tag-trend">[TRENDING]</span>`;
+    const now = Date.now();
+    els.digest.innerHTML = posts.map((post, i) => {
+      const ageHours = Math.max(0, (now - post.created_at) / 3600000);
+      const isFlame = (post.comments / (post.score + 1)) > 1.3 && post.comments > 30;
+      const tags = isFlame ? `<span class="tag-flame">[FLAME]</span>` : "";
 
       return `
-      <article class="news-card" data-slot="${String(index + 1).padStart(3, "0")}">
+      <article class="news-card" data-slot="${String(i + 1).padStart(3, "0")}">
         <div class="card-top">
-          <span class="source">${escapeHtml(post.source)} ${tags}</span>
+          <span class="source">${post.source} ${tags}</span>
           <div class="score">${post.hype}<small>IDX</small></div>
         </div>
-        <h3>${escapeHtml(post.title)}</h3>
+        <h3 title="${post.title}">${post.title}</h3>
         <div class="card-foot">
-          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments} &nbsp; // &nbsp; ${Math.max(0, Math.floor(post.ageHours))}H AGO</span>
-          <a class="open-link" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
+          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments} &nbsp; // &nbsp; ${Math.floor(ageHours)}H AGO</span>
+          <a class="open-link" href="${post.url}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
         </div>
-      </article>
-      `;
+      </article>`;
     }).join("");
   }
 
@@ -391,112 +200,81 @@
       els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--muted);">NO RECORDS IN DATABASE</td></tr>`;
       return;
     }
-
     els.dbTableBody.innerHTML = posts.map(post => `
       <tr>
-        <td><code>${escapeHtml(post.id)}</code></td>
-        <td><a href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); text-decoration: none;">${escapeHtml(post.title)}</a></td>
+        <td><code>${post.external_id}</code></td>
+        <td title="${post.title}"><a href="${post.url}" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); text-decoration: none;">${post.title}</a></td>
         <td>${post.score}</td>
         <td>${post.comments}</td>
         <td style="color: var(--green); font-weight: bold;">${post.hype}</td>
-        <td>${new Date(post.fetched_at).toLocaleString()}</td>
+        <td>${new Date(post.last_seen_at).toLocaleString()}</td>
       </tr>
     `).join("");
   }
 
   function sortDbData(field) {
-    if (currentSortField === field) {
-      sortDirectionDesc = !sortDirectionDesc;
-    } else {
-      currentSortField = field;
-      sortDirectionDesc = true;
-    }
+    if (currentSortField === field) sortDirectionDesc = !sortDirectionDesc;
+    else { currentSortField = field; sortDirectionDesc = true; }
 
-    cachedDbData.sort((a, b) => {
-      let valA = a[field];
-      let valB = b[field];
+    document.querySelectorAll("#dbTable th").forEach(th => th.setAttribute("aria-sort", "none"));
+    const activeTh = document.querySelector(`#dbTable th[data-sort="${field}"]`);
+    if (activeTh) activeTh.setAttribute("aria-sort", sortDirectionDesc ? "descending" : "ascending");
+
+    dbData.sort((a, b) => {
+      let valA = a[field], valB = b[field];
       if (typeof valA === "string") { valA = valA.toLowerCase(); valB = valB.toLowerCase(); }
       if (valA < valB) return sortDirectionDesc ? 1 : -1;
       if (valA > valB) return sortDirectionDesc ? -1 : 1;
       return 0;
     });
-
-    renderTable(cachedDbData);
-    log(`DB Table sorted by ${field.toUpperCase()} (${sortDirectionDesc ? "DESC" : "ASC"})`);
+    renderTable(dbData);
   }
 
-  async function handleAction() {
+  async function loadData() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
-
-    if (currentView === "digest") {
-      els.fetchButton.textContent = "SCANNING...";
-      els.connectionState.textContent = "UPLINK STATUS: SCANNING";
-      try {
-        const posts = await scanLiveFeed();
-        renderDigest(posts);
-        els.postCount.textContent = String(posts.length).padStart(3, "0");
-        els.recordLabel.textContent = `${posts.length} PURE RECORDS COMPUTED`;
-        els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-        log(`Pure scan complete. Filter isolated ${posts.length} gaming items.`);
-      } catch (error) {
-        els.connectionState.textContent = "UPLINK STATUS: FAULT";
-        els.digest.innerHTML = `<div class="empty-state"><div><strong>SCAN FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
-        log(`Scan fault: ${error.message}`, "error");
-      }
-    } else {
-      els.fetchButton.textContent = "FETCHING_DB";
-      els.connectionState.textContent = "UPLINK STATUS: QUERYING DB";
-      try {
-        cachedDbData = await fetchDatabaseRecords();
-        renderTable(cachedDbData);
-        els.postCount.textContent = String(cachedDbData.length).padStart(3, "0");
-        els.recordLabel.textContent = `${cachedDbData.length} DB RECORDS LOADED`;
-        els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-        log("Successfully loaded raw database records.");
-      } catch (error) {
-        els.connectionState.textContent = "UPLINK STATUS: FAULT";
-        els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--red);">DB ERROR: ${escapeHtml(error.message)}</td></tr>`;
-        log(`DB query failed: ${error.message}`, "error");
-      }
+    els.connectionState.textContent = "UPLINK STATUS: FETCHING API";
+    
+    try {
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      dbData = await res.json();
+      
+      renderDigest(dbData);
+      renderTable(dbData);
+      
+      els.postCount.textContent = String(dbData.length).padStart(3, "0");
+      els.recordLabel.textContent = `${dbData.length} RECORDS SYNCED`;
+      els.connectionState.textContent = "UPLINK STATUS: ONLINE";
+      log("Data pulled from secure API.");
+    } catch (e) {
+      els.connectionState.textContent = "UPLINK STATUS: FAULT";
+      log(`API Error: ${e.message}`, "error");
+    } finally {
+      els.fetchButton.disabled = false;
+      els.fetchButton.classList.remove("loading");
     }
-
-    els.fetchButton.disabled = false;
-    els.fetchButton.classList.remove("loading");
-    els.fetchButton.textContent = currentView === "digest" ? "EXECUTE_SCAN" : "SYNC_DB";
   }
 
   els.btnDigest.addEventListener("click", () => {
     currentView = "digest";
-    els.btnDigest.classList.add("active");
-    els.btnDB.classList.remove("active");
-    els.digest.style.display = "grid";
-    els.dbTableContainer.style.display = "none";
+    els.btnDigest.classList.add("active"); els.btnDigest.setAttribute("aria-pressed", "true");
+    els.btnDB.classList.remove("active"); els.btnDB.setAttribute("aria-pressed", "false");
+    els.digest.style.display = "grid"; els.dbTableContainer.style.display = "none";
     els.panelTitle.textContent = "LIVE HYPE STREAM";
-    els.fetchButton.textContent = "EXECUTE_SCAN";
-    log("Switched to: LIVE_SCAN_VIEW");
   });
 
   els.btnDB.addEventListener("click", () => {
     currentView = "db";
-    els.btnDB.classList.add("active");
-    els.btnDigest.classList.remove("active");
-    els.digest.style.display = "none";
-    els.dbTableContainer.style.display = "block";
+    els.btnDB.classList.add("active"); els.btnDB.setAttribute("aria-pressed", "true");
+    els.btnDigest.classList.remove("active"); els.btnDigest.setAttribute("aria-pressed", "false");
+    els.digest.style.display = "none"; els.dbTableContainer.style.display = "block";
     els.panelTitle.textContent = "RAW SQL DATABASE BROWSER";
-    els.fetchButton.textContent = "SYNC_DB";
-    log("Switched to: DB_BROWSER_VIEW");
-    if(cachedDbData.length === 0) handleAction();
   });
 
-  document.querySelectorAll("#dbTable th[data-sort]").forEach(th => {
-    th.addEventListener("click", () => sortDbData(th.getAttribute("data-sort")));
-  });
-
+  document.querySelectorAll("#dbTable th[data-sort]").forEach(th => th.addEventListener("click", () => sortDbData(th.getAttribute("data-sort"))));
   setInterval(() => els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }), 1000);
-  els.fetchButton.addEventListener("click", handleAction);
-
-  handleAction();
+  els.fetchButton.addEventListener("click", loadData);
 })();
 </script>
 </body>
