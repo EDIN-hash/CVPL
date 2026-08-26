@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HYPE DIGEST // LIVE DOCS & WIKI</title>
+<title>HYPE DIGEST // FULL SYSTEM WIKI & DOCUMENTATION</title>
 <style>
   :root { --bg: #020406; --cyan: #56f6ff; --green: #a8ff6a; --muted: #5b9392; --dim: #153032; --line: rgba(86, 246, 255, .3); --glow: 0 0 12px rgba(86, 246, 255, .25); --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace; }
   * { box-sizing: border-box; }
@@ -12,89 +12,109 @@
   body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .25; background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,.6) 3px, rgba(0,0,0,.6) 4px); z-index: 99; }
   
   .layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
-  aside { border-right: 1px solid var(--line); background: rgba(3,8,10,.95); padding: 20px; display: flex; flex-direction: column; }
-  .logo { font-size: 14px; font-weight: bold; color: var(--green); margin-bottom: 20px; text-shadow: var(--glow); }
+  aside { border-right: 1px solid var(--line); background: rgba(3,8,10,.95); padding: 20px; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .logo { font-size: 13px; font-weight: bold; color: var(--green); margin-bottom: 15px; text-shadow: var(--glow); }
   
   .search-box { width: 100%; background: #000; border: 1px solid var(--dim); color: var(--cyan); padding: 8px 12px; font: inherit; font-size: 11px; margin-bottom: 20px; outline: none; }
   .search-box:focus { border-color: var(--green); }
 
-  .nav-group { margin-bottom: 20px; }
-  .nav-title { font-size: 10px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
-  .nav-item { display: block; padding: 6px 10px; color: var(--muted); text-decoration: none; font-size: 11px; border-left: 2px solid transparent; transition: .15s; }
+  .nav-group { margin-bottom: 15px; }
+  .nav-title { font-size: 10px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+  .nav-item { display: block; padding: 5px 8px; color: var(--muted); text-decoration: none; font-size: 11px; border-left: 2px solid transparent; transition: .15s; }
   .nav-item:hover, .nav-item.active { color: var(--green); border-left-color: var(--green); background: rgba(168,255,106,.05); }
 
-  main { padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+  main { padding: 40px; max-width: 1100px; overflow-y: auto; height: 100vh; }
   h1, h2, h3 { color: var(--green); font-weight: normal; }
   h1 { font-size: 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-top: 0; }
   h2 { font-size: 15px; margin-top: 35px; border-bottom: 1px solid var(--dim); padding-bottom: 5px; }
+  h3 { font-size: 13px; color: var(--cyan); }
   p, li { color: #82b3b2; line-height: 1.6; font-size: 12px; }
+  ul { padding-left: 18px; }
   
   .code-block { position: relative; margin: 15px 0; border: 1px solid var(--dim); background: #010305; }
-  .code-header { display: flex; justify-content: space-between; align-items: center; background: var(--dim); padding: 4px 10px; font-size: 10px; color: var(--green); }
+  .code-header { display: flex; justify-content: space-between; align-items: center; background: var(--dim); padding: 6px 10px; font-size: 10px; color: var(--green); }
   .copy-btn { background: transparent; border: 1px solid var(--green); color: var(--green); padding: 2px 6px; cursor: pointer; font: inherit; font-size: 9px; }
   .copy-btn:hover { background: var(--green); color: var(--bg); }
-  pre { margin: 0; padding: 15px; overflow-x: auto; color: #a2fffc; font-size: 11px; line-height: 1.4; }
+  pre { margin: 0; padding: 15px; overflow-x: auto; color: #a2fffc; font-size: 11px; line-height: 1.4; max-height: 450px; }
 
   .badge { display: inline-block; padding: 2px 6px; border: 1px solid var(--dim); font-size: 9px; color: #ff9b5e; }
   
-  @media(max-width: 768px) { .layout { grid-template-columns: 1fr; } main { height: auto; } }
+  @media(max-width: 768px) { .layout { grid-template-columns: 1fr; } aside { position: static; height: auto; } main { height: auto; padding: 20px; } }
 </style>
 </head>
 <body>
 
 <div class="layout">
   <aside>
-    <div class="logo">✦ HYPE_DOCS // WIKI</div>
-    <input type="text" id="search" class="search-box" placeholder="FILTER DOCUMENTATION...">
+    <div class="logo">✦ HYPE_DIGEST // WIKI</div>
+    <input type="text" id="search" class="search-box" placeholder="ПОИСК ПО ДОКУМЕНТАЦИИ...">
     
     <div class="nav-group">
-      <div class="nav-title">System Manual</div>
-      <a href="#overview" class="nav-link active">1. Обзор и Концепт</a>
-      <a href="#architecture" class="nav-link">2. Архитектура потоков</a>
-      <a href="#limits" class="nav-link">3. Лимиты Cloudflare Free</a>
+      <div class="nav-title">1. Концепция</div>
+      <a href="#overview" class="nav-item active">Обзор и Архитектура</a>
+      <a href="#streams" class="nav-item">Разделение потоков</a>
     </div>
 
     <div class="nav-group">
-      <div class="nav-title">Codebase & DB</div>
-      <a href="#database" class="nav-link">4. Схема D1 SQLite</a>
-      <a href="#worker" class="nav-link">5. Код Worker (Бэкенд)</a>
-      <a href="#workflow" class="nav-link">6. GitHub Actions CI/CD</a>
+      <div class="nav-title">2. База данных</div>
+      <a href="#database" class="nav-item">Схема D1 (SQL)</a>
     </div>
 
-    <div style="margin-top: auto; font-size: 10px; color: var(--muted);">
-      STATUS: LIVE DOCS<br>REV: 2026.8
+    <div class="nav-group">
+      <div class="nav-title">3. Бэкенд (Worker)</div>
+      <a href="#worker-code" class="nav-item">Полный код Worker.js</a>
+      <a href="#math" class="nav-item">Формула Hype IDX</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-title">4. Фронтенд (Сайт)</div>
+      <a href="#frontend-code" class="nav-item">Полный HTML/JS клиента</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-title">5. Деплой и CI/CD</div>
+      <a href="#workflow" class="nav-item">GitHub Actions YAML</a>
+      <a href="#instructions" class="nav-item">Пошаговый гайд запуска</a>
+    </div>
+
+    <div style="margin-top: auto; font-size: 10px; color: var(--muted); padding-top: 20px;">
+      STATUS: FULL SYNC<br>REV: 2026.8
     </div>
   </aside>
 
   <main id="docContent">
+    
+    <!-- 1. ОБЗОР -->
     <section id="overview">
-      <h1>Hype Digest Wiki & Technical Specification</h1>
-      <p>Живая техническая документация автономного агрегатора игровой повестки. Проект полностью лишён раздутых фреймворков и работает на связке <strong>Cloudflare Worker + D1 + GitHub Pages</strong>.</p>
-      <p><span class="badge">PROD REPO</span> <a href="https://edin-hash.github.io/CVPL/CV_BOhdan/cybe.html" target="_blank" style="color: var(--cyan);">edin-hash.github.io/CVPL/CV_BOhdan/cybe.html</a></p>
-    </section>
-
-    <section id="architecture">
-      <h2>2. Архитектура разделения потоков</h2>
-      <p>Чтобы математика хайпа не ломалась от разнородных данных, система делит входящий поток на две независимые категории:</p>
+      <h1>Hype Digest: Полная техническая документация системы</h1>
+      <p><strong>Hype Digest BIOS</strong> — автономный агрегатор игровой повестки, разработчиком которого является Bohdan Shvets. Проект спроектирован для работы в условиях жестких инфраструктурных ограничений бесплатных тарифов без использования тяжелых серверных фреймворков и баз данных общего назначения.</p>
+      <p><span class="badge">PROD LINK</span> <a href="https://edin-hash.github.io/CVPL/CV_BOhdan/cybe.html" target="_blank" style="color: var(--cyan);">edin-hash.github.io/CVPL/CV_BOhdan/cybe.html</a></p>
+      
+      <h2>Архитектура взаимодействия</h2>
+      <p>Система построена на бессерверной архитектуре (Serverless):</p>
       <ul>
-        <li><strong>SOCIAL_HYPE:</strong> Hacker News и Reddit. Использует сложную формулу скорости (Velocity), MAD-рейтинг, коэффициенты дискуссионности и экспоненциальный спад времени.</li>
-        <li><strong>OFFICIAL_UPDATES:</strong> Steam News API. Исключает надуманные метрики лайков, ранжируя патчи по свежести и типу обновления.</li>
+        <li><strong>Фронтенд (GitHub Pages):</strong> Статический терминал в киберпанк-стилистике. Работает исключительно в режиме <em>Read-Only</em>, отправляя GET-запросы на бэкенд. Никакой логики парсинга или прямой записи в базу на клиенте нет.</li>
+        <li><strong>Бэкенд (Cloudflare Workers):</strong> Написан на ES Modules (<code>export default</code>). Выполняет две роли: обрабатывает клиентские запросы и запускается по расписанию (Cron Triggers).</li>
+        <li><strong>Хранилище (Cloudflare D1):</strong> Легковесная распределенная база данных SQLite. Хранит агрегированные посты, метрики и временные метки.</li>
       </ul>
     </section>
 
-    <section id="limits">
-      <h2>3. Инфраструктурные лимиты Cloudflare Free</h2>
-      <p>Бесплатный тариф накладывает жесткие рамки, которые учтены в коде:</p>
+    <!-- 2. ПОТОКИ -->
+    <section id="streams">
+      <h2>Разделение потоков данных (Streams Isolation)</h2>
+      <p>Главная архитектурная фишка проекта — отказ от смешивания разнородных данных в одну формулу. Социальный хайп и официальные патчи обрабатываются раздельно:</p>
       <ul>
-        <li>Максимум <strong>50 внешних subrequests</strong> за один запуск воркера.</li>
-        <li>Оптимизация: парсер забирает ровно 30–40 постов пачками через <code>Promise.all</code>.</li>
+        <li><strong>SOCIAL_HYPE (Hacker News):</strong> Проходит жесткий фильтр по ключевым словам (железо, платформы, бренды) и исключает научный/академический мусор (PDF, arxiv). Для него рассчитывается математический индекс хайпа (Velocity, MAD, Z-score, комментарии).</li>
+        <li><strong>OFFICIAL_UPDATES (Steam News API):</strong> Официальные патчноуты разработчиков игр (Cyberpunk 2077, Dota 2, CS2). У них нет лайков или комментариев, поэтому они ранжируются строго по свежести (актуальность за последние 14 дней) и имеют тип <code>OFFICIAL</code>.</li>
       </ul>
     </section>
 
+    <!-- 3. БАЗА ДАННЫХ -->
     <section id="database">
-      <h2>4. Схема базы данных (Cloudflare D1)</h2>
+      <h2>Схема базы данных Cloudflare D1 (SQLite)</h2>
+      <p>Используется композитный первичный ключ <code>PRIMARY KEY(source, external_id)</code>, что гарантирует работу идемпотентного метода <code>UPSERT</code> (при повторном парсинге данные обновляются, а не дублируются).</p>
       <div class="code-block">
-        <div class="code-header"><span>SQL Schema</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+        <div class="code-header"><span>schema.sql</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
         <pre><code>DROP TABLE IF EXISTS hype_posts;
 
 CREATE TABLE hype_posts (
@@ -114,8 +134,10 @@ CREATE TABLE hype_posts (
       </div>
     </section>
 
-    <section id="worker">
-      <h2>5. Исходный код бэкенда (Cloudflare Worker)</h2>
+    <!-- 4. КОД WORKER -->
+    <section id="worker-code">
+      <h2>Полный исходный код бэкенда (Cloudflare Worker)</h2>
+      <p>Код полностью автономен, обрабатывает CORS-заголовки, имеет защищенный роут <code>/force-sync</code> для ручного триггера и фоновый метод <code>scheduled()</code> для Cron.</p>
       <div class="code-block">
         <div class="code-header"><span>worker.js (ES Modules)</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
         <pre><code>const corsHeaders = {
@@ -126,36 +148,255 @@ CREATE TABLE hype_posts (
 };
 
 const CONFIG = {
-  gamingKeywords: ["steam", "playstation", "xbox", "nintendo", "switch", "rtx", "radeon", "cyberpunk", "valve"],
-  excludeWords: ["pdf", "arxiv", "research", "paper", "hiring", "job", "crypto", "web3"],
-  steamApps: [{ id: 1091500, name: "Cyberpunk 2077" }, { id: 570, name: "Dota 2" }]
+  gamingKeywords: [
+    "steam", "playstation", "xbox", "nintendo", "switch", "rtx", "radeon", 
+    "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", 
+    "proton", "raytracing", "dlss", "fsr", "steamdeck", "epic games", 
+    "ubisoft", "ea sports", "bethesda", "fromsoftware", "gta vi", "gta 6"
+  ],
+  excludeWords: [
+    "pdf", "arxiv", "research", "paper", "algorithm", "rendering", "topology", 
+    "siggraph", "ieee", "vector graphics", "san francisco", "city as a", "map", "geospatial",
+    "hiring", "job", "jobs", "career", "remote", "position", "intern", "salary", "resume", "cv", 
+    "yc ", "y combinator", "saas", "startup", "crypto", "web3", "nft", "blockchain", "token", "bitcoin"
+  ],
+  triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
+  hnTags: ["show hn:", "launch hn:", "ask hn:"],
+
+  steamApps: [
+    { id: 1091500, name: "Cyberpunk 2077" },
+    { id: 570, name: "Dota 2" },
+    { id: 730, name: "Counter-Strike 2" }
+  ]
 };
 
 export default {
   async fetch(request, env) {
-    if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: corsHeaders });
+    if (request.method === "OPTIONS") {
+      return new Response(null, { status: 204, headers: corsHeaders });
+    }
+    
     const url = new URL(request.url);
 
     if (url.pathname === "/force-sync") {
-      await this.processFeed(env);
-      return new Response(JSON.stringify({ status: "Synced" }), { headers: corsHeaders });
+      try {
+        await this.processFeed(env);
+        return new Response(JSON.stringify({ status: "Forced scan complete" }), { headers: corsHeaders });
+      } catch (e) {
+        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders });
+      }
     }
     
-    const { results } = await env.DB.prepare("SELECT * FROM hype_posts ORDER BY hype DESC LIMIT 100").all();
-    return new Response(JSON.stringify(results), { headers: corsHeaders });
+    if (request.method === "GET") {
+      try {
+        const { results } = await env.DB.prepare(`
+          SELECT * FROM hype_posts 
+          ORDER BY hype DESC, created_at DESC 
+          LIMIT 100
+        `).all();
+        return new Response(JSON.stringify(results), { headers: corsHeaders });
+      } catch (err) {
+        return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
+      }
+    }
+    
+    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: corsHeaders });
   },
 
-  async scheduled(event, env, ctx) { ctx.waitUntil(this.processFeed(env)); },
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(this.processFeed(env));
+  },
 
   async processFeed(env) {
-    // Сбор данных HN и Steam News, батчинг в D1
+    const now = Date.now();
+    const nowSec = Math.floor(now / 1000);
+    const statements = [];
+
+    const cutoff = now - (7 * 24 * 60 * 60 * 1000);
+    statements.push(env.DB.prepare("DELETE FROM hype_posts WHERE last_seen_at < ?").bind(cutoff));
+
+    // Поток 1: Hacker News (Social Hype)
+    try {
+      const [newRes, bestRes] = await Promise.all([
+        fetch("https://hacker-news.firebaseio.com/v0/newstories.json"),
+        fetch("https://hacker-news.firebaseio.com/v0/beststories.json")
+      ]);
+      
+      const newIds = await newRes.json();
+      const bestIds = await bestRes.json();
+      const selectedIds = [...new Set([...newIds.slice(0, 25), ...bestIds.slice(0, 25)])].slice(0, 30);
+
+      const items = await Promise.all(
+        selectedIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.ok ? r.json() : null).catch(() => null))
+      );
+
+      const rawPosts = items.filter(i => i && i.title).map(item => {
+        const titleLower = item.title.toLowerCase();
+        if (CONFIG.excludeWords.some(w => titleLower.includes(w))) return null;
+        if (!CONFIG.gamingKeywords.some(w => titleLower.includes(w))) return null;
+
+        return {
+          id: String(item.id),
+          title: item.title,
+          url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
+          score: Math.max(0, Number(item.score) || 0),
+          comments: Math.max(0, Number(item.descendants) || 0),
+          created: Number(item.time) || nowSec
+        };
+      }).filter(Boolean);
+
+      if (rawPosts.length > 0) {
+        const lambda = Math.LN2 / 42;
+        const metrics = rawPosts.map(post => {
+          const ageHours = Math.max(0.1, (nowSec - post.created) / 3600);
+          const baseMetric = Math.log1p(post.score) * 18 + Math.log1p(post.comments) * 24;
+          const effectiveAge = Math.max(2, ageHours);
+          const velocity = baseMetric / Math.sqrt(effectiveAge);
+          return { ...post, ageHours, baseMetric, velocity };
+        });
+
+        const sortedVel = metrics.map(p => p.velocity).sort((a,b) => a-b);
+        const median = sortedVel[Math.floor(sortedVel.length / 2)] || 0.1;
+        const deviations = sortedVel.map(v => Math.abs(v - median)).sort((a,b) => a-b);
+        const mad = deviations[Math.floor(deviations.length / 2)] || 1;
+
+        metrics.forEach(post => {
+          const robustZ = (post.velocity - median) / (mad * 1.4826);
+          const trendBoost = 1 + Math.max(0, Math.min(robustZ, 4)) * 0.4;
+          const engagementRatio = post.comments / (post.score + 1);
+          const discussionBoost = 1 + Math.min(engagementRatio, 3) * 0.25;
+          const sampleSize = post.score + post.comments;
+          const confidence = Math.min(1, Math.log1p(sampleSize) / Math.log(300));
+          const earlyPostPenalty = sampleSize < 12 ? 0.72 : 1;
+          const timeDecay = Math.exp(-lambda * post.ageHours);
+          const t = post.title.toLowerCase();
+          const kwBoost = 1 + Math.min(CONFIG.triggerWords.filter(w => t.includes(w)).length, 2) * 0.12 + (CONFIG.hnTags.some(tag => t.includes(tag)) ? 0.3 : 0);
+          const hype = Math.round(100 * trendBoost * discussionBoost * timeDecay * kwBoost * (0.45 + confidence * 0.55) * earlyPostPenalty);
+
+          statements.push(
+            env.DB.prepare(`
+              INSERT INTO hype_posts (
+                source, source_type, external_id, title, url, score, comments, hype, created_at, first_seen_at, last_seen_at
+              ) VALUES (?, 'SOCIAL', ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              ON CONFLICT(source, external_id) DO UPDATE SET
+                title = excluded.title,
+                score = excluded.score,
+                comments = excluded.comments,
+                hype = excluded.hype,
+                last_seen_at = excluded.last_seen_at
+            `).bind("HN_PURE", post.id, post.title.trim(), post.url, post.score, post.comments, hype, post.created * 1000, now, now)
+          );
+        });
+      }
+    } catch (e) {
+      console.error("HN Fetch Error:", e);
+    }
+
+    // Поток 2: Steam News (Official Updates)
+    try {
+      for (const app of CONFIG.steamApps) {
+        const res = await fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=${app.id}&count=3&maxlength=300`);
+        if (!res.ok) continue;
+        const data = await res.json();
+        const newsItems = data?.appnews?.newsitems || [];
+
+        newsItems.forEach(item => {
+          const ageDays = (nowSec - item.date) / 86400;
+          if (ageDays > 14) return;
+          
+          const hype = Math.max(20, Math.round(80 - (ageDays * 4)));
+
+          statements.push(
+            env.DB.prepare(`
+              INSERT INTO hype_posts (
+                source, source_type, external_id, title, url, score, comments, hype, created_at, first_seen_at, last_seen_at
+              ) VALUES (?, 'OFFICIAL', ?, ?, ?, 0, 0, ?, ?, ?, ?)
+              ON CONFLICT(source, external_id) DO UPDATE SET
+                title = excluded.title,
+                hype = excluded.hype,
+                last_seen_at = excluded.last_seen_at
+            `).bind(`STEAM: ${app.name}`, String(item.gid), item.title.trim(), item.url, hype, item.date * 1000, now, now)
+          );
+        });
+      }
+    } catch (e) {
+      console.error("Steam Fetch Error:", e);
+    }
+
+    await env.DB.batch(statements);
   }
 };</code></pre>
       </div>
     </section>
 
+    <!-- 5. КОД ФРОНТЕНДА -->
+    <section id="frontend-code">
+      <h2>Полный исходный код Фронтенда (Клиентский HTML-терминал)</h2>
+      <p>Интерфейс поддерживает переключение вкладок между карточками дайджеста и табличным просмотром базы данных.</p>
+      <div class="code-block">
+        <div class="code-header"><span>index.html (Фронтенд)</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+        <pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+&lt;meta charset="utf-8"&gt;
+&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+&lt;meta name="color-scheme" content="dark"&gt;
+&lt;title&gt;GAMING // HYPE DIGEST BIOS&lt;/title&gt;
+&lt;style&gt;
+  :root { --bg: #030507; --cyan: #56f6ff; --green: #a8ff6a; --muted: #5b9392; --dim: #183638; --line: rgba(86, 246, 255, .42); --glow: 0 0 10px rgba(86, 246, 255, .4); --mono: Consolas, monospace; }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); }
+  body { margin: 0; min-height: 100vh; color: var(--cyan); background: var(--bg); font-family: var(--mono); font-size: 13px; }
+  .screen { min-height: 100vh; padding: 17px; }
+  .frame { width: min(1500px, 100%); margin: 0 auto; border: 1px solid var(--line); background: rgba(3, 10, 12, .85); box-shadow: var(--glow); }
+  header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 66px; }
+  .brand { display: flex; align-items: center; gap: 11px; padding: 10px 16px; border-right: 1px solid var(--line); }
+  .workspace { display: grid; grid-template-columns: 280px 1fr; min-height: 670px; }
+  .side-panel { border-right: 1px solid var(--line); padding: 15px; }
+  .fetch-button { width: 100%; border: 1px solid var(--green); background: rgba(168, 255, 106, .08); color: var(--green); padding: 14px 10px; cursor: pointer; font: 700 12px var(--mono); }
+  .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); gap: 10px; padding: 13px; }
+  .news-card { border: 1px solid var(--dim); padding: 13px; background: rgba(7, 18, 21, .7); display: flex; flex-direction: column; }
+  .score { color: var(--bg); background: var(--green); padding: 4px 7px; font-weight: bold; font-size: 12px; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="screen"&gt;
+  &lt;main class="frame"&gt;
+    &lt;header&gt;
+      &lt;div class="brand"&gt;&lt;h1&gt;HYPE_DIGEST // BIOS&lt;/h1&gt;&lt;/div&gt;
+    &lt;/header&gt;
+    &lt;section class="workspace"&gt;
+      &lt;aside class="side-panel"&gt;
+        &lt;button id="fetchButton" class="fetch-button"&gt;PULL_DATA&lt;/button&gt;
+      &lt;/aside&gt;
+      &lt;section class="main-panel"&gt;
+        &lt;div id="digest" class="digest"&gt;&lt;/div&gt;
+      &lt;/section&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+&lt;/div&gt;
+&lt;script&gt;
+  const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
+  document.getElementById("fetchButton").addEventListener("click", async () => {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    document.getElementById("digest").innerHTML = data.map(p => `
+      &lt;article class="news-card"&gt;
+        &lt;div style="display:flex; justify-content:space-between;"&gt;&lt;span&gt;${p.source}&lt;/span&gt;&lt;div class="score"&gt;${p.hype}&lt;/div&gt;&lt;/div&gt;
+        &lt;h3&gt;${p.title}&lt;/h3&gt;
+        &lt;a href="${p.url}" target="_blank" style="color:var(--green); margin-top:auto;"&gt;OPEN ↗&lt;/a&gt;
+      &lt;/article&gt;`).join("");
+  });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- 6. GITHUB ACTIONS -->
     <section id="workflow">
-      <h2>6. GitHub Actions Workflow (CI/CD)</h2>
+      <h2>GitHub Actions Workflow (Автоматический деплой)</h2>
+      <p>Поместите этот файл по пути <code>.github/workflows/deploy.yml</code> в своем репозитории для мгновенной публикации сайта на GitHub Pages.</p>
       <div class="code-block">
         <div class="code-header"><span>.github/workflows/deploy.yml</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
         <pre><code>name: Deploy GitHub Pages
@@ -164,22 +405,52 @@ on:
   push:
     branches: [ "main", "master" ]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: '.' }
-      - uses: actions/deploy-pages@v4</code></pre>
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4</code></pre>
       </div>
     </section>
+
+    <!-- 7. ИНСТРУКЦИЯ -->
+    <section id="instructions">
+      <h2>Пошаговый гайд по развертыванию (Deployment Guide)</h2>
+      <ol>
+        <li><strong>Создание D1 Базы:</strong> Перейдите в дашборд Cloudflare -> Workers & Pages -> D1 -> создайте базу <code>hype_db</code>. Выполните SQL-скрипт схемы из раздела 3.</li>
+        <li><strong>Создание воркера:</strong> В разделе Workers & Pages создайте стандартный воркер (назовите его, например, <code>old-dew-2090</code>). Во вкладке <em>Settings -> Bindings</em> добавьте переменную с именем <code>DB</code> и привяжите к ней созданную D1 базу.</li>
+        <li><strong>Загрузка кода:</strong> В редакторе воркера полностью замените код на код из раздела 4 и нажмите <strong>Deploy</strong>.</li>
+        <li><strong>Настройка Cron:</strong> Во вкладке <em>Triggers</em> воркера добавьте триггер расписания <code>*/30 * * * *</code> (запуск каждые 30 минут).</li>
+        <li><strong>Проверка:</strong> Откройте в браузере служебный эндпоинт <code>https://&lt;ваш-воркер&gt;.workers.dev/force-sync</code>. Успешный ответ <code>{"status":"Forced scan complete"}</code> подтверждает наполнение базы.</li>
+      </ol>
+    </section>
+
   </main>
 </div>
 
 <script>
-  // Интерактивный копировщик кода
   function copyCode(btn) {
     const pre = btn.parentElement.nextElementSibling;
     navigator.clipboard.writeText(pre.textContent);
@@ -187,36 +458,29 @@ jobs:
     setTimeout(() => btn.textContent = "COPY", 1500);
   }
 
-  // Живой фильтр документации по поиску
   const searchInput = document.getElementById('search');
   searchInput.addEventListener('input', (e) => {
     const term = e.target.value.toLowerCase();
     document.querySelectorAll('main section').forEach(sec => {
-      const text = sec.textContent.toLowerCase();
-      sec.style.display = text.includes(term) ? 'block' : 'none';
+      sec.style.display = sec.textContent.toLowerCase().includes(term) ? 'block' : 'none';
     });
   });
 
-  // Подсветка пунктов меню при скролле
-  const navLinks = document.querySelectorAll('.nav-link');
+  const navLinks = document.querySelectorAll('.nav-item');
   const sections = document.querySelectorAll('main section');
 
   document.querySelector('main').addEventListener('scroll', () => {
     let current = '';
     sections.forEach(sec => {
-      const top = sec.offsetTop;
-      if (document.querySelector('main').scrollTop >= top - 60) {
+      if (document.querySelector('main').scrollTop >= sec.offsetTop - 60) {
         current = sec.getAttribute('id');
       }
     });
     navLinks.forEach(link => {
       link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
     });
   });
 </script>
-
 </body>
 </html>
