@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>ASSESSMENT // BOHDAN SHVETS</title>
+<style>
+  :root { --bg: #020406; --cyan: #56f6ff; --green: #a8ff6a; --red: #ff5f7e; --orange: #ff9b5e; --muted: #5b9392; --dim: #153032; --line: rgba(86, 246, 255, .3); --glow: 0 0 12px rgba(86, 246, 255, .25); --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace; }
+  * { box-sizing: border-box; }
+  html { background: var(--bg); scroll-behavior: smooth; }
+  body { margin: 0; min-height: 100vh; color: var(--cyan); background: var(--bg); font-family: var(--mono); font-size: 13px; line-height: 1.55; }
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .22; background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,.55) 3px, rgba(0,0,0,.55) 4px); z-index: 99; }
+  
+  .layout { display: grid; grid-template-columns: 300px 1fr; min-height: 100vh; }
+  
+  aside { border-right: 1px solid var(--line); background: rgba(3,8,10,.95); padding: 22px 18px; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .logo { font-size: 13px; font-weight: bold; color: var(--green); margin-bottom: 18px; text-shadow: var(--glow); }
+  .nav-title { font-size: 9px; color: var(--muted); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .nav-item { display: block; padding: 5px 8px; color: var(--muted); text-decoration: none; font-size: 11px; border-left: 2px solid transparent; transition: .15s; }
+  .nav-item:hover, .nav-item.active { color: var(--green); border-left-color: var(--green); background: rgba(168,255,106,.05); }
+  .status-box { margin-top: auto; border: 1px solid var(--dim); padding: 10px; font-size: 9px; color: var(--muted); }
+  .status-box b { color: var(--green); }
+  
+  main { padding: 35px 40px; max-width: 1050px; overflow-y: auto; height: 100vh; }
+  h1, h2, h3 { color: var(--green); font-weight: normal; }
+  h1 { font-size: 19px; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-top: 0; }
+  h2 { font-size: 14px; margin-top: 32px; border-bottom: 1px solid var(--dim); padding-bottom: 6px; }
+  h3 { font-size: 12px; color: var(--cyan); margin-top: 20px; }
+  p, li { color: #82b3b2; font-size: 12px; }
+  ul { padding-left: 18px; }
+  a { color: var(--cyan); text-decoration: none; border-bottom: 1px dotted rgba(86,246,255,.35); }
+  a:hover { color: var(--green); border-bottom-color: var(--green); }
+  
+  .scoreboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 18px 0; }
+  .score-card { border: 1px solid var(--dim); background: rgba(7,18,21,.6); padding: 14px; text-align: center; }
+  .score-card .value { font-size: 28px; font-weight: bold; color: var(--green); }
+  .score-card .label { font-size: 9px; color: var(--muted); margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .verdict { border: 1px solid var(--orange); background: rgba(255,159,94,.05); padding: 16px 18px; margin: 20px 0; }
+  .verdict .tag { color: var(--orange); font-size: 10px; }
+  .verdict p { color: #d4c5a0; }
+  
+  .opinion { border-left: 3px solid var(--green); padding: 14px 18px; background: rgba(168,255,106,.04); margin: 18px 0; }
+  .opinion p { color: #c5e8c5; font-style: italic; }
+  
+  .steps { counter-reset: step; }
+  .step { position: relative; padding: 14px 14px 14px 54px; border: 1px solid var(--dim); margin-bottom: 10px; background: rgba(7,18,21,.5); }
+  .step::before { counter-increment: step; content: "0" counter(step); position: absolute; left: 14px; top: 14px; font-size: 18px; font-weight: bold; color: var(--green); }
+  .step-title { color: var(--cyan); font-weight: bold; font-size: 12px; }
+  .step-desc { color: #82b3b2; font-size: 11px; margin-top: 4px; }
+  .step-time { color: var(--muted); font-size: 9px; margin-top: 4px; }
+  
+  .money-track { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin: 15px 0; }
+  .money-stage { border: 1px solid var(--dim); padding: 12px; background: rgba(7,18,21,.6); }
+  .money-stage .stage { font-size: 9px; color: var(--muted); }
+  .money-stage .amount { font-size: 16px; color: var(--green); font-weight: bold; margin-top: 4px; }
+  .money-stage .when { font-size: 9px; color: var(--orange); margin-top: 3px; }
+  
+  .resume-block { border: 1px solid var(--line); background: rgba(3,10,12,.8); padding: 22px; margin: 18px 0; }
+  .resume-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); padding-bottom: 12px; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
+  .resume-name { font-size: 17px; color: var(--green); font-weight: bold; }
+  .resume-title { font-size: 11px; color: var(--cyan); }
+  .resume-section { margin: 14px 0; }
+  .resume-label { font-size: 9px; color: var(--orange); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .resume-text { color: #82b3b2; font-size: 11px; }
+  .skill-tag { display: inline-block; border: 1px solid var(--dim); padding: 2px 7px; font-size: 9px; color: var(--green); margin: 2px; }
+  
+  @media(max-width: 768px) { .layout { grid-template-columns: 1fr; } aside { position: static; height: auto; } main { height: auto; padding: 20px; } }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <aside>
+    <div class="logo">✦ ASSESSMENT // BOHDAN</div>
+    
+    <div class="nav-title">Сводка</div>
+    <a href="#scores" class="nav-item active">Оценки</a>
+    <a href="#verdict" class="nav-item">Вердикт</a>
+    
+    <div class="nav-title">Моё мнение</div>
+    <a href="#opinion" class="nav-item">Личное мнение</a>
+    
+    <div class="nav-title">План действий</div>
+    <a href="#steps" class="nav-item">Шаги</a>
+    <a href="#money" class="nav-item">Монетизация</a>
+    
+    <div class="nav-title">Резюме</div>
+    <a href="#resume" class="nav-item">Готовое резюме</a>
+    
+    <div class="status-box">
+      STATUS: COMPLETE<br>
+      REV: 2026.8<br>
+      <b>AGE: 20</b><br>
+      PROJECTS: 1 LIVE<br>
+      BUDGET: $0
+    </div>
+  </aside>
+
+  <main>
+    
+    <section id="scores">
+      <h1>Полный разбор разработчика и проекта</h1>
+      <p>Оценка составлена на основе анализа кода, архитектуры, скорости разработки, дизайна и рыночного потенциала. Возраст разработчика учтён как множитель потенциала.</p>
+      
+      <div class="scoreboard">
+        <div class="score-card"><div class="value">88</div><div class="label">Общая оценка</div></div>
+        <div class="score-card"><div class="value">95</div><div class="label">Скорость</div></div>
+        <div class="score-card"><div class="value">82</div><div class="label">Технически</div></div>
+        <div class="score-card"><div class="value">90</div><div class="label">Дизайн</div></div>
+        <div class="score-card"><div class="value">25</div><div class="label">Дистрибуция</div></div>
+        <div class="score-card"><div class="value">95</div><div class="label">Потенциал</div></div>
+      </div>
+      
+      <h2>Сильные стороны</h2>
+      <ul>
+        <li>Полный цикл: идея → код → деплой → документация за 3 часа</li>
+        <li>Нулевой бюджет: бесплатные ИИ + бесплатные тарифы Cloudflare/GitHub</li>
+        <li>Прагматичная архитектура: разделение потоков, идемпотентность</li>
+        <li>Дизайн уровня продакшн с вниманием к деталям</li>
+        <li>Полная документация с живым поиском</li>
+      </ul>
+      
+      <h2>Слабые стороны</h2>
+      <ul>
+        <li>Нет пользователей — сайт есть, трафика нет</li>
+        <li>Нет дистрибуции — не запущены каналы привлечения</li>
+        <li>Нет аналитики — не измеряется ничего</li>
+        <li>Нет монетизации — нет модели дохода</li>
+        <li>Нет глубины — ИИ ускорил, но понимание алгоритмов нужно качать</li>
+      </ul>
+    </section>
+
+    <section id="verdict">
+      <h2>Вердикт</h2>
+      <div class="verdict">
+        <div class="tag">[ FINAL VERDICT ]</div>
+        <p>В 20 лет сделать такой проект за 3 часа с нулевым бюджетом — это топ 5-10% среди ровесников. Технически грамотно, визуально цепляюще. Главная проблема — не в коде, а в отсутствии запуска. Продукт есть, пользователей нет.</p>
+      </div>
+    </section>
+
+    <section id="opinion">
+      <h2>Моё личное мнение</h2>
+      <div class="opinion">
+        <p>«Тебе 20. У тебя есть скорость, прагматизм и умение доводить до конца. Это редкое сочетание. Твоя главная задача сейчас — не выучить ещё 10 технологий, а запустить 10 проектов и найти пользователей. Не залипай на полировке. Запускай сырое, собирай фидбек, итерируй. Через 2 года при таком подходе ты будешь Senior, когда ровесники только закончат курсы. Удачи. И не останавливайся.»</p>
+      </div>
+    </section>
+
+    <section id="steps">
+      <h2>Детальный план действий</h2>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-title">Запустить Telegram-бота</div>
+          <div class="step-desc">Создать бота через BotFather. Команды: /today — дайджест, /top — топ недели, /settings — выбор игр. Ежедневная рассылка в 9:00 через Cloudflare Cron.</div>
+          <div class="step-time">⏱ 4-6 часов</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Посев на Reddit</div>
+          <div class="step-desc">Посты в r/gaming, r/telegrambots, r/webdev, r/InternetIsBeautiful. Заголовок: "Сделал агрегатор гейм-новостей с Hype Index за 3 часа на бесплатных тарифах".</div>
+          <div class="step-time">⏱ 1 час + мониторинг</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Product Hunt запуск</div>
+          <div class="step-desc">Подготовить скриншоты, описание, тэги. Лучшее время — вторник/среда утром по США.</div>
+          <div class="step-time">⏱ 2 часа</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Пиар в Telegram-каналах</div>
+          <div class="step-desc">Найти 10-15 каналов про игры (1к-10к подписчиков). Предложить взаимный пиар или платное размещение за $10-30.</div>
+          <div class="step-time">⏱ 3-4 часа</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Статья на dev.to / Habr</div>
+          <div class="step-desc">Разбор архитектуры: "Как я собрал агрегатор гейм-новостей на Cloudflare Workers за 3 часа и $0". Целевая аудитория — разработчики, которые дадут трафик и фидбек.</div>
+          <div class="step-time">⏱ 2-3 часа</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Добавить аналитику</div>
+          <div class="step-desc">Google Analytics + счётчик посещений. Отслеживать: откуда приходят, что кликают, сколько возвращаются.</div>
+          <div class="step-time">⏱ 30 минут</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Добавить Reddit API</div>
+          <div class="step-desc">Подключить r/gaming, r/pcgaming, r/steam как источники. Увеличит контент в 2-3 раза. Использовать JSON API Reddit (бесплатно без ключа).</div>
+          <div class="step-time">⏱ 3-4 часа</div>
+        </div>
+        <div class="step">
+          <div class="step-title">Персональные настройки</div>
+          <div class="step-desc">Выбор игр, платформ, порог хайпа. Сохранение в localStorage. Это увеличит удержание.</div>
+          <div class="step-time">⏱ 4-5 часов</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="money">
+      <h2>Путь к деньгам</h2>
+      
+      <div class="money-track">
+        <div class="money-stage">
+          <div class="stage">ЭТАП 1</div>
+          <div class="amount">$0</div>
+          <div class="when">Сейчас</div>
+          <div class="stage" style="margin-top:6px;">Портфолио, нет пользователей</div>
+        </div>
+        <div class="money-stage">
+          <div class="stage">ЭТАП 2</div>
+          <div class="amount">$50-100/мес</div>
+          <div class="when">1-2 месяца</div>
+          <div class="stage" style="margin-top:6px;">1000+ подписчиков в боте</div>
+        </div>
+        <div class="money-stage">
+          <div class="stage">ЭТАП 3</div>
+          <div class="amount">$500-1000/мес</div>
+          <div class="when">3-6 месяцев</div>
+          <div class="stage" style="margin-top:6px;">10к+ подписчиков, реклама</div>
+        </div>
+        <div class="money-stage">
+          <div class="stage">ЭТАП 4</div>
+          <div class="amount">$2000+/мес</div>
+          <div class="when">6-12 месяцев</div>
+          <div class="stage" style="margin-top:6px;">API + B2B для студий</div>
+        </div>
+      </div>
+      
+      <h3>Способы монетизации</h3>
+      <ul>
+        <li><strong>Реклама в Telegram-боте:</strong> $30-100 за пост при 5к+ подписчиках</li>
+        <li><strong>Платные подписки:</strong> $2-5/мес за расширенный дайджест, кастомные фильтры</li>
+        <li><strong>API для разработчиков:</strong> $29-99/мес за доступ к данным</li>
+        <li><strong>White-label для студий:</strong> $500-2000 разовая установка</li>
+        <li><strong>Партнёрки:</strong> G2A, Steam, Amazon</li>
+      </ul>
+    </section>
+
+    <section id="resume">
+      <h2>Готовое резюме разработчика</h2>
+      
+      <div class="resume-block">
+        <div class="resume-header">
+          <div>
+            <div class="resume-name">BOHDAN SHVETS</div>
+            <div class="resume-title">Full-Stack Developer (Self-taught) // Age: 20</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:9px; color:var(--muted);">GitHub: github.com/EDIN-hash</div>
+            <div style="font-size:9px; color:var(--muted);">Location: Remote</div>
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <div class="resume-label">// Summary</div>
+          <div class="resume-text">
+            Прагматичный разработчик с навыком быстрого прототипирования. Специализация: serverless-архитектура, агрегаторы данных, киберпанк-эстетика UI. Довожу идеи до рабочего продукта за часы, а не недели. Использую ИИ-инструменты для ускорения разработки.
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <div class="resume-label">// Live Project</div>
+          <div class="resume-text">
+            <strong>Hype Digest BIOS</strong> — автономный агрегатор игровых новостей.<br>
+            Стек: Cloudflare Workers, D1 (SQLite), GitHub Pages, REST API.<br>
+            Фичи: собственный алгоритм ранжирования (Hype IDX), двухпотоковая архитектура (SOCIAL + OFFICIAL), киберпанк-терминальный UI, полная документация.<br>
+            Деплой: edin-hash.github.io/CVPL/CV_BOhdan/siteBlog/cybe.html
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <div class="resume-label">// Skills</div>
+          <div>
+            <span class="skill-tag">JavaScript (ES Modules)</span>
+            <span class="skill-tag">HTML5/CSS3</span>
+            <span class="skill-tag">Cloudflare Workers</span>
+            <span class="skill-tag">D1 (SQLite)</span>
+            <span class="skill-tag">REST API</span>
+            <span class="skill-tag">Git / GitHub</span>
+            <span class="skill-tag">CI/CD (GitHub Actions)</span>
+            <span class="skill-tag">Serverless Architecture</span>
+            <span class="skill-tag">ИИ-инструменты (Claude, GPT)</span>
+            <span class="skill-tag">Техническая документация</span>
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <div class="resume-label">// Key Achievements</div>
+          <div class="resume-text">
+            • Полный MVP за 3 часа с нулевым бюджетом<br>
+            • Математическая модель ранжирования (MAD, Z-score, time decay)<br>
+            • Идемпотентная синхронизация данных через UPSERT<br>
+            • Документация уровня Wiki с живым поиском
+          </div>
+        </div>
+        
+        <div class="resume-section">
+          <div class="resume-label">// Target Position</div>
+          <div class="resume-text">
+            Junior Full-Stack Developer / Frontend Developer (Remote)<br>
+            Открыт к стажировкам и работе в стартапах
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Подсветка активного пункта меню
+  const navLinks = document.querySelectorAll('.nav-item');
+  const sections = document.querySelectorAll('main section');
+  
+  document.querySelector('main').addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (document.querySelector('main').scrollTop >= sec.offsetTop - 80) {
+        current = sec.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
