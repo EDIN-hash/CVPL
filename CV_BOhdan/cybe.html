@@ -200,19 +200,32 @@
   "use strict";
 
   const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
-  let currentView = "digest"; // "digest" или "db"
+  let currentView = "digest"; 
   let cachedDbData = [];
   let currentSortField = "hype";
   let sortDirectionDesc = true;
 
   const CONFIG = {
-    limit: 60,
+    limit: 80, // Гребем шире, чтобы чистый гейминг точно пробился сквозь фильтры
     timeoutMs: 15000,
+    
+    // Жесткие маркеры гейминга и железа
     gamingKeywords: [
       "game", "gaming", "steam", "playstation", "xbox", "nintendo", "switch", 
       "gpu", "rtx", "radeon", "fps", "unreal", "unity", "engine", "emulator", 
-      "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", "proton"
+      "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", 
+      "proton", "raytracing", "dlss", "fsr", "vr", "oculus", "steamdeck"
     ],
+
+    // Тотальный мусор, который выжигаем нахуй
+    excludeWords: [
+      "hiring", "job", "jobs", "career", "remote", "position", "positions", "founder", "cofounder", "intern", "internship", "salary", "resume", "cv",
+      "yc ", "y combinator", "saas", "startup", "startups", "bootstrapped", "revenue", "arr", "mrr", "waitlist", "pre-seed", "seed round", "vc ",
+      "lawsuit", "court", "antitrust", "sec ", "acquisition", "merger", "policy", "patent", "copyright", "lawyer", "regulation",
+      "crypto", "web3", "nft", "solana", "ethereum", "blockchain", "token", "bitcoin",
+      "react", "next.js", "tailwind", "typescript", "postgres", "docker", "kubernetes", "aws", "cloudflare", "api", "database", "sql"
+    ],
+
     triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
     hnTags: ["show hn:", "launch hn:", "ask hn:"]
   };
@@ -243,7 +256,7 @@
     return div.innerHTML;
   }
 
-  // --- МАТЕМАТИЧЕСКОЕ ЯДРО НА КЛИЕНТЕ ---
+  // Математическое ядро
   function calculateAdvancedHype(posts) {
     if (!Array.isArray(posts) || posts.length === 0) return [];
 
@@ -306,9 +319,8 @@
     }
   }
 
-  // --- СКАНИРОВАНИЕ И ОПЕРЕЖАЮЩИЙ РАЗБОР В РЕАЛЬНОМ ВРЕМЕНИ ---
   async function scanLiveFeed() {
-    log("Scanning global Hacker News stream for gaming anomalies...");
+    log("Scanning global stream with maximum exclusion filters...");
     const ids = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
     const topIds = ids.slice(0, CONFIG.limit);
     
@@ -318,6 +330,12 @@
 
     const rawPosts = items.filter(item => item && item.title).map(item => {
       const titleLower = item.title.toLowerCase();
+      
+      // Шаг 1: Проверяем на стоп-слова (если есть хоть одно — сразу брак)
+      const isExcluded = CONFIG.excludeWords.some(badWord => titleLower.includes(badWord));
+      if (isExcluded) return null;
+
+      // Шаг 2: Проверяем, есть ли хоть одно игровое/железное ключевое слово
       const isGaming = CONFIG.gamingKeywords.some(kw => titleLower.includes(kw));
       if (!isGaming) return null;
 
@@ -327,14 +345,13 @@
         score: Number(item.score) || 0,
         comments: Number(item.descendants) || 0,
         created: Number(item.time) || Math.floor(Date.now() / 1000),
-        source: "HN_LIVE"
+        source: "HN_PURE"
       };
     }).filter(Boolean);
 
     return calculateAdvancedHype(rawPosts);
   }
 
-  // --- ЗАГРУЗКА БАЗЫ ДАННЫХ ДЛЯ ВТОРОЙ ВКЛАДКИ ---
   async function fetchDatabaseRecords() {
     log("Querying Cloudflare D1 Database...");
     const res = await fetch(API_URL);
@@ -344,7 +361,7 @@
 
   function renderDigest(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO GAMING SIGNALS</strong><br>Stream returned no matching records.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO MATCHING SIGNALS</strong><br>Filters dropped all records. Try expanding scan limit.</div></div>`;
       return;
     }
 
@@ -408,7 +425,6 @@
     log(`DB Table sorted by ${field.toUpperCase()} (${sortDirectionDesc ? "DESC" : "ASC"})`);
   }
 
-  // --- ГЛАВНЫЙ ИНТЕРАКТИВ ПО КНОПКЕ ---
   async function handleAction() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
@@ -420,9 +436,9 @@
         const posts = await scanLiveFeed();
         renderDigest(posts);
         els.postCount.textContent = String(posts.length).padStart(3, "0");
-        els.recordLabel.textContent = `${posts.length} LIVE RECORDS COMPUTED`;
+        els.recordLabel.textContent = `${posts.length} PURE RECORDS COMPUTED`;
         els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-        log(`Live scan complete. Matrix stabilized with ${posts.length} items.`);
+        log(`Pure scan complete. Filter isolated ${posts.length} gaming items.`);
       } catch (error) {
         els.connectionState.textContent = "UPLINK STATUS: FAULT";
         els.digest.innerHTML = `<div class="empty-state"><div><strong>SCAN FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
@@ -450,7 +466,6 @@
     els.fetchButton.textContent = currentView === "digest" ? "EXECUTE_SCAN" : "SYNC_DB";
   }
 
-  // Переключение вкладок
   els.btnDigest.addEventListener("click", () => {
     currentView = "digest";
     els.btnDigest.classList.add("active");
@@ -471,7 +486,7 @@
     els.panelTitle.textContent = "RAW SQL DATABASE BROWSER";
     els.fetchButton.textContent = "SYNC_DB";
     log("Switched to: DB_BROWSER_VIEW");
-    if(cachedDbData.length === 0) handleAction(); // Авто-загрузка при первом открытии базы
+    if(cachedDbData.length === 0) handleAction();
   });
 
   document.querySelectorAll("#dbTable th[data-sort]").forEach(th => {
@@ -481,7 +496,6 @@
   setInterval(() => els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }), 1000);
   els.fetchButton.addEventListener("click", handleAction);
 
-  // Стартовый авто-скан
   handleAction();
 })();
 </script>
