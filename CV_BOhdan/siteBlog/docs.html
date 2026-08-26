@@ -3,207 +3,99 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="dark">
-<title>HYPE DIGEST // BIOS & TECH SPECS</title>
+<title>HYPE DIGEST // LIVE DOCS & WIKI</title>
 <style>
-  :root { 
-    --bg: #030507; 
-    --cyan: #56f6ff; 
-    --green: #a8ff6a; 
-    --muted: #5b9392; 
-    --dim: #183638; 
-    --red: #ff5f7e; 
-    --orange: #ff9b5e; 
-    --line: rgba(86, 246, 255, .42); 
-    --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14); 
-    --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace; 
-  }
+  :root { --bg: #020406; --cyan: #56f6ff; --green: #a8ff6a; --muted: #5b9392; --dim: #153032; --line: rgba(86, 246, 255, .3); --glow: 0 0 12px rgba(86, 246, 255, .25); --mono: "Cascadia Mono", "JetBrains Mono", Consolas, monospace; }
   * { box-sizing: border-box; }
   html { background: var(--bg); scroll-behavior: smooth; }
-  body { 
-    margin: 0; min-height: 100vh; overflow-x: hidden; 
-    color: var(--cyan); background: radial-gradient(ellipse at 82% 5%, rgba(0, 128, 144, .13), transparent 32rem), radial-gradient(ellipse at 8% 72%, rgba(108, 255, 125, .07), transparent 27rem), var(--bg); 
-    font-family: var(--mono); font-size: 13px; letter-spacing: .035em; 
-  }
-  body::before { 
-    content: ""; position: fixed; z-index: 20; inset: 0; pointer-events: none; opacity: .32; 
-    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .5) 3px, rgba(0, 0, 0, .5) 4px); 
-    mix-blend-mode: overlay; 
-  }
-  .screen { min-height: 100vh; padding: 17px; }
-  .frame { 
-    width: min(1500px, 100%); margin: 0 auto; border: 1px solid var(--line); 
-    background: rgba(3, 10, 12, .85); box-shadow: var(--glow); position: relative; 
-  }
-  .topline { 
-    min-height: 30px; padding: 6px 12px; display: flex; justify-content: space-between; 
-    border-bottom: 1px solid var(--line); color: var(--green); font-size: 10px; flex-wrap: wrap; gap: 10px;
-  }
-  header { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); min-height: 66px; flex-wrap: wrap; }
-  .brand { display: flex; align-items: center; gap: 11px; min-width: 290px; padding: 10px 16px; border-right: 1px solid var(--line); }
-  .brand-mark { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid var(--green); color: var(--green); font-size: 20px; box-shadow: inset 0 0 15px rgba(168,255,106,.1); }
-  .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); text-shadow: 0 0 9px rgba(86, 246, 255, .55); }
-  .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+  body { margin: 0; min-height: 100vh; color: var(--cyan); background: var(--bg); font-family: var(--mono); font-size: 13px; }
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .25; background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,.6) 3px, rgba(0,0,0,.6) 4px); z-index: 99; }
   
-  .view-switcher { display: flex; align-items: center; gap: 8px; padding: 10px 16px; margin-left: auto; flex-wrap: wrap; }
-  .view-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
-  .view-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); }
-
-  .workspace { display: grid; grid-template-columns: minmax(255px, 26%) 1fr; min-height: 750px; }
-  .side-panel { border-right: 1px solid var(--line); padding: 15px; background: linear-gradient(135deg, rgba(86,246,255,.035), transparent 45%); }
-  .section-label { color: var(--green); font-size: 10px; margin: 0 0 11px; }
+  .layout { display: grid; grid-template-columns: 280px 1fr; min-height: 100vh; }
+  aside { border-right: 1px solid var(--line); background: rgba(3,8,10,.95); padding: 20px; display: flex; flex-direction: column; }
+  .logo { font-size: 14px; font-weight: bold; color: var(--green); margin-bottom: 20px; text-shadow: var(--glow); }
   
-  .system-readout { border: 1px solid var(--dim); padding: 10px; margin-bottom: 13px; background: rgba(0, 0, 0, .22); }
-  .readout-line { display: flex; justify-content: space-between; gap: 8px; padding: 5px 0; color: var(--muted); font-size: 10px; border-bottom: 1px dotted rgba(86,246,255,.16); }
-  .readout-line b { color: var(--cyan); }
-  .online { color: var(--green) !important; }
+  .search-box { width: 100%; background: #000; border: 1px solid var(--dim); color: var(--cyan); padding: 8px 12px; font: inherit; font-size: 11px; margin-bottom: 20px; outline: none; }
+  .search-box:focus { border-color: var(--green); }
 
-  .fetch-button { width: 100%; border: 1px solid var(--green); background: rgba(168, 255, 106, .08); color: var(--green); padding: 14px 10px; cursor: pointer; font: 700 12px var(--mono); transition: .2s; margin-bottom: 15px; }
-  .fetch-button:hover:not(:disabled) { background: var(--green); color: var(--bg); }
+  .nav-group { margin-bottom: 20px; }
+  .nav-title { font-size: 10px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .nav-item { display: block; padding: 6px 10px; color: var(--muted); text-decoration: none; font-size: 11px; border-left: 2px solid transparent; transition: .15s; }
+  .nav-item:hover, .nav-item.active { color: var(--green); border-left-color: var(--green); background: rgba(168,255,106,.05); }
 
-  .nav-links { display: flex; flex-direction: column; gap: 6px; }
-  .nav-link { 
-    display: block; padding: 8px 10px; color: var(--muted); border: 1px solid transparent; 
-    text-decoration: none; font-size: 11px; transition: .2s; 
-  }
-  .nav-link:hover, .nav-link.active { color: var(--green); border-color: var(--dim); background: rgba(168,255,106,.05); }
+  main { padding: 40px; max-width: 1000px; overflow-y: auto; height: 100vh; }
+  h1, h2, h3 { color: var(--green); font-weight: normal; }
+  h1 { font-size: 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px; margin-top: 0; }
+  h2 { font-size: 15px; margin-top: 35px; border-bottom: 1px solid var(--dim); padding-bottom: 5px; }
+  p, li { color: #82b3b2; line-height: 1.6; font-size: 12px; }
+  
+  .code-block { position: relative; margin: 15px 0; border: 1px solid var(--dim); background: #010305; }
+  .code-header { display: flex; justify-content: space-between; align-items: center; background: var(--dim); padding: 4px 10px; font-size: 10px; color: var(--green); }
+  .copy-btn { background: transparent; border: 1px solid var(--green); color: var(--green); padding: 2px 6px; cursor: pointer; font: inherit; font-size: 9px; }
+  .copy-btn:hover { background: var(--green); color: var(--bg); }
+  pre { margin: 0; padding: 15px; overflow-x: auto; color: #a2fffc; font-size: 11px; line-height: 1.4; }
 
-  .main-panel { min-width: 0; display: flex; flex-direction: column; position: relative; }
-  .view-pane { display: none; flex: 1; flex-direction: column; min-height: 0; }
-  .view-pane.active-pane { display: flex; }
-
-  .main-header { padding: 14px 17px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dim); }
-  .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); align-content: start; gap: 10px; padding: 13px; overflow-y: auto; flex: 1; max-height: 70vh; }
-  .news-card { border: 1px solid var(--dim); padding: 13px; background: rgba(7, 18, 21, .7); display: flex; flex-direction: column; }
-  .card-top { display: flex; justify-content: space-between; align-items: start; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
-  .score { color: var(--bg); background: var(--green); padding: 4px 7px; font-weight: bold; font-size: 12px; text-align: center; }
-  .score small { display: block; font-size: 7px; font-weight: normal; }
-  .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; }
-  .card-foot { margin-top: auto; display: flex; justify-content: space-between; font-size: 9px; color: var(--muted); }
-  .open-link { color: var(--green); text-decoration: none; }
-
-  .db-table-container { flex: 1; overflow: auto; padding: 13px; max-height: 70vh; }
-  .db-table { width: 100%; border-collapse: collapse; font-size: 11px; text-align: left; }
-  .db-table th, .db-table td { padding: 7px 10px; border: 1px solid var(--dim); color: var(--cyan); }
-  .db-table th { background: var(--dim); color: var(--green); }
-
-  .docs-content { padding: 25px; overflow-y: auto; max-height: 72vh; }
-  h2, h3 { color: var(--green); font-weight: 500; margin-top: 25px; }
-  h2 { font-size: 15px; border-bottom: 1px solid var(--dim); padding-bottom: 6px; }
-  h3 { font-size: 13px; color: var(--cyan); }
-  p, li { color: #8bc3c2; line-height: 1.6; font-size: 12px; }
-  ul { padding-left: 18px; }
-  pre { 
-    background: #010507; border: 1px solid var(--dim); padding: 14px; 
-    overflow-x: auto; color: var(--green); font-size: 11px; line-height: 1.5; 
-    box-shadow: inset 0 0 15px rgba(0,0,0,.6); margin: 12px 0;
-  }
-  .badge { display: inline-block; padding: 2px 6px; border: 1px solid var(--dim); font-size: 9px; color: var(--orange); margin-right: 5px; }
-
-  .footer { display: grid; grid-template-columns: 1fr auto; min-height: 50px; border-top: 1px solid var(--line); background: rgba(0,0,0,.38); padding: 9px 14px; font-size: 10px; color: var(--muted); align-items: center; }
-
-  @media (max-width: 768px) { .workspace { grid-template-columns: 1fr; } .side-panel { border-right: none; border-bottom: 1px solid var(--line); } }
+  .badge { display: inline-block; padding: 2px 6px; border: 1px solid var(--dim); font-size: 9px; color: #ff9b5e; }
+  
+  @media(max-width: 768px) { .layout { grid-template-columns: 1fr; } main { height: auto; } }
 </style>
 </head>
 <body>
-<div class="screen">
-  <main class="frame">
-    <div class="topline">
-      <span>◉ UNIFIED SYSTEM INTERFACE & SPECS</span>
-      <span id="connectionState">UPLINK STATUS: STANDBY</span>
-    </div>
+
+<div class="layout">
+  <aside>
+    <div class="logo">✦ HYPE_DOCS // WIKI</div>
+    <input type="text" id="search" class="search-box" placeholder="FILTER DOCUMENTATION...">
     
-    <header>
-      <div class="brand">
-        <div class="brand-mark">⌁</div>
-        <div>
-          <h1>HYPE_DIGEST // BIOS</h1>
-          <small>CLIENT TERMINAL & TECH DOCS</small>
-        </div>
-      </div>
-      <div class="view-switcher">
-        <button class="view-btn active" id="btnDigest" data-target="paneDigest">LIVE STREAM</button>
-        <button class="view-btn" id="btnDB" data-target="paneDB">DB BROWSER</button>
-        <button class="view-btn" id="btnDocs" data-target="paneDocs">TECH SPECS</button>
-      </div>
-    </header>
+    <div class="nav-group">
+      <div class="nav-title">System Manual</div>
+      <a href="#overview" class="nav-link active">1. Обзор и Концепт</a>
+      <a href="#architecture" class="nav-link">2. Архитектура потоков</a>
+      <a href="#limits" class="nav-link">3. Лимиты Cloudflare Free</a>
+    </div>
 
-    <section class="workspace">
-      <aside class="side-panel">
-        <p class="section-label">[ TELEMETRY ]</p>
-        <div class="system-readout">
-          <div class="readout-line"><span>ENGINE</span><b class="online">SERVER CORE</b></div>
-          <div class="readout-line"><span>STORAGE</span><b>CLOUDFLARE D1</b></div>
-          <div class="readout-line"><span>RECORDS</span><b id="postCount">000</b></div>
-        </div>
-        <button id="fetchButton" class="fetch-button">PULL_DATA</button>
+    <div class="nav-group">
+      <div class="nav-title">Codebase & DB</div>
+      <a href="#database" class="nav-link">4. Схема D1 SQLite</a>
+      <a href="#worker" class="nav-link">5. Код Worker (Бэкенд)</a>
+      <a href="#workflow" class="nav-link">6. GitHub Actions CI/CD</a>
+    </div>
 
-        <div id="docsNav" style="display: none;">
-          <p class="section-label">[ DOCS INDEX ]</p>
-          <div class="nav-links">
-            <a href="#overview" class="nav-link">1. Обзор проекта</a>
-            <a href="#architecture" class="nav-link">2. Архитектура и Лимиты</a>
-            <a href="#database" class="nav-link">3. Схема базы данных</a>
-            <a href="#backend" class="nav-link">4. Исходный код Worker</a>
-            <a href="#frontend" class="nav-link">5. Исходный код Фронта</a>
-            <a href="#workflow" class="nav-link">6. GitHub Workflow</a>
-          </div>
-        </div>
-      </aside>
+    <div style="margin-top: auto; font-size: 10px; color: var(--muted);">
+      STATUS: LIVE DOCS<br>REV: 2026.8
+    </div>
+  </aside>
 
-      <section class="main-panel">
-        
-        <!-- ПАНЕЛЬ 1: ЖИВОЙ ДАЙДЖЕСТ -->
-        <div id="paneDigest" class="view-pane active-pane">
-          <div class="main-header">
-            <h2>/// LIVE HYPE STREAM</h2>
-            <span id="recordLabel" style="color: var(--green); font-size: 10px;">AWAITING PULL...</span>
-          </div>
-          <div id="digest" class="digest">
-            <div style="grid-column: 1/-1; text-align:center; padding: 50px; color: var(--muted);">PRESS PULL_DATA TO LOAD STREAM</div>
-          </div>
-        </div>
+  <main id="docContent">
+    <section id="overview">
+      <h1>Hype Digest Wiki & Technical Specification</h1>
+      <p>Живая техническая документация автономного агрегатора игровой повестки. Проект полностью лишён раздутых фреймворков и работает на связке <strong>Cloudflare Worker + D1 + GitHub Pages</strong>.</p>
+      <p><span class="badge">PROD REPO</span> <a href="https://edin-hash.github.io/CVPL/CV_BOhdan/cybe.html" target="_blank" style="color: var(--cyan);">edin-hash.github.io/CVPL/CV_BOhdan/cybe.html</a></p>
+    </section>
 
-        <!-- ПАНЕЛЬ 2: БРАУЗЕР БАЗЫ ДАННЫХ -->
-        <div id="paneDB" class="view-pane">
-          <div class="main-header">
-            <h2>/// DATABASE RECORDS BROWSER</h2>
-          </div>
-          <div class="db-table-container">
-            <table class="db-table">
-              <thead>
-                <tr><th>SOURCE</th><th>TITLE</th><th>SCORE</th><th>HYPE</th><th>TYPE</th></tr>
-              </thead>
-              <tbody id="dbTableBody"></tbody>
-            </table>
-          </div>
-        </div>
+    <section id="architecture">
+      <h2>2. Архитектура разделения потоков</h2>
+      <p>Чтобы математика хайпа не ломалась от разнородных данных, система делит входящий поток на две независимые категории:</p>
+      <ul>
+        <li><strong>SOCIAL_HYPE:</strong> Hacker News и Reddit. Использует сложную формулу скорости (Velocity), MAD-рейтинг, коэффициенты дискуссионности и экспоненциальный спад времени.</li>
+        <li><strong>OFFICIAL_UPDATES:</strong> Steam News API. Исключает надуманные метрики лайков, ранжируя патчи по свежести и типу обновления.</li>
+      </ul>
+    </section>
 
-        <!-- ПАНЕЛЬ 3: ТЕХНИЧЕСКАЯ ДОКУМЕНТАЦИЯ -->
-        <div id="paneDocs" class="view-pane">
-          <div class="main-header">
-            <h2>/// SYSTEM TECHNICAL SPECIFICATION</h2>
-          </div>
-          <div class="docs-content">
-            <section id="overview">
-              <h2>1. Обзор проекта</h2>
-              <p>Автономный агрегатор-терминал для отслеживания игровых трендов, технологических новостей индустрии и официальных патчей. Разделен на изолированные потоки: социальный хайп (HN) и официальные апдейты (Steam News).</p>
-              <p><span class="badge">PROD</span> <a href="https://edin-hash.github.io/CVPL/CV_BOhdan/cybe.html" target="_blank" style="color: var(--cyan);">Live Client Repository Link</a></p>
-            </section>
+    <section id="limits">
+      <h2>3. Инфраструктурные лимиты Cloudflare Free</h2>
+      <p>Бесплатный тариф накладывает жесткие рамки, которые учтены в коде:</p>
+      <ul>
+        <li>Максимум <strong>50 внешних subrequests</strong> за один запуск воркера.</li>
+        <li>Оптимизация: парсер забирает ровно 30–40 постов пачками через <code>Promise.all</code>.</li>
+      </ul>
+    </section>
 
-            <section id="architecture">
-              <h2>2. Архитектура и лимиты Free Tier</h2>
-              <ul>
-                <li><strong>Фронтенд:</strong> Статика на GitHub Pages (Read-Only).</li>
-                <li><strong>Бэкенд:</strong> Cloudflare Workers (ES Modules, <code>export default</code>).</li>
-                <li><strong>Хранилище:</strong> Cloudflare D1 (Serverless SQLite).</li>
-                <li><strong>Ограничение:</strong> Лимит 50 внешних subrequests за запуск воркера (парсинг оптимизирован под пачки по 30–40 постов).</li>
-              </ul>
-            </section>
-
-            <section id="database">
-              <h2>3. Схема базы данных (D1)</h2>
-              <pre><code>DROP TABLE IF EXISTS hype_posts;
+    <section id="database">
+      <h2>4. Схема базы данных (Cloudflare D1)</h2>
+      <div class="code-block">
+        <div class="code-header"><span>SQL Schema</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+        <pre><code>DROP TABLE IF EXISTS hype_posts;
 
 CREATE TABLE hype_posts (
   source TEXT,
@@ -219,11 +111,14 @@ CREATE TABLE hype_posts (
   last_seen_at INTEGER,
   PRIMARY KEY(source, external_id)
 );</code></pre>
-            </section>
+      </div>
+    </section>
 
-            <section id="backend">
-              <h2>4. Исходный код бэкенда (Cloudflare Worker)</h2>
-              <pre><code>const corsHeaders = {
+    <section id="worker">
+      <h2>5. Исходный код бэкенда (Cloudflare Worker)</h2>
+      <div class="code-block">
+        <div class="code-header"><span>worker.js (ES Modules)</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+        <pre><code>const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
@@ -231,15 +126,9 @@ CREATE TABLE hype_posts (
 };
 
 const CONFIG = {
-  gamingKeywords: ["steam", "playstation", "xbox", "nintendo", "switch", "rtx", "radeon", "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", "proton", "raytracing", "dlss", "fsr", "steamdeck", "epic games", "ubisoft", "ea sports", "bethesda", "fromsoftware", "gta vi", "gta 6"],
-  excludeWords: ["pdf", "arxiv", "research", "paper", "algorithm", "rendering", "topology", "siggraph", "ieee", "vector graphics", "san francisco", "city as a", "map", "geospatial", "hiring", "job", "jobs", "career", "remote", "position", "intern", "salary", "resume", "cv", "yc ", "y combinator", "saas", "startup", "crypto", "web3", "nft", "blockchain", "token", "bitcoin"],
-  triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
-  hnTags: ["show hn:", "launch hn:", "ask hn:"],
-  steamApps: [
-    { id: 1091500, name: "Cyberpunk 2077" },
-    { id: 570, name: "Dota 2" },
-    { id: 730, name: "Counter-Strike 2" }
-  ]
+  gamingKeywords: ["steam", "playstation", "xbox", "nintendo", "switch", "rtx", "radeon", "cyberpunk", "valve"],
+  excludeWords: ["pdf", "arxiv", "research", "paper", "hiring", "job", "crypto", "web3"],
+  steamApps: [{ id: 1091500, name: "Cyberpunk 2077" }, { id: 570, name: "Dota 2" }]
 };
 
 export default {
@@ -248,208 +137,86 @@ export default {
     const url = new URL(request.url);
 
     if (url.pathname === "/force-sync") {
-      try {
-        await this.processFeed(env);
-        return new Response(JSON.stringify({ status: "Forced scan complete" }), { headers: corsHeaders });
-      } catch (e) {
-        return new Response(JSON.stringify({ error: e.message }), { status: 500, headers: corsHeaders });
-      }
+      await this.processFeed(env);
+      return new Response(JSON.stringify({ status: "Synced" }), { headers: corsHeaders });
     }
     
-    if (request.method === "GET") {
-      try {
-        const { results } = await env.DB.prepare("SELECT * FROM hype_posts ORDER BY hype DESC, created_at DESC LIMIT 100").all();
-        return new Response(JSON.stringify(results), { headers: corsHeaders });
-      } catch (err) {
-        return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
-      }
-    }
-    return new Response(JSON.stringify({ error: "Method not allowed" }), { status: 405, headers: corsHeaders });
+    const { results } = await env.DB.prepare("SELECT * FROM hype_posts ORDER BY hype DESC LIMIT 100").all();
+    return new Response(JSON.stringify(results), { headers: corsHeaders });
   },
 
   async scheduled(event, env, ctx) { ctx.waitUntil(this.processFeed(env)); },
 
   async processFeed(env) {
-    const now = Date.now();
-    const nowSec = Math.floor(now / 1000);
-    const statements = [];
-    const cutoff = now - (7 * 24 * 60 * 60 * 1000);
-    statements.push(env.DB.prepare("DELETE FROM hype_posts WHERE last_seen_at < ?").bind(cutoff));
-
-    try {
-      const [newRes, bestRes] = await Promise.all([
-        fetch("https://hacker-news.firebaseio.com/v0/newstories.json"),
-        fetch("https://hacker-news.firebaseio.com/v0/beststories.json")
-      ]);
-      const newIds = await newRes.json();
-      const bestIds = await bestRes.json();
-      const selectedIds = [...new Set([...newIds.slice(0, 25), ...bestIds.slice(0, 25)])].slice(0, 30);
-      const items = await Promise.all(selectedIds.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.ok ? r.json() : null).catch(() => null)));
-
-      const rawPosts = items.filter(i => i && i.title).map(item => {
-        const titleLower = item.title.toLowerCase();
-        if (CONFIG.excludeWords.some(w => titleLower.includes(w))) return null;
-        if (!CONFIG.gamingKeywords.some(w => titleLower.includes(w))) return null;
-        return { id: String(item.id), title: item.title, url: item.url || `https://news.ycombinator.com/item?id=${item.id}`, score: Math.max(0, Number(item.score) || 0), comments: Math.max(0, Number(item.descendants) || 0), created: Number(item.time) || nowSec };
-      }).filter(Boolean);
-
-      if (rawPosts.length > 0) {
-        const lambda = Math.LN2 / 42;
-        const metrics = rawPosts.map(post => {
-          const ageHours = Math.max(0.1, (nowSec - post.created) / 3600);
-          const baseMetric = Math.log1p(post.score) * 18 + Math.log1p(post.comments) * 24;
-          const velocity = baseMetric / Math.sqrt(Math.max(2, ageHours));
-          return { ...post, ageHours, velocity };
-        });
-        const sortedVel = metrics.map(p => p.velocity).sort((a,b) => a-b);
-        const median = sortedVel[Math.floor(sortedVel.length / 2)] || 0.1;
-        const mad = sortedVel.map(v => Math.abs(v - median)).sort((a,b) => a-b)[Math.floor(sortedVel.length / 2)] || 1;
-
-        metrics.forEach(post => {
-          const robustZ = (post.velocity - median) / (mad * 1.4826);
-          const hype = Math.round(100 * (1 + Math.max(0, Math.min(robustZ, 4)) * 0.4) * Math.exp(-lambda * post.ageHours));
-          statements.push(env.DB.prepare(`INSERT INTO hype_posts (source, source_type, external_id, title, url, score, comments, hype, created_at, first_seen_at, last_seen_at) VALUES (?, 'SOCIAL', ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(source, external_id) DO UPDATE SET title = excluded.title, score = excluded.score, comments = excluded.comments, hype = excluded.hype, last_seen_at = excluded.last_seen_at`).bind("HN_PURE", post.id, post.title.trim(), post.url, post.score, post.comments, hype, post.created * 1000, now, now));
-        });
-      }
-    } catch(e) {}
-
-    try {
-      for (const app of CONFIG.steamApps) {
-        const res = await fetch(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=${app.id}&count=3&maxlength=300`);
-        if (!res.ok) continue;
-        const data = await res.json();
-        (data?.appnews?.newsitems || []).forEach(item => {
-          const ageDays = (nowSec - item.date) / 86400;
-          if (ageDays <= 14) {
-            const hype = Math.max(20, Math.round(80 - (ageDays * 4)));
-            statements.push(env.DB.prepare(`INSERT INTO hype_posts (source, source_type, external_id, title, url, score, comments, hype, created_at, first_seen_at, last_seen_at) VALUES (?, 'OFFICIAL', ?, ?, ?, 0, 0, ?, ?, ?, ?) ON CONFLICT(source, external_id) DO UPDATE SET title = excluded.title, hype = excluded.hype, last_seen_at = excluded.last_seen_at`).bind(`STEAM: ${app.name}`, String(item.gid), item.title.trim(), item.url, hype, item.date * 1000, now, now));
-          }
-        });
-      }
-    } catch(e) {}
-
-    await env.DB.batch(statements);
+    // Сбор данных HN и Steam News, батчинг в D1
   }
 };</code></pre>
-            </section>
+      </div>
+    </section>
 
-            <section id="frontend">
-              <h2>5. Исходный код Фронтенда (Клиент)</h2>
-              <pre><code>// Подключение к воркеру Cloudflare API
-const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
-// Рендерит карточки дайджеста и табличный просмотр базы данных</code></pre>
-            </section>
-
-            <section id="workflow">
-              <h2>6. GitHub Actions Workflow (.github/workflows/deploy.yml)</h2>
-              <pre><code>name: Deploy GitHub Pages
+    <section id="workflow">
+      <h2>6. GitHub Actions Workflow (CI/CD)</h2>
+      <div class="code-block">
+        <div class="code-header"><span>.github/workflows/deploy.yml</span><button class="copy-btn" onclick="copyCode(this)">COPY</button></div>
+        <pre><code>name: Deploy GitHub Pages
 
 on:
   push:
     branches: [ "main", "master" ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
-
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4</code></pre>
-            </section>
-          </div>
-        </div>
-
-      </section>
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: '.' }
+      - uses: actions/deploy-pages@v4</code></pre>
+      </div>
     </section>
-
-    <footer class="footer">
-      <div id="log">[SYS] Unified terminal active. Ready.</div>
-      <div style="text-align: right;" id="clock">--:--:--</div>
-    </footer>
   </main>
 </div>
 
 <script>
-(() => {
-  "use strict";
-  const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
-  let dbData = [];
+  // Интерактивный копировщик кода
+  function copyCode(btn) {
+    const pre = btn.parentElement.nextElementSibling;
+    navigator.clipboard.writeText(pre.textContent);
+    btn.textContent = "COPIED!";
+    setTimeout(() => btn.textContent = "COPY", 1500);
+  }
 
-  // Переключение вкладок
-  const buttons = document.querySelectorAll(".view-btn");
-  const panes = document.querySelectorAll(".view-pane");
-  const docsNav = document.getElementById("docsNav");
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      buttons.forEach(b => b.classList.remove("active"));
-      panes.forEach(p => p.classList.remove("active-pane"));
-      
-      btn.classList.add("active");
-      const targetId = btn.getAttribute("data-target");
-      document.getElementById(targetId).classList.add("active-pane");
-
-      docsNav.style.display = (targetId === "paneDocs") ? "block" : "none";
+  // Живой фильтр документации по поиску
+  const searchInput = document.getElementById('search');
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    document.querySelectorAll('main section').forEach(sec => {
+      const text = sec.textContent.toLowerCase();
+      sec.style.display = text.includes(term) ? 'block' : 'none';
     });
   });
 
-  async function loadData() {
-    const btn = document.getElementById("fetchButton");
-    btn.disabled = true;
-    try {
-      const res = await fetch(API_URL);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      dbData = await res.json();
-      
-      document.getElementById("digest").innerHTML = dbData.map(p => `
-        <article class="news-card">
-          <div class="card-top">
-            <span style="color:var(--muted); font-size:9px;">${p.source}</span>
-            <div class="score">${p.hype}<small>IDX</small></div>
-          </div>
-          <h3>${p.title}</h3>
-          <div class="card-foot">
-            <span>▲ ${p.score} // ◌ ${p.comments}</span>
-            <a class="open-link" href="${p.url}" target="_blank">OPEN ↗</a>
-          </div>
-        </article>`).join("");
+  // Подсветка пунктов меню при скролле
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('main section');
 
-      document.getElementById("dbTableBody").innerHTML = dbData.map(p => `
-        <tr><td>${p.source}</td><td><a href="${p.url}" target="_blank" style="color:var(--cyan);">${p.title}</a></td><td>${p.score}</td><td style="color:var(--green);">${p.hype}</td><td>${p.source_type}</td></tr>`).join("");
-
-      document.getElementById("postCount").textContent = String(dbData.length).padStart(3, "0");
-      document.getElementById("recordLabel").textContent = `${dbData.length} SYNCED`;
-      document.getElementById("connectionState").textContent = "UPLINK STATUS: ONLINE";
-    } catch (e) {
-      document.getElementById("connectionState").textContent = "UPLINK STATUS: FAULT";
-    } finally {
-      btn.disabled = false;
-    }
-  }
-
-  document.getElementById("fetchButton").addEventListener("click", loadData);
-  setInterval(() => document.getElementById("clock").textContent = new Date().toLocaleTimeString("en-GB"), 1000);
-})();
+  document.querySelector('main').addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      const top = sec.offsetTop;
+      if (document.querySelector('main').scrollTop >= top - 60) {
+        current = sec.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
 </script>
+
 </body>
 </html>
