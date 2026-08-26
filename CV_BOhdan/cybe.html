@@ -15,6 +15,7 @@
     --muted: #5b9392;
     --dim: #183638;
     --red: #ff5f7e;
+    --orange: #ff9b5e;
     --line: rgba(86, 246, 255, .42);
     --glow: 0 0 10px rgba(86, 246, 255, .4), 0 0 28px rgba(86, 246, 255, .14);
     --mono: "Cascadia Mono", "JetBrains Mono", "IBM Plex Mono", Consolas, monospace;
@@ -58,7 +59,7 @@
   .brand h1 { font-size: 15px; margin: 0; color: var(--cyan); text-shadow: 0 0 9px rgba(86, 246, 255, .55); }
   .brand small { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
 
-  /* Переключатель режимов в шапке */
+  /* Свитч режимов интерфейса */
   .view-switcher { display: flex; align-items: center; gap: 8px; padding: 0 16px; margin-left: auto; }
   .view-btn { appearance: none; border: 1px solid var(--dim); background: transparent; color: var(--muted); padding: 6px 12px; cursor: pointer; font: inherit; font-size: 10px; transition: .2s; }
   .view-btn.active { border-color: var(--green); color: var(--green); background: rgba(168,255,106,.08); box-shadow: 0 0 10px rgba(168,255,106,.2); }
@@ -82,13 +83,16 @@
   .main-header h2 { margin: 0; font-size: 12px; color: var(--cyan); font-weight: 500; }
   .record-count { color: var(--green); font-size: 10px; }
 
-  /* Режим карточек */
+  /* Режим карточек (Дигест) */
   .digest { display: grid; grid-template-columns: repeat(auto-fill, minmax(278px, 1fr)); align-content: start; gap: 10px; padding: 13px; flex: 1; }
   .news-card { position: relative; min-height: 182px; display: flex; flex-direction: column; padding: 13px; border: 1px solid var(--dim); background: linear-gradient(90deg, rgba(86,246,255,.05) 1px, transparent 1px) 0 0 / 8px 8px, linear-gradient(rgba(86,246,255,.035) 1px, transparent 1px) 0 0 / 8px 8px, rgba(7, 18, 21, .7); transition: transform .25s ease, border-color .25s ease; }
   .news-card:hover { transform: translateY(-3px); border-color: var(--cyan); box-shadow: var(--glow); }
   .card-top { display: flex; align-items: start; justify-content: space-between; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid rgba(86,246,255,.22); }
   .score { color: var(--bg); background: var(--green); min-width: 60px; padding: 4px 7px; text-align: center; font-size: 12px; font-weight: bold; }
   .score small { display: block; font-size: 7px; font-weight: normal; margin-top: 1px; }
+  
+  .tag-flame { color: var(--red); font-size: 9px; border: 1px solid var(--red); padding: 1px 4px; margin-right: 5px; animation: blink 2s infinite; }
+  .tag-trend { color: var(--orange); font-size: 9px; border: 1px solid var(--orange); padding: 1px 4px; margin-right: 5px; }
   .source { color: var(--muted); font-size: 9px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .news-card h3 { margin: 12px 0; color: var(--cyan); font-size: 13px; line-height: 1.45; font-weight: 500; }
   .card-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 8px; color: var(--muted); font-size: 9px; }
@@ -121,7 +125,7 @@
 <div class="screen">
   <main class="frame">
     <div class="topline">
-      <span>◉ CLOUDFLARE D1 DATABASE BROWSER</span>
+      <span>◉ LIVE CLIENT SCANNER + D1 BROWSER</span>
       <span id="connectionState">UPLINK STATUS: STANDBY</span>
     </div>
     <header>
@@ -129,11 +133,11 @@
         <div class="brand-mark">⌁</div>
         <div>
           <h1>HYPE_DIGEST // BIOS</h1>
-          <small>DB-DRIVEN TELEMETRY TERMINAL</small>
+          <small>AUTONOMOUS TERMINAL v3.0</small>
         </div>
       </div>
       
-      <!-- Свитч режимов интерфейса -->
+      <!-- Переключатель режимов -->
       <div class="view-switcher">
         <span style="font-size: 9px; color: var(--muted);">VIEW:</span>
         <button class="view-btn active" id="btnDigest" type="button">DIGEST_VIEW</button>
@@ -142,29 +146,29 @@
     </header>
     <section class="workspace">
       <aside class="side-panel">
-        <p class="section-label">[ SYSTEM TELEMETRY ]</p>
+        <p class="section-label">[ TELEMETRY ]</p>
         <div class="system-readout">
-          <div class="readout-line"><span>STORAGE</span><b class="online">CLOUDFLARE D1</b></div>
-          <div class="readout-line"><span>SYNC MODE</span><b>AUTO (HOURLY)</b></div>
-          <div class="readout-line"><span>RECORDS LOADED</span><b id="postCount">000</b></div>
+          <div class="readout-line"><span>ENGINE</span><b class="online">CLIENT MATH</b></div>
+          <div class="readout-line"><span>FILTER</span><b>GAMING / HARDWARE</b></div>
+          <div class="readout-line"><span>RECORDS</span><b id="postCount">000</b></div>
         </div>
-        <button id="fetchButton" class="fetch-button" type="button">SYNC_FROM_DB</button>
+        <button id="fetchButton" class="fetch-button" type="button">EXECUTE_SCAN</button>
       </aside>
       
       <section class="main-panel">
         <div class="main-header">
-          <h2>/// <span id="panelTitle">INDEXED ANOMALIES</span></h2>
-          <span class="record-count" id="recordLabel">AWAITING SYNC...</span>
+          <h2>/// <span id="panelTitle">LIVE HYPE STREAM</span></h2>
+          <span class="record-count" id="recordLabel">AWAITING SCAN...</span>
         </div>
         
-        <!-- Представление 1: Карточки -->
+        <!-- Вкладка 1: Живой дигест с математикой -->
         <div id="digest" class="digest" aria-live="polite">
           <div class="empty-state">
-            <div><strong>DATABASE READY</strong><br><span class="cursor">PRESS SYNC_FROM_DB TO PULL CACHED MATRIX</span></div>
+            <div><strong>TERMINAL IDLE</strong><br><span class="cursor">PRESS EXECUTE_SCAN TO FETCH & COMPUTE</span></div>
           </div>
         </div>
 
-        <!-- Представление 2: Полная таблица базы данных с сортировкой -->
+        <!-- Вкладка 2: Таблица базы данных -->
         <div id="dbTableContainer" class="db-table-container">
           <table class="db-table" id="dbTable">
             <thead>
@@ -178,15 +182,15 @@
               </tr>
             </thead>
             <tbody id="dbTableBody">
-              <!-- Сюда динамически падают все данные из базы -->
+              <tr><td colspan="6" style="text-align:center; color: var(--muted);">CLICK SYNC DB TO LOAD CACHED RECORDS</td></tr>
             </tbody>
           </table>
         </div>
       </section>
     </section>
     <footer class="footer">
-      <div class="log" id="log"><b>[SYS]</b> Connected to Cloudflare Worker API. Ready.</div>
-      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>D1_BROWSER</div>
+      <div class="log" id="log"><b>[SYS]</b> Autonomous terminal initialized. Ready for scan.</div>
+      <div class="clock">LOCAL_TIME: <b id="clock">--:--:--</b><br>CLIENT_CORE</div>
     </footer>
   </main>
 </div>
@@ -196,9 +200,22 @@
   "use strict";
 
   const API_URL = "https://old-dew-2090.0662982401w.workers.dev/";
-  let cachedData = [];
+  let currentView = "digest"; // "digest" или "db"
+  let cachedDbData = [];
   let currentSortField = "hype";
   let sortDirectionDesc = true;
+
+  const CONFIG = {
+    limit: 60,
+    timeoutMs: 15000,
+    gamingKeywords: [
+      "game", "gaming", "steam", "playstation", "xbox", "nintendo", "switch", 
+      "gpu", "rtx", "radeon", "fps", "unreal", "unity", "engine", "emulator", 
+      "zelda", "mario", "minecraft", "cyberpunk", "valve", "riot", "blizzard", "proton"
+    ],
+    triggerWords: ["fail", "bug", "scandal", "leak", "worst", "ban", "update", "release"],
+    hnTags: ["show hn:", "launch hn:", "ask hn:"]
+  };
 
   const els = {
     fetchButton: document.getElementById("fetchButton"),
@@ -226,32 +243,135 @@
     return div.innerHTML;
   }
 
-  // Отрисовка режима карточек
+  // --- МАТЕМАТИЧЕСКОЕ ЯДРО НА КЛИЕНТЕ ---
+  function calculateAdvancedHype(posts) {
+    if (!Array.isArray(posts) || posts.length === 0) return [];
+
+    const now = Date.now() / 1000;
+    const halfLifeHours = 42;
+    const lambda = Math.LN2 / halfLifeHours;
+
+    const metrics = posts.map(post => {
+      const score = Math.max(0, Number(post.score) || 0);
+      const comments = Math.max(0, Number(post.comments) || 0);
+      const ageHours = Math.max(0.1, (now - post.created) / 3600); 
+
+      const baseMetric = Math.log1p(score) * 18 + Math.log1p(comments) * 24;
+      const velocity = baseMetric / Math.max(0.5, ageHours);
+
+      return { ...post, score, comments, ageHours, baseMetric, velocity };
+    });
+
+    const sortedVelocity = metrics.map(p => p.velocity).sort((a, b) => a - b);
+    const median = sortedVelocity[Math.floor(sortedVelocity.length / 2)] || 0.1;
+    const deviations = sortedVelocity.map(v => Math.abs(v - median)).sort((a, b) => a - b);
+    const mad = deviations[Math.floor(deviations.length / 2)] || 1;
+
+    return metrics.map(post => {
+      const robustZ = (post.velocity - median) / (mad * 1.4826);
+      const trendBoost = 1 + Math.max(0, Math.min(robustZ, 4)) * 0.4;
+
+      const engagementRatio = post.comments / (post.score + 1);
+      const discussionBoost = 1 + Math.min(engagementRatio, 3) * 0.25;
+      const flameBoost = engagementRatio > 1.3 ? 1.25 : 1; 
+
+      const confidence = Math.min(1, Math.log1p(post.score + post.comments) / Math.log(250));
+      const timeDecay = Math.exp(-lambda * post.ageHours);
+
+      const title = String(post.title || "").toLowerCase();
+      const keywordCount = CONFIG.triggerWords.filter(w => title.includes(w)).length;
+      const isHnSpecial = CONFIG.hnTags.some(tag => title.includes(tag));
+      const keywordBoost = 1 + Math.min(keywordCount, 2) * 0.12 + (isHnSpecial ? 0.3 : 0);
+
+      post.hype = Math.round(
+        100 * trendBoost * discussionBoost * flameBoost * timeDecay * keywordBoost * (0.45 + confidence * 0.55)
+      );
+
+      post.isFlame = engagementRatio > 1.3 && post.comments > 30;
+      post.isTrending = robustZ > 2.5;
+
+      return post;
+    }).sort((a, b) => b.hype - a.hype);
+  }
+
+  async function fetchWithTimeout(url) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), CONFIG.timeoutMs);
+    try {
+      const response = await fetch(url, { signal: controller.signal });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return await response.json();
+    } finally {
+      clearTimeout(timeout);
+    }
+  }
+
+  // --- СКАНИРОВАНИЕ И ОПЕРЕЖАЮЩИЙ РАЗБОР В РЕАЛЬНОМ ВРЕМЕНИ ---
+  async function scanLiveFeed() {
+    log("Scanning global Hacker News stream for gaming anomalies...");
+    const ids = await fetchWithTimeout("https://hacker-news.firebaseio.com/v0/topstories.json");
+    const topIds = ids.slice(0, CONFIG.limit);
+    
+    const items = await Promise.all(
+      topIds.map(id => fetchWithTimeout(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).catch(() => null))
+    );
+
+    const rawPosts = items.filter(item => item && item.title).map(item => {
+      const titleLower = item.title.toLowerCase();
+      const isGaming = CONFIG.gamingKeywords.some(kw => titleLower.includes(kw));
+      if (!isGaming) return null;
+
+      return {
+        title: item.title,
+        url: item.url || `https://news.ycombinator.com/item?id=${item.id}`,
+        score: Number(item.score) || 0,
+        comments: Number(item.descendants) || 0,
+        created: Number(item.time) || Math.floor(Date.now() / 1000),
+        source: "HN_LIVE"
+      };
+    }).filter(Boolean);
+
+    return calculateAdvancedHype(rawPosts);
+  }
+
+  // --- ЗАГРУЗКА БАЗЫ ДАННЫХ ДЛЯ ВТОРОЙ ВКЛАДКИ ---
+  async function fetchDatabaseRecords() {
+    log("Querying Cloudflare D1 Database...");
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error(`DB Error: ${res.status}`);
+    return await res.json();
+  }
+
   function renderDigest(posts) {
     if (!posts.length) {
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>DATABASE EMPTY</strong><br>Run worker cron or wait for scheduler.</div></div>`;
+      els.digest.innerHTML = `<div class="empty-state"><div><strong>NO GAMING SIGNALS</strong><br>Stream returned no matching records.</div></div>`;
       return;
     }
 
-    els.digest.innerHTML = posts.map((post, index) => `
+    els.digest.innerHTML = posts.map((post, index) => {
+      let tags = "";
+      if(post.isFlame) tags += `<span class="tag-flame">[FLAME]</span>`;
+      if(post.isTrending) tags += `<span class="tag-trend">[TRENDING]</span>`;
+
+      return `
       <article class="news-card" data-slot="${String(index + 1).padStart(3, "0")}">
         <div class="card-top">
-          <span class="source">${escapeHtml(post.source)}</span>
+          <span class="source">${escapeHtml(post.source)} ${tags}</span>
           <div class="score">${post.hype}<small>IDX</small></div>
         </div>
         <h3>${escapeHtml(post.title)}</h3>
         <div class="card-foot">
-          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments}</span>
+          <span>▲ ${post.score} &nbsp; // &nbsp; ◌ ${post.comments} &nbsp; // &nbsp; ${Math.max(0, Math.floor(post.ageHours))}H AGO</span>
           <a class="open-link" href="${escapeHtml(post.url)}" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
         </div>
       </article>
-    `).join("");
+      `;
+    }).join("");
   }
 
-  // Отрисовка режима таблицы базы данных (все данные)
   function renderTable(posts) {
     if (!posts.length) {
-      els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--muted);">NO RECORDS FOUND IN D1 DATABASE</td></tr>`;
+      els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--muted);">NO RECORDS IN DATABASE</td></tr>`;
       return;
     }
 
@@ -267,8 +387,7 @@
     `).join("");
   }
 
-  // Сортировка данных по клику на заголовки таблицы
-  function sortData(field) {
+  function sortDbData(field) {
     if (currentSortField === field) {
       sortDirectionDesc = !sortDirectionDesc;
     } else {
@@ -276,84 +395,94 @@
       sortDirectionDesc = true;
     }
 
-    cachedData.sort((a, b) => {
+    cachedDbData.sort((a, b) => {
       let valA = a[field];
       let valB = b[field];
-
-      if (typeof valA === "string") {
-        valA = valA.toLowerCase();
-        valB = valB.toLowerCase();
-      }
-
+      if (typeof valA === "string") { valA = valA.toLowerCase(); valB = valB.toLowerCase(); }
       if (valA < valB) return sortDirectionDesc ? 1 : -1;
       if (valA > valB) return sortDirectionDesc ? -1 : 1;
       return 0;
     });
 
-    renderTable(cachedData);
-    log(`Field sorted: ${field.toUpperCase()} (${sortDirectionDesc ? "DESC" : "ASC"})`);
+    renderTable(cachedDbData);
+    log(`DB Table sorted by ${field.toUpperCase()} (${sortDirectionDesc ? "DESC" : "ASC"})`);
   }
 
-  async function loadDigest() {
+  // --- ГЛАВНЫЙ ИНТЕРАКТИВ ПО КНОПКЕ ---
+  async function handleAction() {
     els.fetchButton.disabled = true;
     els.fetchButton.classList.add("loading");
-    els.fetchButton.textContent = "FETCHING_DB";
-    els.connectionState.textContent = "UPLINK STATUS: QUERYING";
 
-    try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      
-      cachedData = await response.json();
-      
-      renderDigest(cachedData);
-      renderTable(cachedData);
-
-      els.postCount.textContent = String(cachedData.length).padStart(3, "0");
-      els.recordLabel.textContent = `${cachedData.length} RECORDS SYNCED FROM SQL`;
-      els.connectionState.textContent = "UPLINK STATUS: ONLINE";
-      log("Successfully synchronized records from Cloudflare D1 database.");
-    } catch (error) {
-      els.connectionState.textContent = "UPLINK STATUS: FAULT";
-      els.digest.innerHTML = `<div class="empty-state"><div><strong>SYNC FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
-      log(`Database query failed: ${error.message}`, "error");
-    } finally {
-      els.fetchButton.disabled = false;
-      els.fetchButton.classList.remove("loading");
-      els.fetchButton.textContent = "SYNC_FROM_DB";
+    if (currentView === "digest") {
+      els.fetchButton.textContent = "SCANNING...";
+      els.connectionState.textContent = "UPLINK STATUS: SCANNING";
+      try {
+        const posts = await scanLiveFeed();
+        renderDigest(posts);
+        els.postCount.textContent = String(posts.length).padStart(3, "0");
+        els.recordLabel.textContent = `${posts.length} LIVE RECORDS COMPUTED`;
+        els.connectionState.textContent = "UPLINK STATUS: ONLINE";
+        log(`Live scan complete. Matrix stabilized with ${posts.length} items.`);
+      } catch (error) {
+        els.connectionState.textContent = "UPLINK STATUS: FAULT";
+        els.digest.innerHTML = `<div class="empty-state"><div><strong>SCAN FAILED</strong><br><span class="cursor">${escapeHtml(error.message)}</span></div></div>`;
+        log(`Scan fault: ${error.message}`, "error");
+      }
+    } else {
+      els.fetchButton.textContent = "FETCHING_DB";
+      els.connectionState.textContent = "UPLINK STATUS: QUERYING DB";
+      try {
+        cachedDbData = await fetchDatabaseRecords();
+        renderTable(cachedDbData);
+        els.postCount.textContent = String(cachedDbData.length).padStart(3, "0");
+        els.recordLabel.textContent = `${cachedDbData.length} DB RECORDS LOADED`;
+        els.connectionState.textContent = "UPLINK STATUS: ONLINE";
+        log("Successfully loaded raw database records.");
+      } catch (error) {
+        els.connectionState.textContent = "UPLINK STATUS: FAULT";
+        els.dbTableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--red);">DB ERROR: ${escapeHtml(error.message)}</td></tr>`;
+        log(`DB query failed: ${error.message}`, "error");
+      }
     }
+
+    els.fetchButton.disabled = false;
+    els.fetchButton.classList.remove("loading");
+    els.fetchButton.textContent = currentView === "digest" ? "EXECUTE_SCAN" : "SYNC_DB";
   }
 
-  // Переключение представлений (Дигест / Таблица базы данных)
+  // Переключение вкладок
   els.btnDigest.addEventListener("click", () => {
+    currentView = "digest";
     els.btnDigest.classList.add("active");
     els.btnDB.classList.remove("active");
     els.digest.style.display = "grid";
     els.dbTableContainer.style.display = "none";
-    els.panelTitle.textContent = "INDEXED ANOMALIES";
-    log("Switched view to: DIGEST_VIEW");
+    els.panelTitle.textContent = "LIVE HYPE STREAM";
+    els.fetchButton.textContent = "EXECUTE_SCAN";
+    log("Switched to: LIVE_SCAN_VIEW");
   });
 
   els.btnDB.addEventListener("click", () => {
+    currentView = "db";
     els.btnDB.classList.add("active");
     els.btnDigest.classList.remove("active");
     els.digest.style.display = "none";
     els.dbTableContainer.style.display = "block";
     els.panelTitle.textContent = "RAW SQL DATABASE BROWSER";
-    log("Switched view to: DB_BROWSER");
+    els.fetchButton.textContent = "SYNC_DB";
+    log("Switched to: DB_BROWSER_VIEW");
+    if(cachedDbData.length === 0) handleAction(); // Авто-загрузка при первом открытии базы
   });
 
-  // Навешиваем клики на заголовки таблицы для сортировки
   document.querySelectorAll("#dbTable th[data-sort]").forEach(th => {
-    th.addEventListener("click", () => {
-      sortData(th.getAttribute("data-sort"));
-    });
+    th.addEventListener("click", () => sortDbData(th.getAttribute("data-sort")));
   });
 
   setInterval(() => els.clock.textContent = new Date().toLocaleTimeString("en-GB", { hour12: false }), 1000);
-  els.fetchButton.addEventListener("click", loadDigest);
+  els.fetchButton.addEventListener("click", handleAction);
 
-  loadDigest();
+  // Стартовый авто-скан
+  handleAction();
 })();
 </script>
 </body>
