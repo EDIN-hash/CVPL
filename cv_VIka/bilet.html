@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Bilet Elektroniczny - Viktoriia Borysenko</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 40px 20px;
+            color: #212529;
+            font-size: 14px;
+        }
+        .ticket {
+            max-width: 850px;
+            background: #fff;
+            margin: auto;
+            border: 1px solid #dee2e6;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        .ticket-header {
+            text-align: center;
+            border-bottom: 2px solid #343a40;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .ticket-header h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+        .col-half {
+            width: 48%;
+        }
+        .label {
+            font-size: 11px;
+            color: #6c757d;
+            text-transform: uppercase;
+            margin-bottom: 3px;
+            display: block;
+        }
+        .value {
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .route-block {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+        .route-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #495057;
+            border-bottom: 1px solid #ced4da;
+            padding-bottom: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #f1f3f5;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #495057;
+        }
+        .total-row td {
+            font-weight: bold;
+            background: #f8f9fa;
+        }
+        .rules-section {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #495057;
+        }
+        .rules-section h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #212529;
+        }
+        ul {
+            margin-top: 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <div class="ticket-header">
+            <h1>Bilet Elektroniczny / E-Ticket</h1>
+            <div style="margin-top: 5px; font-size: 14px; font-weight: bold;">Nr: 6406304</div>
+        </div>
+
+        <div class="row">
+            <div class="col-half">
+                <span class="label">Pasażer / Passenger</span>
+                <span class="value">Viktoriia Borysenko</span><br><br>
+                <span class="label">Sprzedano / Sales</span>
+                <span class="value">13.08.25 13:51 (GMT+3)</span>
+            </div>
+            <div class="col-half" style="text-align: right;">
+                <span class="label">Kurs / Flight</span>
+                <span class="value">999 Czernihów - Poznań</span><br><br>
+                <span class="label">Miejsce / Seat</span>
+                <span class="value" style="font-size: 20px; color: #d9534f;">19</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-half route-block">
+                <div class="route-title">Odjazd / Departure</div>
+                <span class="value" style="font-size: 18px;">17.08.2025 / 13:00</span><br><br>
+                <strong>Kijów, Dworzec Autobusowy Kijów</strong><br>
+                (centralny dworzec kolejowy)<br>
+                metro Wokzalna; ul. Symona Petlury;<br>
+                bud. 32 (peron 12)
+            </div>
+            <div class="col-half route-block">
+                <div class="route-title">Przyjazd / Arrival</div>
+                <span class="value" style="font-size: 18px;">18.08.2025 / 12:00</span><br><br>
+                <strong>Poznań, Dworzec Autobusowy Poznań</strong><br>
+                ul. Stanisława Matyi; bud. 2
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <th>Opłata / Usługa</th>
+                <th>Taryfa</th>
+                <th>Zniżka</th>
+                <th>W tym VAT</th>
+                <th>Razem (UAH)</th>
+            </tr>
+            <tr>
+                <td>Przejazd (Typ: PEŁNY)</td>
+                <td>1800,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>1800,00</td>
+            </tr>
+            <tr>
+                <td>Ubezpieczenie od NNW (PrAT SK "VUSO")</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+                <td>0,00</td>
+            </tr>
+            <tr class="total-row">
+                <td colspan="4" style="text-align: right;">Całkowity koszt podróży:</td>
+                <td>1800,00</td>
+            </tr>
+        </table>
+
+        <div class="row" style="margin-bottom: 25px; border-bottom: 1px solid #dee2e6; padding-bottom: 15px;">
+            <div class="col-half">
+                <span class="label">Przewoźnik / Carrier</span>
+                <strong>ATLASTRAVELBUS/AVTOEKSPRES</strong><br>
+                Czernihów, 14037, ul. Borysenki, 60<br>
+                Tel: +38 097 970 09 80
+            </div>
+            <div class="col-half" style="text-align: right;">
+                <span class="label">Serwis wsparcia / Support service</span>
+                <strong>+38 097 970 09 80</strong>
+            </div>
+        </div>
+
+        <div class="rules-section">
+            <h3>Do wiadomości pasażerów:</h3>
+            <ol>
+                <li>Po opłaceniu przejazdu pasażerowi zaleca się sprawdzenie wszystkich danych rejestracyjnych wskazanych w voucherze rezerwacyjnym.</li>
+                <li>W celu zapewnienia zorganizowanego wejścia na pokład, wskazane jest przybycie na miejsce odjazdu 20 minut wcześniej.</li>
+                <li>Odjazd autobusu odbywa się według czasu lokalnego.</li>
+                <li>Pasażer ponosi odpowiedzialność za przestrzeganie reżimu wizowego oraz warunków przekraczania granicy.</li>
+                <li>W celu uzyskania informacji dotyczących przerejestrowania lub odwołania podróży, pasażer może zwrócić się do przedstawicielstw firmy lub serwisu wsparcia.</li>
+                <li>Opłata za podróż oznacza zgodę pasażera na warunki umowy oferty.</li>
+                <li>Bilet jest ważny tylko pod warunkiem, że nazwisko i imię pasażera odpowiadają jego danym paszportowym.</li>
+            </ol>
+
+            <h3>Warunki zwrotu biletów:</h3>
+            <ul>
+                <li>od 3 dni i więcej przed odjazdem: <strong>75%</strong> wartości podróży</li>
+                <li>od 3 dni do 1 doby przed odjazdem: <strong>50%</strong> wartości podróży</li>
+                <li>od 1 doby do 12 godz. przed odjazdem: <strong>25%</strong> wartości podróży</li>
+                <li>mniej niż 12 godz. przed odjazdem: środki za podróż <strong>nie podlegają zwrotowi</strong></li>
+            </ul>
+
+            <h3>Warunki przewozu bagażu:</h3>
+            <p>Przewóz 1 sztuki bagażu podręcznego (7 kg - 42x30x18 cm) + 1 sztuki bagażu turystycznego (20 kg - 80x50x30 cm) na osobę – <strong>bezpłatnie</strong>.<br>
+            Bagaż dodatkowy: 25% wartości biletu.</p>
+
+            <h3>Dodatkowe informacje:</h3>
+            <p>Przewoźnik zastrzega sobie prawo do zastąpienia autobusu innym, który odpowiada klasie zadeklarowanej przy sprzedaży biletów.</p>
+        </div>
+    </div>
+</body>
+</html>
+
+  
