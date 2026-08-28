@@ -2,216 +2,336 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Bilet Elektroniczny - Viktoriia Borysenko</title>
+    <title>Bilet Elektroniczny</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background-color: #e9ecef;
+            font-family: Arial, sans-serif;
+            background-color: #525659;
             margin: 0;
-            padding: 40px 20px;
-            color: #212529;
-            font-size: 14px;
-        }
-        .ticket {
-            max-width: 850px;
-            background: #fff;
-            margin: auto;
-            border: 1px solid #dee2e6;
-            padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border-radius: 4px;
-        }
-        .ticket-header {
-            text-align: center;
-            border-bottom: 2px solid #343a40;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-        }
-        .ticket-header h1 {
-            margin: 0;
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .row {
+            padding: 20px;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 25px;
+            justify-content: center;
         }
-        .col-half {
-            width: 48%;
+        .page {
+            width: 794px; /* A4 width roughly */
+            background: white;
+            padding: 40px;
+            box-sizing: border-box;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .ticket-stub {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            margin-bottom: 0;
+            font-size: 11px;
+            line-height: 1.3;
+        }
+        .cut-line {
+            border-top: 2px dashed #999;
+            margin: 15px 0;
+            position: relative;
+        }
+        .left-col {
+            width: 130px;
+            text-align: center;
+            border-right: 1px dashed #ccc;
+            padding-right: 15px;
+            margin-right: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-col {
+            flex-grow: 1;
+        }
+        .qr-code {
+            width: 90px;
+            height: 90px;
+            margin: 15px auto;
+        }
+        .header-title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 12px;
+            margin-bottom: 15px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
         }
         .label {
+            font-size: 9px;
+            color: #333;
+            font-weight: bold;
+        }
+        .val {
             font-size: 11px;
-            color: #6c757d;
-            text-transform: uppercase;
-            margin-bottom: 3px;
-            display: block;
+            margin-top: 3px;
         }
-        .value {
-            font-weight: bold;
-            font-size: 15px;
+        .green-bar {
+            border-left: 3px solid #28a745;
+            padding-left: 8px;
         }
-        .route-block {
-            background: #f8f9fa;
-            border: 1px solid #dee2e6;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 25px;
+        .price-grid {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 8px 0;
+            margin-bottom: 15px;
         }
-        .route-title {
-            font-weight: bold;
+        .price-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .price-col.right {
+            text-align: right;
+        }
+        .total-price {
             font-size: 16px;
-            margin-bottom: 10px;
-            color: #495057;
-            border-bottom: 1px solid #ced4da;
-            padding-bottom: 5px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 25px;
-        }
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background: #f1f3f5;
-            font-size: 12px;
-            text-transform: uppercase;
-            color: #495057;
-        }
-        .total-row td {
             font-weight: bold;
-            background: #f8f9fa;
         }
+        .footer-grid {
+            display: flex;
+            justify-content: space-between;
+        }
+        
         .rules-section {
-            font-size: 12px;
-            line-height: 1.5;
-            color: #495057;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            line-height: 1.4;
+            margin-top: 20px;
+            gap: 30px;
         }
-        .rules-section h3 {
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #212529;
+        .rules-col {
+            width: 50%;
         }
-        ul {
-            margin-top: 0;
-            padding-left: 20px;
+        .rules-section h4 {
+            margin: 10px 0 5px 0;
+            font-size: 11px;
+        }
+        ul, ol {
+            margin: 0;
+            padding-left: 15px;
+        }
+        li {
+            margin-bottom: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="ticket">
-        <div class="ticket-header">
-            <h1>Bilet Elektroniczny / E-Ticket</h1>
-            <div style="margin-top: 5px; font-size: 14px; font-weight: bold;">Nr: 6406304</div>
+    <div class="page">
+        <!-- TICKET 1 -->
+        <div class="ticket-stub">
+            <div class="left-col">
+                <div class="label">Sprzedano / Sales</div>
+                <div class="val">13.08.25 13:51<br>(GMT+3)</div>
+                <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=6406304" alt="QR">
+                <div class="val">Nr 6406304</div>
+            </div>
+            
+            <div class="right-col">
+                <div class="header-title">BILET ELEKTRONICZNY</div>
+                
+                <div class="info-grid">
+                    <div class="green-bar">
+                        <div class="label">Kurs / Flight</div>
+                        <div class="val">999 Czernihów - Poznań</div>
+                    </div>
+                    <div>
+                        <div class="label">Odjazd / Departure</div>
+                        <div class="val">17.08.2025 / 13:00<br>Kijów, Dworzec Autobusowy Kijów<br>(centralny dworzec kolejowy)<br>metro Wokzalna; ul. Symona Petlury; bud. 32 (peron 12)</div>
+                    </div>
+                    <div>
+                        <div class="label">Przyjazd / Arrival</div>
+                        <div class="val">18.08.2025 / 12:00<br>Poznań, Dworzec Autobusowy Poznań<br>ul. Stanisława Matyi; bud. 2</div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div>
+                        <div class="label">Pasażer / Passenger</div>
+                        <div class="val">Viktoriia Borysenko</div>
+                    </div>
+                    <div>
+                        <div class="label">Miejsce / Seat</div>
+                        <div class="val">19</div>
+                    </div>
+                    <div>
+                        <div class="label">Przewoźnik / Carrier</div>
+                        <div class="val">ATLASTRAVELBUS/AVTOEKSPRES<br>Czernihów, 14037, Czernihów, ul. Borysenki, 60<br>380979700980</div>
+                    </div>
+                </div>
+
+                <div class="price-grid">
+                    <div class="price-col">
+                        <div class="label">Opłata / Usługa<br>Fee/Service</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Taryfa<br>Tariff</div>
+                        <div class="val">1800.00</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Opłata<br>Passage</div>
+                        <div class="val">1800,00</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Bagaż<br>Luggage</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Typ<br>Type</div>
+                        <div class="val">PEŁNY</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Zniżka<br>Discount</div>
+                    </div>
+                    <div class="price-col right">
+                        <div class="label">Razem, UAH<br>Total, UAH</div>
+                        <div class="val total-price">1800,00</div>
+                    </div>
+                </div>
+
+                <div class="footer-grid">
+                    <div>
+                        <div class="label">Ubezpieczenie / Insurance</div>
+                        <div class="val" style="font-size: 9px;">Ubezpieczenie od NNW w transporcie.<br>PrAT SK "VUSO", Kijów, ul. K. Malewicza, 6. 31</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="label">Serwis wsparcia / Support service</div>
+                        <div class="val">+380979700980</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="row">
-            <div class="col-half">
-                <span class="label">Pasażer / Passenger</span>
-                <span class="value">Viktoriia Borysenko</span><br><br>
-                <span class="label">Sprzedano / Sales</span>
-                <span class="value">13.08.25 13:51 (GMT+3)</span>
+        <div class="cut-line"></div>
+
+        <!-- TICKET 2 -->
+        <div class="ticket-stub">
+            <div class="left-col">
+                <div class="label">Sprzedano / Sales</div>
+                <div class="val">13.08.25 13:51<br>(GMT+3)</div>
+                <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=6406304" alt="QR">
+                <div class="val">Nr 6406304</div>
             </div>
-            <div class="col-half" style="text-align: right;">
-                <span class="label">Kurs / Flight</span>
-                <span class="value">999 Czernihów - Poznań</span><br><br>
-                <span class="label">Miejsce / Seat</span>
-                <span class="value" style="font-size: 20px; color: #d9534f;">19</span>
+            
+            <div class="right-col">
+                <div class="header-title">BILET ELEKTRONICZNY</div>
+                
+                <div class="info-grid">
+                    <div class="green-bar">
+                        <div class="label">Kurs / Flight</div>
+                        <div class="val">999 Czernihów - Poznań</div>
+                    </div>
+                    <div>
+                        <div class="label">Odjazd / Departure</div>
+                        <div class="val">17.08.2025 / 13:00<br>Kijów, Dworzec Autobusowy Kijów<br>(centralny dworzec kolejowy)<br>metro Wokzalna; ul. Symona Petlury; bud. 32 (peron 12)</div>
+                    </div>
+                    <div>
+                        <div class="label">Przyjazd / Arrival</div>
+                        <div class="val">18.08.2025 / 12:00<br>Poznań, Dworzec Autobusowy Poznań<br>ul. Stanisława Matyi; bud. 2</div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div>
+                        <div class="label">Pasażer / Passenger</div>
+                        <div class="val">Viktoriia Borysenko</div>
+                    </div>
+                    <div>
+                        <div class="label">Miejsce / Seat</div>
+                        <div class="val">19</div>
+                    </div>
+                    <div>
+                        <div class="label">Przewoźnik / Carrier</div>
+                        <div class="val">ATLASTRAVELBUS/AVTOEKSPRES<br>Czernihów, 14037, Czernihów, ul. Borysenki, 60<br>380979700980</div>
+                    </div>
+                </div>
+
+                <div class="price-grid">
+                    <div class="price-col">
+                        <div class="label">Opłata / Usługa<br>Fee/Service</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Taryfa<br>Tariff</div>
+                        <div class="val">1800.00</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Opłata<br>Passage</div>
+                        <div class="val">1800,00</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Bagaż<br>Luggage</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Typ<br>Type</div>
+                        <div class="val">PEŁNY</div>
+                    </div>
+                    <div class="price-col">
+                        <div class="label">Zniżka<br>Discount</div>
+                    </div>
+                    <div class="price-col right">
+                        <div class="label">Razem, UAH<br>Total, UAH</div>
+                        <div class="val total-price">1800,00</div>
+                    </div>
+                </div>
+
+                <div class="footer-grid">
+                    <div>
+                        <div class="label">Ubezpieczenie / Insurance</div>
+                        <div class="val" style="font-size: 9px;">Ubezpieczenie od NNW w transporcie.<br>PrAT SK "VUSO", Kijów, ul. K. Malewicza, 6. 31</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="label">Serwis wsparcia / Support service</div>
+                        <div class="val">+380979700980</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-half route-block">
-                <div class="route-title">Odjazd / Departure</div>
-                <span class="value" style="font-size: 18px;">17.08.2025 / 13:00</span><br><br>
-                <strong>Kijów, Dworzec Autobusowy Kijów</strong><br>
-                (centralny dworzec kolejowy)<br>
-                metro Wokzalna; ul. Symona Petlury;<br>
-                bud. 32 (peron 12)
-            </div>
-            <div class="col-half route-block">
-                <div class="route-title">Przyjazd / Arrival</div>
-                <span class="value" style="font-size: 18px;">18.08.2025 / 12:00</span><br><br>
-                <strong>Poznań, Dworzec Autobusowy Poznań</strong><br>
-                ul. Stanisława Matyi; bud. 2
-            </div>
-        </div>
-
-        <table>
-            <tr>
-                <th>Opłata / Usługa</th>
-                <th>Taryfa</th>
-                <th>Zniżka</th>
-                <th>W tym VAT</th>
-                <th>Razem (UAH)</th>
-            </tr>
-            <tr>
-                <td>Przejazd (Typ: PEŁNY)</td>
-                <td>1800,00</td>
-                <td>0,00</td>
-                <td>0,00</td>
-                <td>1800,00</td>
-            </tr>
-            <tr>
-                <td>Ubezpieczenie od NNW (PrAT SK "VUSO")</td>
-                <td>0,00</td>
-                <td>0,00</td>
-                <td>0,00</td>
-                <td>0,00</td>
-            </tr>
-            <tr class="total-row">
-                <td colspan="4" style="text-align: right;">Całkowity koszt podróży:</td>
-                <td>1800,00</td>
-            </tr>
-        </table>
-
-        <div class="row" style="margin-bottom: 25px; border-bottom: 1px solid #dee2e6; padding-bottom: 15px;">
-            <div class="col-half">
-                <span class="label">Przewoźnik / Carrier</span>
-                <strong>ATLASTRAVELBUS/AVTOEKSPRES</strong><br>
-                Czernihów, 14037, ul. Borysenki, 60<br>
-                Tel: +38 097 970 09 80
-            </div>
-            <div class="col-half" style="text-align: right;">
-                <span class="label">Serwis wsparcia / Support service</span>
-                <strong>+38 097 970 09 80</strong>
-            </div>
-        </div>
-
+        <!-- RULES -->
         <div class="rules-section">
-            <h3>Do wiadomości pasażerów:</h3>
-            <ol>
-                <li>Po opłaceniu przejazdu pasażerowi zaleca się sprawdzenie wszystkich danych rejestracyjnych wskazanych w voucherze rezerwacyjnym.</li>
-                <li>W celu zapewnienia zorganizowanego wejścia na pokład, wskazane jest przybycie na miejsce odjazdu 20 minut wcześniej.</li>
-                <li>Odjazd autobusu odbywa się według czasu lokalnego.</li>
-                <li>Pasażer ponosi odpowiedzialność za przestrzeganie reżimu wizowego oraz warunków przekraczania granicy.</li>
-                <li>W celu uzyskania informacji dotyczących przerejestrowania lub odwołania podróży, pasażer może zwrócić się do przedstawicielstw firmy lub serwisu wsparcia.</li>
-                <li>Opłata za podróż oznacza zgodę pasażera na warunki umowy oferty.</li>
-                <li>Bilet jest ważny tylko pod warunkiem, że nazwisko i imię pasażera odpowiadają jego danym paszportowym.</li>
-            </ol>
+            <div class="rules-col">
+                <h4>Do wiadomości pasażerów:</h4>
+                <ol>
+                    <li>Po opłaceniu przejazdu pasażerowi zaleca się sprawdzenie wszystkich danych rejestracyjnych wskazanych w voucherze rezerwacyjnym.</li>
+                    <li>W celu zapewnienia zorganizowanego wejścia na pokład, wskazane jest przybycie na miejsce odjazdu autobusu 20 minut wcześniej.</li>
+                    <li>Odjazd autobusu w kurs odbywa się według czasu lokalnego.</li>
+                    <li>Pasażer ponosi odpowiedzialność za przestrzeganie reżimu wizowego oraz warunków przekraczania granicy.</li>
+                </ol>
+                
+                <h4>Warunki zwrotu biletów:</h4>
+                <ul>
+                    <li>od 3 dni i więcej przed odjazdem: 75% wartości podróży</li>
+                    <li>od 3 dni do 1 doby przed odjazdem: 50% wartości podróży</li>
+                    <li>od 1 doby do 12 godz. przed odjazdem: 25% wartości podróży</li>
+                    <li>mniej niż 12 godz. przed odjazdem: środki za podróż nie podlegają zwrotowi</li>
+                </ul>
+            </div>
+            
+            <div class="rules-col">
+                <ol start="5">
+                    <li>W celu uzyskania informacji dotyczących przerejestrowania lub odwołania podróży, pasażer może zwrócić się do oficjalnych przedstawicielstw firmy lub pod numerami Serwisu wsparcia.</li>
+                    <li>Opłata za podróż oznacza zgodę pasażera na warunki umowy oferty zamieszczonej na stronie internetowej oraz w oficjalnych przedstawicielstwach firmy.</li>
+                    <li>Bilet jest ważny tylko pod warunkiem, że nazwisko i imię pasażera odpowiadają jego danym paszportowym.</li>
+                </ol>
 
-            <h3>Warunki zwrotu biletów:</h3>
-            <ul>
-                <li>od 3 dni i więcej przed odjazdem: <strong>75%</strong> wartości podróży</li>
-                <li>od 3 dni do 1 doby przed odjazdem: <strong>50%</strong> wartości podróży</li>
-                <li>od 1 doby do 12 godz. przed odjazdem: <strong>25%</strong> wartości podróży</li>
-                <li>mniej niż 12 godz. przed odjazdem: środki za podróż <strong>nie podlegają zwrotowi</strong></li>
-            </ul>
+                <h4>Warunki przewozu bagażu:</h4>
+                <ul>
+                    <li>Przewóz 1 sztuki bagażu podręcznego (7 kg - 42x30x18 cm) + 1 sztuki bagażu turystycznego (20 kg - 80x50x30 cm) na osobę bezpłatnie.</li>
+                    <li>Bagaż dodatkowy: 25% wartości biletu.</li>
+                </ul>
 
-            <h3>Warunki przewozu bagażu:</h3>
-            <p>Przewóz 1 sztuki bagażu podręcznego (7 kg - 42x30x18 cm) + 1 sztuki bagażu turystycznego (20 kg - 80x50x30 cm) na osobę – <strong>bezpłatnie</strong>.<br>
-            Bagaż dodatkowy: 25% wartości biletu.</p>
-
-            <h3>Dodatkowe informacje:</h3>
-            <p>Przewoźnik zastrzega sobie prawo do zastąpienia autobusu innym, który odpowiada klasie zadeklarowanej przy sprzedaży biletów.</p>
+                <h4>Dodatkowe informacje:</h4>
+                <p style="margin: 5px 0 0 15px;">Przewoźnik zastrzega sobie prawo do zastąpienia autobusu innym, który odpowiada klasie zadeklarowanej przy sprzedaży biletów.</p>
+            </div>
         </div>
     </div>
 </body>
 </html>
 
-  
